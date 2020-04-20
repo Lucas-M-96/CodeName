@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Create Game{% endblock %}
+
+{% block en_tete %}Create Game{% endblock %}
+
+{% block content %}
+<form action=# method="post">
+	<p> <label for="new_game_id">New Game ID:</label></p>
+	<p> <input type="number" id="new_game_id" name= "new_game_id" /></p>
+	<p> <label for="new_game_nb_players">Number of players:</label></p>
+	<p> <input type="number" id="new_game_nb_players" name= "new_game_nb_players" /></p>
+	<p> <input type="submit" value="submit" /></p>
+</form>
+
+{% endblock %}

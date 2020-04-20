@@ -2,6 +2,8 @@
 import enum
 import random
 
+table_de_carte = ["Vol", "Chef", "Rame","Charge","Tambour","Cellule","Sol","Chemise","Solution","Chou","Mousse","Numéro","Marche","Perle","Carte","Couronne","Carrière","Portable","Lunettes","Sortie","Chaine","Botte","Corne","Mineur","Mine","Entrée","Bretelle","Poste","Banane","Phare","Don","Pendule","Fin","Pompe","Australie","Napoléon","Tube","Lit","Avocat","Physique","Ampoule","Patron","Confinement","Titre","Cartouche","Cuisine","Trait","Air","Prise","Uniforme","Page","Clé","Somme","Club","Cabinet","Coupe","Timbre","Vaisseau","Tuile","Couteau","Toile","Couverture","Menu","Bureau","Religieuse","But","Radio","Cadre","Essence","Cafard","Arc","Canne","Passe","Canon","Plat","Mémoire","Manège","Ligne","Membre","Opération","Planche","Carreau","Louche","Russie","Vin","Barre","Atout","Bon","Liquide","Orange","Course","Boite","Raie","Bombe","Plateau","Poele","Partie","Baie","Pensée","Boulet","Poire","Bouton","Bougie","Coq","Espagne","Col","Ordre","Campagne","Jet","Queue","Foyer","Grèce","Tokyo","Eponge","Note","Critique","Vague","Cycle","Farce","Droit","Vase","Eclair","Balance","Ensemble","Voile","Prêt","Rayon","Glace","Ferme","Gorge","Feuille","Grain","Ronde","Grenade","Brique","Grue","Enceinte","Guide","Banc","Bete","Iris","Lentille","Asile","Peste","Fort","Gel","Garde","Remise","Sardine","Europe","Hollywood","Palais","Bande","Vision","Piece","Paille","Facteur","Majeur","Sens","Pile","Espace","Plan","Bar","Court","Fer","Fuite","Formule","New-York","Alpes","Londres","Ninja","Plante","Marque","Talon","Commerce","Rouleau","Front","Lettre","Marron","Siège","Recette","Etude","Kiwi","Palme","Langue","Meuble","Figure","Carton","Moule","Quartier","Bourse","Volume","Charme","Rome","Révolution","Fraise","Manche","Base","Pêche","Asterix","Lumière","Camember","Français","Rat","Pôle","Appareil","Tableau","Argent","Nœud","Blé","Code","Pied","Journal","Tour","Champ","Café","Tête","Classe","Trou","Cinéma","Flûte","Amour","Dragon","Aile","Araignée","Noir","Courant","Mouche","Place","Baguette","Afrique","Lien","Point","Citrouille","Baleine","Dinosaure","Roulette","Ange","Scène","Temple","Coton","Vampire","Canard","Amérique","Molière","Canada","Luxe","Cirque","Millionaire","Chevalier","Crochet","Machine","Bouchon","Table","Etoile","Himalaya","Paris","Chance","Roi","Ceinture","Piano","Soldat","Ballon","Lion","Papier","Banque","Pomme","Plume","Espion","Droite","Cœur","Pingouin","Héros","Cheval","Vent","Chien","Robe","Noel","Casino","Bateau","Pouce","Mort","Bûche","Microscope","Pirate","Satellite","Kangourou","Jungle","Hôtel","Pigeon","Angleterre","Or","Herbe","Temps","Restaurant","Requin","Château","Parachute","Balle","Laser","Terre","Filet","Colle","Schtroumpf","Allemagne","Tennis","Oiseau","Chausson","Pyramide","Fou","Nuit","Echelle","Hiver","Vie","Géant","Bouteille","Reine","Science","Visage","Jour","Main","Miel","Serpent","Marin","Forêt","Lait","Ecole","Gauche","Règle","Chapeau","Centre","Zéro","Cochon","Verre","Anneau","Souris","Aiguille","Sept","Chocolat","Robot","Eau","Bœuf","Docteur","Voiture","Guerre","Opéra","Génie","Cercle","Chat","Danse","Police","Atlantique","Egalité","Chine","Champagne","Coronavirus","Bière","Princesse","Fantome","Jumelles","Alien","Sorcière","Licorne","Poison","Trésor","Maladie","Bâton","Sirène","Mars","Esprit","Nain","Mode","Jeu","Histoire","Hôpital","Chasse","Egypte","Resistance","Corde","Rouge","Poisson","Livre","Branche","Œil","Maîtresse","Œuf","Lune","Moustache","Magie","Avion","Indien","Berlin","Vert","Plage","Rose","Pilote","Neige","Pétrole","Bouche","Soleil","Poulet"]
+
 # TODO
 # problèmes suivants relevés:
 #
@@ -70,10 +72,10 @@ class Lobby:
         self.redCards = []
         self.blueCards = []
         self.neutralCards = []
-        self.deck = []
         self.guesses = []
         self.number_of_players = number_of_players
         self.lobby_id = lobby_id
+
 
         # these values are set in the prepare_gameturn f'n
         # here, we set the default
@@ -103,6 +105,7 @@ class Lobby:
 
         # full deck: will be created at beginning of each gameturn
         self.deck = []
+        self.cards_order = random.sample(range(0, 400), 400)
         # when all players join, a gameturn must be prepared and the game can start
 
     def generate_new_round(self):
@@ -145,15 +148,15 @@ class Lobby:
         for value in range(0, 25):
             for i in range(0,len(self.redCards)):
                 if value == self.redCards[i]:
-                    self.deck.append(Card(str(value), Color.RED))
+                    self.deck.append(Card(table_de_carte[self.cards_order.pop()], Color.RED))
             for j in range(0,len(self.blueCards)):
                 if value == self.blueCards[j]:
-                    self.deck.append(Card(str(value), Color.BLUE))
+                    self.deck.append(Card(table_de_carte[self.cards_order.pop()], Color.BLUE))
             if value == self.killerCard :
-                self.deck.append(Card(str(value), Color.DARK))
+                self.deck.append(Card(table_de_carte[self.cards_order.pop()], Color.DARK))
             for k in range(0,len(self.neutralCards)):
                 if value == self.neutralCards[k]:
-                    self.deck.append(Card(str(value), Color.NEUTRAL))
+                    self.deck.append(Card(table_de_carte[self.cards_order.pop()], Color.NEUTRAL))
 
         self.blue_guesses_left = len(self.blueCards)
         self.red_guesses_left = len(self.redCards)

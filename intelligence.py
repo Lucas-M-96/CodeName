@@ -105,7 +105,7 @@ class Lobby:
 
         # full deck: will be created at beginning of each gameturn
         self.deck = []
-        self.cards_order = random.sample(range(0, 400), 400)
+        self.cards_order = random.sample(range(0, len(table_de_carte)), len(table_de_carte))
         # when all players join, a gameturn must be prepared and the game can start
 
     def generate_new_round(self):

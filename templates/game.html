@@ -9,41 +9,73 @@
 	<p> <input type="submit" value="submit" /></p>
 </form>
 
-<table border="1" cellpadding="25" cellspacing="10">
+<table border="1" style="text-align: center;" cellpadding="25" cellspacing="10">
+
+    <tr>
+        {% for i in range(0,5)  %}
+           {% if le_deck_de_mots[i].color == 2  %}
+           <td bgcolor="blue">{{le_deck_de_mots[i].text}}</td>
+           {% elif le_deck_de_mots[i].color == 1  %}
+           <td bgcolor="red">{{le_deck_de_mots[i].text}}</td>
+           {% elif le_deck_de_mots[i].color == 4  %}
+           <td bgcolor="yellow">{{le_deck_de_mots[i].text}}</td>
+           {% else  %}
+           <td bgcolor="white">{{le_deck_de_mots[i].text}}</td>
+           {% endif  %}
+        {% endfor  %}
+   </tr>
+
    <tr>
-      <td>{{le_deck_de_mots[0].text}}</td>
-      <td>{{le_deck_de_mots[1].text}}</td>
-      <td>{{le_deck_de_mots[2].text}}</td>
-	  <td>{{le_deck_de_mots[3].text}}</td>
-	  <td>{{le_deck_de_mots[4].text}}</td>
+      {% for i in range(5,10)  %}
+          {% if le_deck_de_mots[i].color == 2  %}
+          <td bgcolor="blue">{{le_deck_de_mots[i].text}}</td>
+          {% elif le_deck_de_mots[i].color == 1  %}
+          <td bgcolor="red">{{le_deck_de_mots[i].text}}</td>
+          {% elif le_deck_de_mots[i].color == 4  %}
+          <td bgcolor="yellow">{{le_deck_de_mots[i].text}}</td>
+          {% else  %}
+          <td bgcolor="white">{{le_deck_de_mots[i].text}}</td>
+          {% endif  %}
+      {% endfor  %}
    </tr>
    <tr>
-      <td>{{le_deck_de_mots[5].text}}</td>
-      <td>{{le_deck_de_mots[6].text}}</td>
-      <td>{{le_deck_de_mots[7].text}}</td>
-	  <td>{{le_deck_de_mots[8].text}}</td>
-	  <td>{{le_deck_de_mots[9].text}}</td>
+      {% for i in range(10,15)  %}
+          {% if le_deck_de_mots[i].color == 2  %}
+          <td bgcolor="blue">{{le_deck_de_mots[i].text}}</td>
+          {% elif le_deck_de_mots[i].color == 1  %}
+          <td bgcolor="red">{{le_deck_de_mots[i].text}}</td>
+          {% elif le_deck_de_mots[i].color == 4  %}
+          <td bgcolor="yellow">{{le_deck_de_mots[i].text}}</td>
+          {% else  %}
+          <td bgcolor="white">{{le_deck_de_mots[i].text}}</td>
+          {% endif  %}
+      {% endfor  %}
    </tr>
    <tr>
-      <td>{{le_deck_de_mots[10].text}}</td>
-      <td>{{le_deck_de_mots[11].text}}</td>
-      <td>{{le_deck_de_mots[12].text}}</td>
-	  <td>{{le_deck_de_mots[13].text}}</td>
-	  <td>{{le_deck_de_mots[14].text}}</td>
-   </tr>
-   <tr>
-      <td>{{le_deck_de_mots[15].text}}</td>
-      <td>{{le_deck_de_mots[16].text}}</td>
-      <td>{{le_deck_de_mots[17].text}}</td>
-	  <td>{{le_deck_de_mots[18].text}}</td>
-	  <td>{{le_deck_de_mots[19].text}}</td>
+      {% for i in range(15,20)  %}
+          {% if le_deck_de_mots[i].color == 2  %}
+          <td bgcolor="blue">{{le_deck_de_mots[i].text}}</td>
+          {% elif le_deck_de_mots[i].color == 1  %}
+          <td bgcolor="red">{{le_deck_de_mots[i].text}}</td>
+          {% elif le_deck_de_mots[i].color == 4  %}
+          <td bgcolor="yellow">{{le_deck_de_mots[i].text}}</td>
+          {% else  %}
+          <td bgcolor="white">{{le_deck_de_mots[i].text}}</td>
+          {% endif  %}
+      {% endfor  %}
    </tr>
 	<tr>
-      <td>{{le_deck_de_mots[20].text}}</td>
-      <td>{{le_deck_de_mots[21].text}}</td>
-      <td>{{le_deck_de_mots[22].text}}</td>
-	  <td>{{le_deck_de_mots[23].text}}</td>
-	  <td>{{le_deck_de_mots[24].text}}</td>
+      {% for i in range(20,25)  %}
+          {% if le_deck_de_mots[i].color == 2  %}
+          <td bgcolor="blue">{{le_deck_de_mots[i].text}}</td>
+          {% elif le_deck_de_mots[i].color == 1  %}
+          <td bgcolor="red">{{le_deck_de_mots[i].text}}</td>
+          {% elif le_deck_de_mots[i].color == 4  %}
+          <td bgcolor="yellow">{{le_deck_de_mots[i].text}}</td>
+          {% else  %}
+          <td bgcolor="white">{{le_deck_de_mots[i].text}}</td>
+          {% endif  %}
+      {% endfor  %}
    </tr>
 
 </table>

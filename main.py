@@ -71,7 +71,7 @@ def game(Lobby_id):
 	if request.method == "POST":
 		player_guess = request.form["guess"]
 		new_game.guess(player.player_id, player.color, player.role, player_guess)
-
+	print(new_game.status())
 	return render_template("game.html", le_deck_de_mots = deck_test)
 
 if __name__=="__main__":

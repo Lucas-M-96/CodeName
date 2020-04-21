@@ -52,6 +52,7 @@ def add_player():
 					session["role"]=new_player_role
 					session["color"]=new_player_color
 					list_games[session["game_id"]].register_player(new_player_name,new_player_role,Color[new_player_color])
+					session["ID"] = len(list_games[session["game_id"]].players)-1
 					print(list_games[session["game_id"]].status())
 					return redirect(url_for("add_player"))
 				if request.form["submit"]=="Start game":
@@ -63,14 +64,15 @@ def add_player():
 @app.route("/game", methods=["POST","GET"])
 def game():
 	global list_games
+	# START GAME A CHANGER (a placer lors du clic sur le bouton start game)
 	list_games[session["game_id"]].start_game()
-	# deck_test = ["Vol", "Chef", "Rame","Charge","Tambour","Cellule","Sol","Chemise","Solution","Chou","Mousse","Numéro","Marche","Perle","Carte","Couronne","Carrière","Portable","Lunettes","Sortie","Chaine","Botte","Corne","Mineur","Mine"]
-	deck_test = list_games[session["game_id"]].deck
+	current_game = list_games[session["game_id"]]
+	role_of_player = session["role"]
 	if request.method == "POST":
 		player_guess = request.form["guess"]
 		list_games[session["game_id"]].guess(player.player_id, player.color, player.role, player_guess)
 	print(list_games[session["game_id"]].status())
-	return render_template("game.html", le_deck_de_mots = deck_test)
+	return render_template("game.html", Partie_en_cours = current_game, role_joueur = role_of_player)
 
 if __name__=="__main__":
 	#db.create.all()

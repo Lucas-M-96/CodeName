@@ -9,75 +9,210 @@
 	<p> <input type="submit" value="submit" /></p>
 </form>
 
-<table border="1" style="text-align: center;" cellpadding="25" cellspacing="10">
+<body>
+    {% if Partie_en_cours.current_team_color == 2  %}
+    <p style="color:blue;">C'est le tour de l'équipe bleue</p>
+    {% else  %}
+    <p style="color:red;">C'est le tour de l'équipe rouge</p>
+    {% endif  %}
+</body>
+<body>
+    {% if Partie_en_cours.current_role == 1  %}
+    <p>Le leader doit faire une proposition</p>
+    {% else  %}
+    <p>les chercheurs de l'équipe doivent valider un mot</p>
+    {% endif  %}
+</body>
 
+<!-- AFFICHAGE LEADER -->
+{% if role_joueur == 1  %}
+    <table border="1" style="text-align: center;" cellpadding="25" cellspacing="10" >
+        <tr>
+            <td bgcolor="white">Légende</td>
+            <td bgcolor="salmon">Rouge pas trouvé</td>
+            <td bgcolor="red">Rouge trouvé</td>
+            <td bgcolor="cadetBlue">Bleu pas trouvé</td>
+            <td bgcolor="Blue">Bleu trouvé</td>
+            <td bgcolor="khaki">Neutre pas révélé</td>
+            <td bgcolor="yellow">Neutre révélé</td>
+            <td bgcolor="black" style="color:white;">Assasin --> défaite</td>
+        </tr>
+    </table>
+
+    <table border="1" style="text-align: center;" cellpadding="25" cellspacing="10" >
+
+        <tr>
+            {% for i in range(0,5)  %}
+               {% if Partie_en_cours.deck[i].color == 2  %}
+               <td bgcolor="cadetBlue">{{Partie_en_cours.deck[i].text}}</td>
+               {% elif Partie_en_cours.deck[i].color == 1  %}
+               <td bgcolor="salmon">{{Partie_en_cours.deck[i].text}}</td>
+               {% elif Partie_en_cours.deck[i].color == 4  %}
+               <td bgcolor="khaki">{{Partie_en_cours.deck[i].text}}</td>
+               {% else  %}
+               <td bgcolor="black" style="color:white;">{{Partie_en_cours.deck[i].text}}</td>
+               {% endif  %}
+            {% endfor  %}
+       </tr>
+
+       <tr>
+          {% for i in range(5,10)  %}
+              {% if Partie_en_cours.deck[i].color == 2  %}
+              <td bgcolor="cadetBlue">{{Partie_en_cours.deck[i].text}}</td>
+              {% elif Partie_en_cours.deck[i].color == 1  %}
+              <td bgcolor="salmon">{{Partie_en_cours.deck[i].text}}</td>
+              {% elif Partie_en_cours.deck[i].color == 4  %}
+              <td bgcolor="khaki">{{Partie_en_cours.deck[i].text}}</td>
+              {% else  %}
+              <td bgcolor="black" style="color:white;">{{Partie_en_cours.deck[i].text}}</td>
+              {% endif  %}
+          {% endfor  %}
+       </tr>
+       <tr>
+          {% for i in range(10,15)  %}
+              {% if Partie_en_cours.deck[i].color == 2  %}
+              <td bgcolor="cadetBlue">{{Partie_en_cours.deck[i].text}}</td>
+              {% elif Partie_en_cours.deck[i].color == 1  %}
+              <td bgcolor="salmon">{{Partie_en_cours.deck[i].text}}</td>
+              {% elif Partie_en_cours.deck[i].color == 4  %}
+              <td bgcolor="khaki">{{Partie_en_cours.deck[i].text}}</td>
+              {% else  %}
+              <td bgcolor="black" style="color:white;">{{Partie_en_cours.deck[i].text}}</td>
+              {% endif  %}
+          {% endfor  %}
+       </tr>
+       <tr>
+          {% for i in range(15,20)  %}
+              {% if Partie_en_cours.deck[i].color == 2  %}
+              <td bgcolor="cadetBlue">{{Partie_en_cours.deck[i].text}}</td>
+              {% elif Partie_en_cours.deck[i].color == 1  %}
+              <td bgcolor="salmon">{{Partie_en_cours.deck[i].text}}</td>
+              {% elif Partie_en_cours.deck[i].color == 4  %}
+              <td bgcolor="khaki">{{Partie_en_cours.deck[i].text}}</td>
+              {% else  %}
+              <td bgcolor="black" style="color:white;">{{Partie_en_cours.deck[i].text}}</td>
+              {% endif  %}
+          {% endfor  %}
+        </tr>
+       </tr>
+        <tr>
+          {% for i in range(20,25)  %}
+              {% if Partie_en_cours.deck[i].color == 2  %}
+              <td bgcolor="cadetBlue">{{Partie_en_cours.deck[i].text}}</td>
+              {% elif Partie_en_cours.deck[i].color == 1  %}
+              <td bgcolor="salmon">{{Partie_en_cours.deck[i].text}}</td>
+              {% elif Partie_en_cours.deck[i].color == 4  %}
+              <td bgcolor="khaki">{{Partie_en_cours.deck[i].text}}</td>
+              {% else  %}
+              <td bgcolor="black" style="color:white;">{{Partie_en_cours.deck[i].text}}</td>
+              {% endif  %}
+          {% endfor  %}
+       </tr>
+    </table>
+
+<!-- AFFICHAGE GUESSER -->
+{% else %}
+
+<table border="1" style="text-align: center;" cellpadding="25" cellspacing="10" >
+    <tr>
+        <td bgcolor="white">Légende</td>
+        <td bgcolor="gray">Mot pas révélé</td>
+        <td bgcolor="red">Mot Rouge</td>
+        <td bgcolor="Blue">Mot Bleu</td>
+        <td bgcolor="yellow">Mot Neutre</td>
+        <td bgcolor="black" style="color:white;">Assasin --> défaite</td>
+    </tr>
+</table>
+
+<table border="1" style="text-align: center;" cellpadding="25" cellspacing="10">
     <tr>
         {% for i in range(0,5)  %}
-           {% if le_deck_de_mots[i].color == 2  %}
-           <td bgcolor="blue">{{le_deck_de_mots[i].text}}</td>
-           {% elif le_deck_de_mots[i].color == 1  %}
-           <td bgcolor="red">{{le_deck_de_mots[i].text}}</td>
-           {% elif le_deck_de_mots[i].color == 4  %}
-           <td bgcolor="yellow">{{le_deck_de_mots[i].text}}</td>
-           {% else  %}
-           <td bgcolor="white">{{le_deck_de_mots[i].text}}</td>
-           {% endif  %}
+            {% if i in Partie_en_cours.guesses %}
+                {% if Partie_en_cours.deck[i].color == 2  %}
+                <td bgcolor="Blue">{{Partie_en_cours.deck[i].text}}</td>
+                {% elif Partie_en_cours.deck[i].color == 1  %}
+                <td bgcolor="red">{{Partie_en_cours.deck[i].text}}</td>
+                {% elif Partie_en_cours.deck[i].color == 4  %}
+                <td bgcolor="yellow">{{Partie_en_cours.deck[i].text}}</td>
+                {% else  %}
+                <td bgcolor="black" style="color:white;">{{Partie_en_cours.deck[i].text}}</td>
+                {% endif  %}
+            {% else  %}
+               <td bgcolor="grey">{{Partie_en_cours.deck[i].text}}</td>
+            {% endif  %}
         {% endfor  %}
    </tr>
 
    <tr>
       {% for i in range(5,10)  %}
-          {% if le_deck_de_mots[i].color == 2  %}
-          <td bgcolor="blue">{{le_deck_de_mots[i].text}}</td>
-          {% elif le_deck_de_mots[i].color == 1  %}
-          <td bgcolor="red">{{le_deck_de_mots[i].text}}</td>
-          {% elif le_deck_de_mots[i].color == 4  %}
-          <td bgcolor="yellow">{{le_deck_de_mots[i].text}}</td>
+          {% if i in Partie_en_cours.guesses %}
+              {% if Partie_en_cours.deck[i].color == 2  %}
+              <td bgcolor="Blue">{{Partie_en_cours.deck[i].text}}</td>
+              {% elif Partie_en_cours.deck[i].color == 1  %}
+              <td bgcolor="red">{{Partie_en_cours.deck[i].text}}</td>
+              {% elif Partie_en_cours.deck[i].color == 4  %}
+              <td bgcolor="yellow">{{Partie_en_cours.deck[i].text}}</td>
+              {% else  %}
+              <td bgcolor="black" style="color:white;">{{Partie_en_cours.deck[i].text}}</td>
+              {% endif  %}
           {% else  %}
-          <td bgcolor="white">{{le_deck_de_mots[i].text}}</td>
+              <td bgcolor="grey">{{Partie_en_cours.deck[i].text}}</td>
           {% endif  %}
       {% endfor  %}
    </tr>
    <tr>
       {% for i in range(10,15)  %}
-          {% if le_deck_de_mots[i].color == 2  %}
-          <td bgcolor="blue">{{le_deck_de_mots[i].text}}</td>
-          {% elif le_deck_de_mots[i].color == 1  %}
-          <td bgcolor="red">{{le_deck_de_mots[i].text}}</td>
-          {% elif le_deck_de_mots[i].color == 4  %}
-          <td bgcolor="yellow">{{le_deck_de_mots[i].text}}</td>
+          {% if i in Partie_en_cours.guesses %}
+              {% if Partie_en_cours.deck[i].color == 2  %}
+              <td bgcolor="Blue">{{Partie_en_cours.deck[i].text}}</td>
+              {% elif Partie_en_cours.deck[i].color == 1  %}
+              <td bgcolor="red">{{Partie_en_cours.deck[i].text}}</td>
+              {% elif Partie_en_cours.deck[i].color == 4  %}
+              <td bgcolor="yellow">{{Partie_en_cours.deck[i].text}}</td>
+              {% else  %}
+              <td bgcolor="black" style="color:white;">{{Partie_en_cours.deck[i].text}}</td>
+              {% endif  %}
           {% else  %}
-          <td bgcolor="white">{{le_deck_de_mots[i].text}}</td>
+              <td bgcolor="grey">{{Partie_en_cours.deck[i].text}}</td>
           {% endif  %}
       {% endfor  %}
    </tr>
    <tr>
       {% for i in range(15,20)  %}
-          {% if le_deck_de_mots[i].color == 2  %}
-          <td bgcolor="blue">{{le_deck_de_mots[i].text}}</td>
-          {% elif le_deck_de_mots[i].color == 1  %}
-          <td bgcolor="red">{{le_deck_de_mots[i].text}}</td>
-          {% elif le_deck_de_mots[i].color == 4  %}
-          <td bgcolor="yellow">{{le_deck_de_mots[i].text}}</td>
+          {% if i in Partie_en_cours.guesses %}
+              {% if Partie_en_cours.deck[i].color == 2  %}
+              <td bgcolor="Blue">{{Partie_en_cours.deck[i].text}}</td>
+              {% elif Partie_en_cours.deck[i].color == 1  %}
+              <td bgcolor="red">{{Partie_en_cours.deck[i].text}}</td>
+              {% elif Partie_en_cours.deck[i].color == 4  %}
+              <td bgcolor="yellow">{{Partie_en_cours.deck[i].text}}</td>
+              {% else  %}
+              <td bgcolor="black" style="color:white;">{{Partie_en_cours.deck[i].text}}</td>
+              {% endif  %}
           {% else  %}
-          <td bgcolor="white">{{le_deck_de_mots[i].text}}</td>
+              <td bgcolor="grey">{{Partie_en_cours.deck[i].text}}</td>
           {% endif  %}
       {% endfor  %}
    </tr>
 	<tr>
       {% for i in range(20,25)  %}
-          {% if le_deck_de_mots[i].color == 2  %}
-          <td bgcolor="blue">{{le_deck_de_mots[i].text}}</td>
-          {% elif le_deck_de_mots[i].color == 1  %}
-          <td bgcolor="red">{{le_deck_de_mots[i].text}}</td>
-          {% elif le_deck_de_mots[i].color == 4  %}
-          <td bgcolor="yellow">{{le_deck_de_mots[i].text}}</td>
+          {% if i in Partie_en_cours.guesses %}
+              {% if Partie_en_cours.deck[i].color == 2  %}
+              <td bgcolor="Blue">{{Partie_en_cours.deck[i].text}}</td>
+              {% elif Partie_en_cours.deck[i].color == 1  %}
+              <td bgcolor="red">{{Partie_en_cours.deck[i].text}}</td>
+              {% elif Partie_en_cours.deck[i].color == 4  %}
+              <td bgcolor="yellow">{{Partie_en_cours.deck[i].text}}</td>
+              {% else  %}
+              <td bgcolor="black" style="color:white;">{{Partie_en_cours.deck[i].text}}</td>
+              {% endif  %}
           {% else  %}
-          <td bgcolor="white">{{le_deck_de_mots[i].text}}</td>
+              <td bgcolor="grey">{{Partie_en_cours.deck[i].text}}</td>
           {% endif  %}
       {% endfor  %}
    </tr>
 
 </table>
 
+{% endif %}
 {% endblock %}

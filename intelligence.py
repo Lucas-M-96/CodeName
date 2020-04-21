@@ -256,8 +256,7 @@ class Lobby:
                         self.number_of_guesses[:] = []
 
             if out_of_guess == 0:
-                self.number_of_guesses[:]\
-                    = []
+                self.number_of_guesses[:]= []
                 for i in range(0, len(self.guesses)):
                     if self.guesses[i] == given_guess:
                         out_of_guess = 2

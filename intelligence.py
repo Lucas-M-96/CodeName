@@ -114,11 +114,7 @@ class Lobby:
         # when all players join, a gameturn must be prepared and the game can start
 
     def generate_new_round(self):
-        self.redCards = []
-        self.blueCards = []
-        self.neutralCards = []
-        self.deck = []
-        self.guesses = []
+        self.guesses[:] = []
         self.current_turn_type = None
         self.current_role = None
         self.current_number_proposal = None
@@ -130,7 +126,10 @@ class Lobby:
 
     def generate_new_deck(self):
         """Generate a new full deck"""
-        self.deck = []
+        self.redCards[:] = []
+        self.blueCards[:] = []
+        self.neutralCards[:] = []
+        self.deck[:] = []
         # shuffle deck at the beginning of gameturn
 
         if self.current_team_color == Color.RED:
@@ -208,7 +207,7 @@ class Lobby:
         self.current_guesse = 0
         self.red_players = 0
         self.blue_players = 0
-        self.number_of_guesses = []
+        self.number_of_guesses[:] = []
         for player in self.players:
             if player.color == Color.RED:
                 self.red_players += 1
@@ -243,7 +242,7 @@ class Lobby:
                             print("tous les joueurs n'ont pas les mêmes suppositions, celles-ci sont réinitialisées")
                             out_of_guess = 4
                     if out_of_guess == 4:
-                        self.number_of_guesses = []
+                        self.number_of_guesses[:] = []
             else:
                 if len(self.number_of_guesses) < (self.blue_players - 1):
                     print("il manque la supposition de certaines personnes")
@@ -254,10 +253,11 @@ class Lobby:
                             print("tous les joueurs n'ont pas les mêmes suppositions, celles-ci sont réinitialisées")
                             out_of_guess = 4
                     if out_of_guess == 4:
-                        self.number_of_guesses = []
+                        self.number_of_guesses[:] = []
 
             if out_of_guess == 0:
-                self.number_of_guesses = []
+                self.number_of_guesses[:]\
+                    = []
                 for i in range(0, len(self.guesses)):
                     if self.guesses[i] == given_guess:
                         out_of_guess = 2

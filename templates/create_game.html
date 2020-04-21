@@ -5,10 +5,23 @@
 {% block en_tete %}Create Game{% endblock %}
 
 {% block content %}
+
+<p>ID of active games:
+{% if list_games|length >0 %}
+	{% for id in list_games %}
+		-{{id}}-
+	{% endfor %}
+{% else %}
+	none
+{% endif %}
+</p>
+<br/>
+
+<p>Create or join a game by entering its ID </p>
 <form action=# method="post">
-	<p> <label for="new_game_id">New Game ID:</label></p>
+	<p> <label for="new_game_id">Game ID:</label></p>
 	<p> <input type="number" id="new_game_id" name= "new_game_id" /></p>
-	<p> <label for="new_game_nb_players">Number of players:</label></p>
+	<p> <label for="new_game_nb_players">Number of players: (only if a new game is created)</label></p>
 	<p> <input type="number" id="new_game_nb_players" name= "new_game_nb_players" /></p>
 	<p> <input type="submit" value="submit" /></p>
 </form>

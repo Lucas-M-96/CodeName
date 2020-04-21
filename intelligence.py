@@ -54,7 +54,12 @@ class Player:
 
     def __str__(self):
         """Return id, name"""
-        return "; ".join([str(self.player_id), self.name])
+        if self.role==1:
+            role_name="spy"
+        else:
+
+            role_name="guesser"
+        return ";".join([str(self.player_id), self.name, role_name, self.color.name])
 
 
 class Lobby:

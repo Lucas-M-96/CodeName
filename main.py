@@ -15,6 +15,8 @@ list_games={}
 @app.route("/create_game", methods=["POST","GET"])
 def create_game():
 	global list_games
+	if "name" in session:
+		print("Session already opened : Game ID = "+session["game_id"]+" Name = "+session["name"])
 	if request.method=="POST":
 		new_game_id=request.form["new_game_id"]
 		session["game_id"]=new_game_id
@@ -41,20 +43,25 @@ def add_player():
 			return redirect(url_for("create_game"))
 		else:
 			if request.method=="POST":
-				new_player_name=request.form["new_player_name"]
-				new_player_role=int(request.form["new_player_role"])
-				new_player_color=request.form["new_player_color"]
-				#new_game.players.append(Player(len(new_game.players), new_player_name, new_player_role, Color[new_player_color]))
-				session["name"]=new_player_name
-				session["role"]=new_player_role
-				session["color"]=new_player_color
-				list_games[session["game_id"]].register_player(new_player_name,new_player_role,Color[new_player_color])
-				print(list_games[session["game_id"]].status())
-				return redirect(url_for("add_player"))
+				if request.form["submit"]=="Sign in":
+					print("Sign in")
+					new_player_name=request.form["new_player_name"]
+					new_player_role=int(request.form["new_player_role"])
+					new_player_color=request.form["new_player_color"]
+					session["name"]=new_player_name
+					session["role"]=new_player_role
+					session["color"]=new_player_color
+					list_games[session["game_id"]].register_player(new_player_name,new_player_role,Color[new_player_color])
+					print(list_games[session["game_id"]].status())
+					return redirect(url_for("add_player"))
+				if request.form["submit"]=="Start game":
+					print("Start game")
+					return redirect(url_for("game"))
 	return render_template("add_player.html",current_game=list_games[session["game_id"]])
 
-@app.route('/<Lobby_id>', methods=["POST","GET"])
-def game(Lobby_id):
+
+@app.route("/game", methods=["POST","GET"])
+def game():
 	global list_games
 	list_games[session["game_id"]].start_game()
 	# deck_test = ["Vol", "Chef", "Rame","Charge","Tambour","Cellule","Sol","Chemise","Solution","Chou","Mousse","Numéro","Marche","Perle","Carte","Couronne","Carrière","Portable","Lunettes","Sortie","Chaine","Botte","Corne","Mineur","Mine"]

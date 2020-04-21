@@ -13,3 +13,6 @@ TO DO
 
 	- Ajout de code pour avoir un seul SPY
 	- Ajout de code pour changer le spy en cas de revanche
+
+- Gestion joueurs / parties
+	- supprimer de list_game les parties qui sont terminées

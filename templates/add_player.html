@@ -19,15 +19,22 @@
 {% endif %}
 
 <br/>
+{% if "name" not in session %}
+	<form action=# method="post">
+		<p> <label for="new_player_name">Player name:</label></p>
+		<p> <input type="text" id="new_player_name" name= "new_player_name" /></p>
+		<p> <label for="new_player_role">Role (1=Leader, 2=Guesser):</label></p>
+		<p> <input type="number" id="new_player_role" name= "new_player_role" /></p>
+		<p> <label for="new_player_color">Color (RED or BLUE):</label></p>
+		<p> <input type="text" id="new_player_color" name= "new_player_color" /></p>
+		<p> <input type="submit" value="Sign in" name="submit" /></p>
+	</form>
 
-<form action=# method="post">
-	<p> <label for="new_player_name">Player name:</label></p>
-	<p> <input type="text" id="new_player_name" name= "new_player_name" /></p>
-	<p> <label for="new_player_role">Role (1=Leader, 2=Guesser):</label></p>
-	<p> <input type="number" id="new_player_role" name= "new_player_role" /></p>
-	<p> <label for="new_player_color">Color (RED or BLUE):</label></p>
-	<p> <input type="text" id="new_player_color" name= "new_player_color" /></p>
-	<p> <input type="submit" value="submit" /></p>
-</form>
+{% else %}
+	<form action=# method="post">
+		<p> <input type="submit" value="Start game" name="submit"/></p>
+	</form>
+
+{% endif %}
 
 {% endblock %}

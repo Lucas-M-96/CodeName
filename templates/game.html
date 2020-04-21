@@ -3,11 +3,21 @@
 {% block title %}Game{% endblock %}
 
 {% block content %}
+{% if role_joueur == 1  %}
 <form action=# method="post">
-	<p> <label for="guess">guess:</label></p>
-	<p> <input type="text" id="guess" name= "make a guess" /></p>
-	<p> <input type="submit" value="submit" /></p>
+	<p> <label for="propose">Proposition (1 word):</label></p>
+	<p> <input type="text" id="propose" name= "word_proposal" /></p>
+    <p> <label for="number_of_words-related">Number of worlds related to your proposal:</label></p>
+	<p> <input type="text" id="number_of_words-related" name= "number-of-words" /></p>
+	<p> <input type="submit" value="Propose" name="submit" /></p>
 </form>
+{% else %}
+<form action=# method="post">
+	<p> <label for="guess">make a guess:</label></p>
+	<p> <input type="text" id="guess" name= "guess" /></p>
+	<p> <input type="submit" value="Guess" name="submit" /></p>
+</form>
+{% endif %}
 
 <body>
     {% if Partie_en_cours.current_team_color == 2  %}

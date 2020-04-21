@@ -57,6 +57,7 @@ def add_player():
 					return redirect(url_for("add_player"))
 				if request.form["submit"]=="Start game":
 					print("Start game")
+					list_games[session["game_id"]].start_game()
 					return redirect(url_for("game"))
 	return render_template("add_player.html",current_game=list_games[session["game_id"]])
 
@@ -64,13 +65,16 @@ def add_player():
 @app.route("/game", methods=["POST","GET"])
 def game():
 	global list_games
-	# START GAME A CHANGER (a placer lors du clic sur le bouton start game)
-	list_games[session["game_id"]].start_game()
 	current_game = list_games[session["game_id"]]
 	role_of_player = session["role"]
 	if request.method == "POST":
-		player_guess = request.form["guess"]
-		list_games[session["game_id"]].guess(player.player_id, player.color, player.role, player_guess)
+		if request.form["submit"]=="Guess":
+			player_guess = int(request.form["guess"])
+			list_games[session["game_id"]].guess(session["ID"], session["color"], session["role"], player_guess)
+		if request.form["submit"]=="Propose":
+			player_proposal = request.form["word_proposal"]
+			number_of_words_related = int(request.form["number-of-words"])
+			list_games[session["game_id"]].propose(session["color"], session["role"], player_proposal, number_of_words_related)
 	print(list_games[session["game_id"]].status())
 	return render_template("game.html", Partie_en_cours = current_game, role_joueur = role_of_player)
 

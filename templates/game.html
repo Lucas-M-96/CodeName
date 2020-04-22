@@ -3,6 +3,7 @@
 {% block title %}Game{% endblock %}
 
 {% block content %}
+
 {% if role_joueur == 1  %}
 <form action=# method="post">
 	<p> <label for="propose">Proposition (1 word):</label></p>
@@ -11,28 +12,40 @@
 	<p> <input type="text" id="number_of_words-related" name= "number-of-words" /></p>
 	<p> <input type="submit" value="Propose" name="submit" /></p>
 </form>
-{% else %}
-<form action=# method="post">
-	<p> <label for="guess">make a guess:</label></p>
-	<p> <input type="text" id="guess" name= "guess" /></p>
-	<p> <input type="submit" value="Guess" name="submit" /></p>
-</form>
+<p> SPY de l'équipe {{couleur_joueur}}</p>
+{% else  %}
+<p> GUESSER de l'équipe {{couleur_joueur}} </p>
 {% endif %}
+<p> {{Partie_en_cours.message}} </p>
 
 <body>
+    {% if Partie_en_cours.current_team_color == couleur_joueur_chiffre and Partie_en_cours.current_role == role_joueur %}
+        <p> C'est à votre tour</p>
+    {% endif  %}
+
     {% if Partie_en_cours.current_team_color == 2  %}
-    <p style="color:blue;">C'est le tour de l'équipe bleue</p>
+        {% if Partie_en_cours.current_role == 1  %}
+        <p style="color:blue;">C'est le tour de l'équipe bleue et le leader doit faire une proposition</p>
+        {% else  %}
+        <p style="color:blue;">les chercheurs de l'équipe bleu doivent valider un mot</p>
+        {% endif  %}
     {% else  %}
-    <p style="color:red;">C'est le tour de l'équipe rouge</p>
+        {% if Partie_en_cours.current_role == 1  %}
+        <p style="color:red;">C'est le tour de l'équipe rouge et le leader doit faire une proposition</p>
+        {% else  %}
+        <p style="color:red;">les chercheurs de l'équipe rouge doivent valider un mot</p>
+        {% endif  %}
     {% endif  %}
 </body>
+
 <body>
-    {% if Partie_en_cours.current_role == 1  %}
-    <p>Le leader doit faire une proposition</p>
+    {% if couleur_joueur_chiffre == 2  %}
+        <p style="color:blue;">Il vous reste {{Partie_en_cours.blue_guesses_left}} mot(s) à trouver. Il reste {{Partie_en_cours.red_guesses_left}} mot(s) à l'équipe rouge. Vous avez {{Partie_en_cours.blue_rest}} proposition(s) bonus </p>
     {% else  %}
-    <p>les chercheurs de l'équipe doivent valider un mot</p>
+        <p style="color:red;">Il vous reste {{Partie_en_cours.red_guesses_left}} mot(s) à trouver. Il reste {{Partie_en_cours.blue_guesses_left}} mot(s) à l'équipe bleu. Vous avez {{Partie_en_cours.red_rest}} proposition(s) bonus </p>
     {% endif  %}
 </body>
+
 
 <!-- AFFICHAGE LEADER -->
 {% if role_joueur == 1  %}
@@ -104,7 +117,6 @@
               {% endif  %}
           {% endfor  %}
         </tr>
-       </tr>
         <tr>
           {% for i in range(20,25)  %}
               {% if Partie_en_cours.deck[i].color == 2  %}
@@ -122,107 +134,109 @@
 
 <!-- AFFICHAGE GUESSER -->
 {% else %}
+    {% if Partie_en_cours.current_team_color == couleur_joueur_chiffre and Partie_en_cours.current_role == role_joueur %}
+        <p>votre SPY vous propose le mot {{Partie_en_cours.current_proposal}} en {{Partie_en_cours.current_number_proposal}}. Il vous reste maintenant {{Partie_en_cours.current_number_proposal-Partie_en_cours.current_guesse}} propositions à faire. </p>
+    {% endif %}
+    <form action=# method="post"><input type="submit" value="passer" name="submit" /></form>
 
-<table border="1" style="text-align: center;" cellpadding="25" cellspacing="10" >
-    <tr>
-        <td bgcolor="white">Légende</td>
-        <td bgcolor="gray">Mot pas révélé</td>
-        <td bgcolor="red">Mot Rouge</td>
-        <td bgcolor="Blue">Mot Bleu</td>
-        <td bgcolor="yellow">Mot Neutre</td>
-        <td bgcolor="black" style="color:white;">Assasin --> défaite</td>
-    </tr>
-</table>
+    <table border="1" style="text-align: center;" cellpadding="25" cellspacing="10" >
+        <tr>
+            <td bgcolor="white">Légende</td>
+            <td bgcolor="gray">Mot pas révélé</td>
+            <td bgcolor="red">Mot Rouge</td>
+            <td bgcolor="Blue">Mot Bleu</td>
+            <td bgcolor="yellow">Mot Neutre</td>
+            <td bgcolor="black" style="color:white;">Assasin --> défaite</td>
+        </tr>
+    </table>
 
-<table border="1" style="text-align: center;" cellpadding="25" cellspacing="10">
-    <tr>
-        {% for i in range(0,5)  %}
-            {% if i in Partie_en_cours.guesses %}
-                {% if Partie_en_cours.deck[i].color == 2  %}
-                <td bgcolor="Blue">{{Partie_en_cours.deck[i].text}}</td>
-                {% elif Partie_en_cours.deck[i].color == 1  %}
-                <td bgcolor="red">{{Partie_en_cours.deck[i].text}}</td>
-                {% elif Partie_en_cours.deck[i].color == 4  %}
-                <td bgcolor="yellow">{{Partie_en_cours.deck[i].text}}</td>
+    <table border="1" style="text-align: center;" cellpadding="25" cellspacing="10">
+        <tr>
+            {% for i in range(0,5)  %}
+                {% if i in Partie_en_cours.guesses %}
+                    {% if Partie_en_cours.deck[i].color == 2  %}
+                    <td bgcolor="Blue">{{Partie_en_cours.deck[i].text}}</td>
+                    {% elif Partie_en_cours.deck[i].color == 1  %}
+                    <td bgcolor="red">{{Partie_en_cours.deck[i].text}}</td>
+                    {% elif Partie_en_cours.deck[i].color == 4  %}
+                    <td bgcolor="yellow">{{Partie_en_cours.deck[i].text}}</td>
+                    {% else  %}
+                    <td bgcolor="black" style="color:white;">{{Partie_en_cours.deck[i].text}}</td>
+                    {% endif  %}
                 {% else  %}
-                <td bgcolor="black" style="color:white;">{{Partie_en_cours.deck[i].text}}</td>
+                <td bgcolor="grey"><form action=# method="post"><input type="submit" value={{Partie_en_cours.deck[i].text}} name="submit" /></form></td>
                 {% endif  %}
-            {% else  %}
-               <td bgcolor="grey">{{Partie_en_cours.deck[i].text}}</td>
-            {% endif  %}
-        {% endfor  %}
-   </tr>
-
-   <tr>
-      {% for i in range(5,10)  %}
-          {% if i in Partie_en_cours.guesses %}
-              {% if Partie_en_cours.deck[i].color == 2  %}
-              <td bgcolor="Blue">{{Partie_en_cours.deck[i].text}}</td>
-              {% elif Partie_en_cours.deck[i].color == 1  %}
-              <td bgcolor="red">{{Partie_en_cours.deck[i].text}}</td>
-              {% elif Partie_en_cours.deck[i].color == 4  %}
-              <td bgcolor="yellow">{{Partie_en_cours.deck[i].text}}</td>
+            {% endfor  %}
+       </tr>
+       <tr>
+          {% for i in range(5,10)  %}
+              {% if i in Partie_en_cours.guesses %}
+                  {% if Partie_en_cours.deck[i].color == 2  %}
+                  <td bgcolor="Blue">{{Partie_en_cours.deck[i].text}}</td>
+                  {% elif Partie_en_cours.deck[i].color == 1  %}
+                  <td bgcolor="red">{{Partie_en_cours.deck[i].text}}</td>
+                  {% elif Partie_en_cours.deck[i].color == 4  %}
+                  <td bgcolor="yellow">{{Partie_en_cours.deck[i].text}}</td>
+                  {% else  %}
+                  <td bgcolor="black" style="color:white;">{{Partie_en_cours.deck[i].text}}</td>
+                  {% endif  %}
               {% else  %}
-              <td bgcolor="black" style="color:white;">{{Partie_en_cours.deck[i].text}}</td>
+                  <td bgcolor="grey"><form action=# method="post"><input type="submit" value={{Partie_en_cours.deck[i].text}} name="submit" /></form></td>
               {% endif  %}
-          {% else  %}
-              <td bgcolor="grey">{{Partie_en_cours.deck[i].text}}</td>
-          {% endif  %}
-      {% endfor  %}
-   </tr>
-   <tr>
-      {% for i in range(10,15)  %}
-          {% if i in Partie_en_cours.guesses %}
-              {% if Partie_en_cours.deck[i].color == 2  %}
-              <td bgcolor="Blue">{{Partie_en_cours.deck[i].text}}</td>
-              {% elif Partie_en_cours.deck[i].color == 1  %}
-              <td bgcolor="red">{{Partie_en_cours.deck[i].text}}</td>
-              {% elif Partie_en_cours.deck[i].color == 4  %}
-              <td bgcolor="yellow">{{Partie_en_cours.deck[i].text}}</td>
+          {% endfor  %}
+       </tr>
+       <tr>
+          {% for i in range(10,15)  %}
+              {% if i in Partie_en_cours.guesses %}
+                  {% if Partie_en_cours.deck[i].color == 2  %}
+                  <td bgcolor="Blue">{{Partie_en_cours.deck[i].text}}</td>
+                  {% elif Partie_en_cours.deck[i].color == 1  %}
+                  <td bgcolor="red">{{Partie_en_cours.deck[i].text}}</td>
+                  {% elif Partie_en_cours.deck[i].color == 4  %}
+                  <td bgcolor="yellow">{{Partie_en_cours.deck[i].text}}</td>
+                  {% else  %}
+                  <td bgcolor="black" style="color:white;">{{Partie_en_cours.deck[i].text}}</td>
+                  {% endif  %}
               {% else  %}
-              <td bgcolor="black" style="color:white;">{{Partie_en_cours.deck[i].text}}</td>
+                  <td bgcolor="grey"><form action=# method="post"><input type="submit" value={{Partie_en_cours.deck[i].text}} name="submit" /></form></td>
               {% endif  %}
-          {% else  %}
-              <td bgcolor="grey">{{Partie_en_cours.deck[i].text}}</td>
-          {% endif  %}
-      {% endfor  %}
-   </tr>
-   <tr>
-      {% for i in range(15,20)  %}
-          {% if i in Partie_en_cours.guesses %}
-              {% if Partie_en_cours.deck[i].color == 2  %}
-              <td bgcolor="Blue">{{Partie_en_cours.deck[i].text}}</td>
-              {% elif Partie_en_cours.deck[i].color == 1  %}
-              <td bgcolor="red">{{Partie_en_cours.deck[i].text}}</td>
-              {% elif Partie_en_cours.deck[i].color == 4  %}
-              <td bgcolor="yellow">{{Partie_en_cours.deck[i].text}}</td>
+          {% endfor  %}
+       </tr>
+       <tr>
+          {% for i in range(15,20)  %}
+              {% if i in Partie_en_cours.guesses %}
+                  {% if Partie_en_cours.deck[i].color == 2  %}
+                  <td bgcolor="Blue">{{Partie_en_cours.deck[i].text}}</td>
+                  {% elif Partie_en_cours.deck[i].color == 1  %}
+                  <td bgcolor="red">{{Partie_en_cours.deck[i].text}}</td>
+                  {% elif Partie_en_cours.deck[i].color == 4  %}
+                  <td bgcolor="yellow">{{Partie_en_cours.deck[i].text}}</td>
+                  {% else  %}
+                  <td bgcolor="black" style="color:white;">{{Partie_en_cours.deck[i].text}}</td>
+                  {% endif  %}
               {% else  %}
-              <td bgcolor="black" style="color:white;">{{Partie_en_cours.deck[i].text}}</td>
+                  <td bgcolor="grey"><form action=# method="post"><input type="submit" value={{Partie_en_cours.deck[i].text}} name="submit" /></form></td>
               {% endif  %}
-          {% else  %}
-              <td bgcolor="grey">{{Partie_en_cours.deck[i].text}}</td>
-          {% endif  %}
-      {% endfor  %}
-   </tr>
-	<tr>
-      {% for i in range(20,25)  %}
-          {% if i in Partie_en_cours.guesses %}
-              {% if Partie_en_cours.deck[i].color == 2  %}
-              <td bgcolor="Blue">{{Partie_en_cours.deck[i].text}}</td>
-              {% elif Partie_en_cours.deck[i].color == 1  %}
-              <td bgcolor="red">{{Partie_en_cours.deck[i].text}}</td>
-              {% elif Partie_en_cours.deck[i].color == 4  %}
-              <td bgcolor="yellow">{{Partie_en_cours.deck[i].text}}</td>
+          {% endfor  %}
+       </tr>
+        <tr>
+          {% for i in range(20,25)  %}
+              {% if i in Partie_en_cours.guesses %}
+                  {% if Partie_en_cours.deck[i].color == 2  %}
+                  <td bgcolor="Blue">{{Partie_en_cours.deck[i].text}}</td>
+                  {% elif Partie_en_cours.deck[i].color == 1  %}
+                  <td bgcolor="red">{{Partie_en_cours.deck[i].text}}</td>
+                  {% elif Partie_en_cours.deck[i].color == 4  %}
+                  <td bgcolor="yellow">{{Partie_en_cours.deck[i].text}}</td>
+                  {% else  %}
+                  <td bgcolor="black" style="color:white;">{{Partie_en_cours.deck[i].text}}</td>
+                  {% endif  %}
               {% else  %}
-              <td bgcolor="black" style="color:white;">{{Partie_en_cours.deck[i].text}}</td>
+                   <td bgcolor="grey"><form action=# method="post"><input type="submit" value={{Partie_en_cours.deck[i].text}} name="submit" /></form></td>
               {% endif  %}
-          {% else  %}
-              <td bgcolor="grey">{{Partie_en_cours.deck[i].text}}</td>
-          {% endif  %}
-      {% endfor  %}
-   </tr>
-
-</table>
+          {% endfor  %}
+       </tr>
+    </table>
 
 {% endif %}
 {% endblock %}

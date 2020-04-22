@@ -95,6 +95,8 @@ class Lobby:
         self.current_turn_type = None
         self.current_role = None
         self.current_number_proposal = None
+        self.current_proposal = None
+        self.message = None
         self.blue_rest = 0
         self.red_rest = 0
         self.blue_guesses_left = None
@@ -212,6 +214,7 @@ class Lobby:
         self.red_players = 0
         self.blue_players = 0
         self.number_of_guesses[:] = []
+        self.message = ""
         for player in self.players.values():
             if player.color == Color.RED:
                 self.red_players += 1
@@ -228,7 +231,7 @@ class Lobby:
             print('It is not a guess round.')
         # is this team the current team
         elif team_color != self.current_team_color:
-            print("It is not this team turn!")
+            self.message ="It is not this team turn!"
         elif team_role != self.current_role:
             print("you don't have this role!")
         else:
@@ -238,28 +241,29 @@ class Lobby:
 
             if team_color == Color.RED:
                 if len(self.number_of_guesses) < (self.red_players - 1):
-                    print("il manque la supposition de certaines personnes")
+                    self.message ="il manque la supposition de certaines personnes"
                     out_of_guess = 3
                 else:
                     for i in range(0, len(self.number_of_guesses)-1):
                         if self.number_of_guesses[i] != self.number_of_guesses[i+1]:
-                            print("tous les joueurs n'ont pas les mêmes suppositions, celles-ci sont réinitialisées")
+                            self.message = "tous les joueurs n'ont pas les mêmes suppositions, celles-ci sont réinitialisées"
                             out_of_guess = 4
                     if out_of_guess == 4:
                         self.number_of_guesses[:] = []
             else:
                 if len(self.number_of_guesses) < (self.blue_players - 1):
-                    print("il manque la supposition de certaines personnes")
+                    self.message ="il manque la supposition de certaines personnes"
                     out_of_guess = 3
                 else:
                     for i in range(0, len(self.number_of_guesses)-1):
                         if self.number_of_guesses[i] != self.number_of_guesses[i+1]:
-                            print("tous les joueurs n'ont pas les mêmes suppositions, celles-ci sont réinitialisées")
+                            self.message = "tous les joueurs n'ont pas les mêmes suppositions, celles-ci sont réinitialisées"
                             out_of_guess = 4
                     if out_of_guess == 4:
                         self.number_of_guesses[:] = []
 
             if out_of_guess == 0:
+                self.message = ""
                 self.number_of_guesses[:]= []
                 for i in range(0, len(self.guesses)):
                     if self.guesses[i] == given_guess:
@@ -367,21 +371,21 @@ class Lobby:
                         self.set_next_role()
                         self.current_turn_type = TurnType.PROPOSAL
                 else:
-                    print("ce mot a déjà été révélé")
+                    self.message = "ce mot a déjà été révélé"
 
     def propose(self, team_color, player_role, given_proposal, number):
         """Assign a proposal to the rest of the team, if it's his turn"""
         if self.current_turn_type != TurnType.PROPOSAL:
-            print('It is not a proposal round.')
+            print("It is not a proposal round.")
         # is this team the current team
         elif team_color != self.current_team_color:
-            print("It is not this team turn!")
+            self.message = "It is not this team turn!"
         elif player_role != self.current_role:
             print("you don't have this role!")
         # if not, this is a valid proposal
         else:
-            print(given_proposal + "en" + str(number))
-
+            self.message = ""
+            self.current_proposal = given_proposal
             self.current_number_proposal = number
             self.current_guesse = 0
             self.set_next_role()
@@ -393,10 +397,12 @@ class Lobby:
 
         # is the game ready
         if self.number_of_players != len(self.players):
-            raise RuntimeError('Not all players have joined. Current player count:', len(self.players))
+            self.message = "Not all players have joined."
 
-        # the game can start!
-        self.prepare_gameturn()
+        else:
+            # the game can start!
+            self.message = ""
+            self.prepare_gameturn()
 
     def status(self):
         """Return detailed status of game"""

@@ -141,16 +141,23 @@ def game():
 	global list_games
 	current_game = list_games[session["game_id"]]
 	role_of_player = session["role"]
+	color_of_player = session["color"]
+	if color_of_player == "RED":
+		color_of_player_chiffre = 1
+	else:
+		color_of_player_chiffre = 2
 	if request.method == "POST":
-		if request.form["submit"]=="Guess":
-			player_guess = int(request.form["guess"])
-			list_games[session["game_id"]].guess(session["ID"], session["color"], session["role"], player_guess)
+		for i in range(0,25):
+			if request.form["submit"]==list_games[session["game_id"]].deck[i].text:
+				list_games[session["game_id"]].guess(session["ID"], Color[session["color"]], session["role"], i)
+			if request.form["submit"]=="passer":
+				list_games[session["game_id"]].guess(session["ID"], Color[session["color"]], session["role"], 25)
 		if request.form["submit"]=="Propose":
 			player_proposal = request.form["word_proposal"]
 			number_of_words_related = int(request.form["number-of-words"])
-			list_games[session["game_id"]].propose(session["color"], session["role"], player_proposal, number_of_words_related)
+			list_games[session["game_id"]].propose(Color[session["color"]], session["role"], player_proposal, number_of_words_related)
 	print(list_games[session["game_id"]].status())
-	return render_template("game.html", Partie_en_cours = current_game, role_joueur = role_of_player)
+	return render_template("game.html", Partie_en_cours = current_game, role_joueur = role_of_player, couleur_joueur = color_of_player, couleur_joueur_chiffre = color_of_player_chiffre )
 
 if __name__=="__main__":
 	#db.create.all()

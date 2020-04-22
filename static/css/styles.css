@@ -1,4 +1,50 @@
-.tableaux{
-  display:inline-block;
-  vertical-align:top;
+.boutonBleu {
+	padding:6px 0 6px 0;
+	font:Bold 13px Arial;
+	background:Blue;
+	color:#fff;
+	width:90px;
+	border-radius:2px;
+	border:none;
 }
+
+.boutonRouge {
+	padding:6px 0 6px 0;
+	font:Bold 13px Arial;
+	background:red;
+	color:#fff;
+	width:90px;
+	border-radius:2px;
+	border:none;
+}
+
+.boutonJaune {
+	padding:6px 0 6px 0;
+	font:Bold 13px Arial;
+	background:yellow;
+	color:#555;
+	width:90px;
+	border-radius:2px;
+	border:none;
+}
+
+.boutonGris {
+	padding:6px 0 6px 0;
+	font:Bold 13px Arial;
+	background:Gray;
+	color:#fff;
+	width:200px;
+	border-radius:2px;
+	border:none;
+}
+
+.boutonNoir {
+	padding:6px 0 6px 0;
+	font:Bold 13px Arial;
+	background:Black;
+	color:#fff;
+	width:90px;
+	border-radius:2px;
+	border:none;
+}
+

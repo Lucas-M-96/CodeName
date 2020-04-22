@@ -42,15 +42,16 @@ class Card:
 class Player:
     """Represent a player"""
 
-    def __init__(self, player_id, name, r, c):
+    def __init__(self, player_id, name, r, c, p):
         # attributes forever
         if not isinstance(c, Color):
             raise TypeError('Given color is not of type Color:', c)
 
+        self.player_id = player_id
         self.name = name
         self.color = c
         self.role = r
-        self.player_id = player_id
+        self.password = p
 
     def __str__(self):
         """Return id, name"""
@@ -73,7 +74,7 @@ class Lobby:
     def __init__(self, lobby_id, number_of_players):
         """Create a new game instance"""
         # attributes for keeping track of the current game
-        self.players = []
+        self.players = {}
         self.redCards = []
         self.blueCards = []
         self.neutralCards = []
@@ -179,17 +180,20 @@ class Lobby:
         if next_role == 2:
             self.current_role = 1
 
-    def register_player(self, name, r, c):
+    def register_player(self, name, r, c, p):
         """Create a new player"""
-        current_id = len(self.players)
+        try:
+            current_id = max(self.players.keys())+1
+        except:
+            current_id=1
         # if all players already joined
-        if current_id == self.number_of_players:
+        if len(self.players) == self.number_of_players:
             raise RuntimeError('A player is trying to join a full lobby. His name: ', name)
         # else append a new Player instance to the list of players
         # the name argument is the chosen username
         else:
-            assert current_id >= 0 and current_id < self.number_of_players
-            self.players.append(Player(current_id, name, r, c))
+            assert len(self.players) >= 0 and len(self.players) < self.number_of_players
+            self.players[current_id]=Player(current_id, name, r, c, p)
 
 
     def update_current_wins(self):
@@ -208,7 +212,7 @@ class Lobby:
         self.red_players = 0
         self.blue_players = 0
         self.number_of_guesses[:] = []
-        for player in self.players:
+        for player in self.players.values():
             if player.color == Color.RED:
                 self.red_players += 1
             if player.color == Color.BLUE:
@@ -398,7 +402,7 @@ class Lobby:
         """Return detailed status of game"""
         return {
             'game_board': [str(card) for card in self.deck],
-            'players': [str(player) for player in self.players],
+            'players': [str(player) for player in self.players.values()],
             'current_team_color': self.current_team_color,
             'current_turn_type': self.current_turn_type,
             'red wins : ' : self.red_wins,

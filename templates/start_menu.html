@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}Start Menu{% endblock %}
+
+{% block en_tete %}Start Menu{% endblock %}
+
+{% block content %}
+
+
+<!-- Affichage des parties actives -->
+{% if "game_id" not in session or session["game_id"] not in list_games.keys() %}
+	<p>List of active games:</p>
+	{% if list_games|length >0 %}
+		{% for id in list_games %}
+			<p> - Game N°{{id}} / Number of players : {{list_games[id].number_of_players}}</p>
+		{% endfor %}
+	{% else %}
+		none
+	{% endif %}
+
+	<br/>
+
+<!-- Creation ou inscription à une partie -->
+	<p>Create or join a game by entering its N° </p>
+	<form action=# method="post">
+		<p> <label for="new_game_id">Game N°:</label></p>
+		<p> <input type="number" id="new_game_id" name= "new_game_id" /></p>
+		<p> <label for="new_game_nb_players">Number of players: (only if a new game is created)</label></p>
+		<p> <input type="number" id="new_game_nb_players" name= "new_game_nb_players" /></p>
+		<p> <input type="submit" value="Create or join game" name="submit" /></p>
+	</form>
+{% else %}
+
+<!-- Gestion de la partie -->
+	<p>You are joining the game N°{{list_games[session["game_id"]].lobby_id}} / Number of players : {{list_games[session["game_id"]].number_of_players}}</p>
+
+	<form action=# method="post">
+	<input type="submit" value="Join an other game" name="submit"/>
+	</form>
+	<br/>
+
+<!-- Liste des joueurs -->
+	<p>List of players aready signed in: (id-name-role-color)</p>
+
+	{% if list_games[session["game_id"]].players|length >0 %}
+		{% for ply in list_games[session["game_id"]].players.values() %}
+			<p>{{ply.player_id}} / {{ply.name}} / 
+				{% if ply.role==1 %}
+					spy
+				{% else %}
+					guesser
+				{% endif %}
+			 / {{ply.color.name}} 
+			</p>
+		{% endfor %}
+	{% else %}
+		<p>none</p>
+	{% endif %}
+
+<!-- Inscrire un nouveau joueur -->
+	<br/>
+	{% if "name" not in session %}
+	<form action=# method="post">
+		<p> <label for="new_player_name">Player name:</label></p>
+		<p> <input type="text" id="new_player_name" name= "new_player_name" /></p>
+		<p> <label for="new_player_role">Role (1=Spy, 2=Guesser):</label></p>
+		<p> <input type="number" id="new_player_role" name= "new_player_role" /></p>
+		<p> <label for="new_player_color">Color (RED or BLUE):</label></p>
+		<p> <input type="text" id="new_player_color" name= "new_player_color" /></p>
+		<p> <label for="new_player_password">Password :</label></p>
+		<p> <input type="text" id="new_player_password" name= "new_player_password" /></p>
+		<p> <input type="submit" value="Add player" name="submit" /></p>
+	</form>
+
+<!-- Reprendre un joueur déjà inscrit -->
+	</br>
+		<form action=# method="post">
+		<p> <label for="sign_in_ID">Sign in ID:</label></p>
+		<p> <input type="number" id="sign_in_ID" name= "sign_in_ID" /></p>
+		<p> <label for="sign_in_password">Password :</label></p>
+		<p> <input type="text" id="sign_in_password" name= "sign_in_password" /></p>
+		<p> <input type="submit" value="Sign in as" name="submit" /></p>
+
+<!-- Details et options session actuelle + afficher le plateau -->
+	{% else %}
+		<p>Currently  signed in as :
+		{{session["ID"]}} / {{session["name"]}} / 
+		{% if session["role"]==1 %}
+			spy
+		{% else %}
+			guesser
+		{% endif %}
+		 / {{session["color"]}} </p>
+		<form action=# method="post">
+		<p> <input type="submit" value="Sign out" name="submit"/></p>
+		<p> <input type="submit" value="Delete player" name="submit"/></p>
+		<p> <input type="submit" value="Start game" name="submit"/></p>
+		</form>
+
+	{% endif %}
+
+{% endif %}
+
+{% endblock %}
+

@@ -6,6 +6,13 @@
 
 {% block content %}
 
+{% with messages = get_flashed_messages() %}
+	{% if messages %}
+		{% for msg in messages %}
+			<P> {{msg}}</p>
+		{% endfor %}
+	{% endif %}
+{% endwith %}
 
 <!-- Affichage des parties actives -->
 {% if "game_id" not in session or session["game_id"] not in list_games.keys() %}
@@ -23,10 +30,10 @@
 <!-- Creation ou inscription à une partie -->
 	<p>Create or join a game by entering its N° </p>
 	<form action=# method="post">
-		<p> <label for="new_game_id">Game N°:</label></p>
-		<p> <input type="number" id="new_game_id" name= "new_game_id" /></p>
-		<p> <label for="new_game_nb_players">Number of players: (only if a new game is created)</label></p>
-		<p> <input type="number" id="new_game_nb_players" name= "new_game_nb_players" /></p>
+		<p> <label for="new_game_id">Game N°: </label>
+			<input type="number" id="new_game_id" name= "new_game_id" /></p>
+		<p> <label for="new_game_nb_players">Number of players: (only if a new game is created) </label>
+			<input type="number" id="new_game_nb_players" name= "new_game_nb_players" /></p>
 		<p> <input type="submit" value="Create or join game" name="submit" /></p>
 	</form>
 {% else %}
@@ -61,24 +68,30 @@
 	<br/>
 	{% if "name" not in session %}
 	<form action=# method="post">
-		<p> <label for="new_player_name">Player name:</label></p>
-		<p> <input type="text" id="new_player_name" name= "new_player_name" /></p>
-		<p> <label for="new_player_role">Role (1=Spy, 2=Guesser):</label></p>
-		<p> <input type="number" id="new_player_role" name= "new_player_role" /></p>
-		<p> <label for="new_player_color">Color (RED or BLUE):</label></p>
-		<p> <input type="text" id="new_player_color" name= "new_player_color" /></p>
-		<p> <label for="new_player_password">Password :</label></p>
-		<p> <input type="text" id="new_player_password" name= "new_player_password" /></p>
+		<p> <label for="new_player_name">Player name: </label>
+			<input type="text" id="new_player_name" name= "new_player_name" /></p>
+		<p> <label for="new_player_role">Role: </label>
+			<input type="radio" id="1" value="1" name= "new_player_role" />
+			<label for="1"> Spy </label>
+			<input type="radio" id="2" value="2" name= "new_player_role" />
+			<label for="2"> Guesser </label></p>
+		<p> <label for="new_player_color">Color: </label>
+			<input type="radio" id="RED" value="RED" name= "new_player_color" />
+			<label for="RED"> RED </label>
+			<input type="radio" id="BLUE" value="BLUE" name= "new_player_color" />
+			<label for="BLUE"> BLUE </label></p>
+		<p> <label for="new_player_password">Password: </label>
+			<input type="text" id="new_player_password" name= "new_player_password" /></p>
 		<p> <input type="submit" value="Add player" name="submit" /></p>
 	</form>
 
 <!-- Reprendre un joueur déjà inscrit -->
 	</br>
 		<form action=# method="post">
-		<p> <label for="sign_in_ID">Sign in ID:</label></p>
-		<p> <input type="number" id="sign_in_ID" name= "sign_in_ID" /></p>
-		<p> <label for="sign_in_password">Password :</label></p>
-		<p> <input type="text" id="sign_in_password" name= "sign_in_password" /></p>
+		<p> <label for="sign_in_ID">Sign in ID: </label>
+			<input type="number" id="sign_in_ID" name= "sign_in_ID" /></p>
+		<p> <label for="sign_in_password">Password: </label>
+			<input type="text" id="sign_in_password" name= "sign_in_password" /></p>
 		<p> <input type="submit" value="Sign in as" name="submit" /></p>
 
 <!-- Details et options session actuelle + afficher le plateau -->

@@ -1,4 +1,4 @@
-from flask import Flask, render_template,request,redirect,url_for,session
+from flask import Flask, render_template,request,redirect,url_for,session,flash
 from intelligence import *
 # from flask_sqlalchemy import SQLAlchemy
 
@@ -74,8 +74,13 @@ def start_menu():
 					session["role"]=list_games[session["game_id"]].players[sign_in_ID].role
 					session["color"]=list_games[session["game_id"]].players[sign_in_ID].color.name
 					return redirect(url_for("start_menu"))
+				else:
+					flash("Wrong password","info") # a mettre en forme correctement
+			else:
+				flash("No players matching with this ID") # a mettre en forme correctement
 
-		# CHANGER DE JOUEUR
+
+		# SIGN OUT JOUEUR
 		if request.form["submit"]=="Sign out":
 			del session["ID"]
 			del session["name"]

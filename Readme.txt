@@ -21,4 +21,4 @@ TO DO
 
 - A garder en tête 
 	- simplifier les paramètres qu'on fourni au html (tous les paramètres de jeu de préférence dans une liste)
-	- ajout boutons bour guesser
+	- ajout boutons pour guesser

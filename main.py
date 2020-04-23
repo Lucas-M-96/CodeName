@@ -91,13 +91,13 @@ def start_menu():
 			if len(list_games[session["game_id"]].deck)==0:
 				if list_games[session["game_id"]].number_of_players == len(list_games[session["game_id"]].players):
 					for ply in list_games[session["game_id"]].players.values():
-						if ply.color==Color.RED and ply.role==Role.SPY:
+						if ply.color.value==1 and ply.role.value==1:
 							nb_red_spy+=1
-						elif ply.color==Color.RED and ply.role==Role.GUESSER:
+						elif ply.color.value==1 and ply.role.value==2:
 							nb_red_guesser+=1
-						elif ply.color==Color.BLUE and ply.role==Role.SPY:
+						elif ply.color.value==2 and ply.role.value==1:
 							nb_blue_spy+=1
-						elif ply.color==Color.BLUE and ply.role==Role.GUESSER:
+						elif ply.color.value==2 and ply.role.value==2:
 							nb_blue_guesser+=1
 					if nb_red_spy != 1:
 						errors["role"].append("Red spy ")
@@ -130,16 +130,14 @@ def game():
 	if request.method == "POST":
 		for i in range(0,25):
 			if request.form["submit"]==list_games[session["game_id"]].deck[i].text:
-				flash(message,"info")
 				list_games[session["game_id"]].guess(session["ID"], list_games[session["game_id"]].players[session["ID"]].color,list_games[session["game_id"]].players[session["ID"]].role, i)
 			if request.form["submit"]=="passer":
-				flash(message,"info")
 				list_games[session["game_id"]].guess(session["ID"], list_games[session["game_id"]].players[session["ID"]].color, list_games[session["game_id"]].players[session["ID"]].role, 25)
 		if request.form["submit"]=="Propose":
-			flash(message,"info")
 			player_proposal = request.form["word_proposal"]
 			number_of_words_related = int(request.form["number-of-words"])
 			list_games[session["game_id"]].propose(list_games[session["game_id"]].players[session["ID"]].color, list_games[session["game_id"]].players[session["ID"]].role, player_proposal, number_of_words_related)
+		flash(list_games[session["game_id"]].message, "info")
 	print(list_games[session["game_id"]].status())
 	return render_template("game.html", list_games=list_games)
 

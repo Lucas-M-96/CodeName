@@ -24,8 +24,8 @@ class Role(enum.IntEnum):
 
 class TurnType(enum.Enum):
     """Represent a type of turn, either 'guess' or 'play'"""
-    GUESS = enum.auto()
     PROPOSAL = enum.auto()
+    GUESS = enum.auto()
     GAME_OVER = enum.auto()
 
 
@@ -208,7 +208,7 @@ class Lobby:
         # shuffle deck at the beginning of gameturn
         self.generate_new_deck()
         self.current_turn_type = TurnType.PROPOSAL
-        self.current_role = Role.GUESSER
+        self.current_role = Role.SPY
         self.current_number_proposal = 0
         self.current_guesse = 0
         self.red_players = 0
@@ -228,12 +228,12 @@ class Lobby:
     def guess(self, player_id, team_color, team_role, given_guess):
         """Assign a guess to a player, if it's his turn"""
         if self.current_turn_type != TurnType.GUESS:
-            print('It is not a guess round.')
+            self.message = "It is not a guess round --> Not your turn bro"
         # is this team the current team
         elif team_color != self.current_team_color:
-            self.message ="It is not this team turn!"
+            self.message ="It is not this team turn! --> go fuck"
         elif team_role != self.current_role:
-            print("you don't have this role!")
+            self.message = "you don't have this role, can't you read bitch ?"
         else:
             # if not, this is a valid guess
             out_of_guess = 0
@@ -376,12 +376,12 @@ class Lobby:
     def propose(self, team_color, player_role, given_proposal, number):
         """Assign a proposal to the rest of the team, if it's his turn"""
         if self.current_turn_type != TurnType.PROPOSAL:
-            print("It is not a proposal round.")
+            self.message = "It is not a proposal round. Not your turn bro"
         # is this team the current team
         elif team_color != self.current_team_color:
             self.message = "It is not this team turn!"
         elif player_role != self.current_role:
-            print("you don't have this role!")
+            self.message =  "you don't have this role! can't you read bitch ?"
         # if not, this is a valid proposal
         else:
             self.message = ""

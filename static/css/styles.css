@@ -1,50 +1,95 @@
-.boutonBleu {
-	padding:6px 0 6px 0;
-	font:Bold 13px Arial;
-	background:Blue;
-	color:#fff;
-	width:90px;
-	border-radius:2px;
-	border:none;
-}
+p {
+				margin-left: auto;
+				margin-right: auto;
+				text-align: center;
+			}
 
-.boutonRouge {
-	padding:6px 0 6px 0;
-	font:Bold 13px Arial;
-	background:red;
-	color:#fff;
-	width:90px;
-	border-radius:2px;
-	border:none;
-}
+			.boutonGuess {
+				margin-left: auto;
+				margin-right: auto;
+				padding:6px 0 6px 0;
+				font:Bold 16px Arial;
+				background:gray;
+				color:#fff;
+				width:200px;
+				border-radius:2px;
+				border:none;
+			}
 
-.boutonJaune {
-	padding:6px 0 6px 0;
-	font:Bold 13px Arial;
-	background:yellow;
-	color:#555;
-	width:90px;
-	border-radius:2px;
-	border:none;
-}
+			.boutonPropose {
+				margin-left: auto;
+				margin-right: auto;
+				padding:6px 0 6px 0;
+				font:Bold 16px Arial;
+				background:Green;
+				color:#fff;
+				width:200px;
+				border-radius:2px;
+				border:none;
+			}
 
-.boutonGris {
-	padding:6px 0 6px 0;
-	font:Bold 13px Arial;
-	background:Gray;
-	color:#fff;
-	width:200px;
-	border-radius:2px;
-	border:none;
-}
+			.boutonPasser {
+				margin-left: auto;
+				margin-right: auto;
+				padding:6px 0 6px 0;
+				font:Bold 16px Arial;
+				background:Green;
+				color:#fff;
+				width:200px;
+				border-radius:2px;
+				border:none;
+			}
 
-.boutonNoir {
-	padding:6px 0 6px 0;
-	font:Bold 13px Arial;
-	background:Black;
-	color:#fff;
-	width:90px;
-	border-radius:2px;
-	border:none;
-}
+			.textblue {
+				margin-left: auto;
+				margin-right: auto;
+				font:Bold 16px Arial;
+				color:blue;
+				text-align: center;
+			}
+
+			.textgreen {
+				margin-left: auto;
+				margin-right: auto;
+				color:Black;
+				font:Bold 16px Arial;
+				text-align: center;
+				background:Green;
+			}
+
+			.proposition {
+				margin-left: auto;
+				margin-right: auto;
+				font:Bold 20px Arial;
+				text-align: center;
+			}
+
+			.textred {
+				margin-left: auto;
+				margin-right: auto;
+				color:red;
+				font:Bold 16px Arial;
+				text-align: center;
+			}
+
+			.tour {
+				margin-left: auto;
+				margin-right: auto;
+				color:black;
+				text-align: center;
+				font-weight: bold;
+			}
+
+			.tableau {
+				margin-left: auto;
+				margin-right: auto;
+				text-align: center;
+			}
+
+			.legende {
+				margin-left: auto;
+				margin-right: auto;
+				text-align: center;
+			}
+
 

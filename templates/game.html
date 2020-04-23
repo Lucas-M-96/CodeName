@@ -4,7 +4,15 @@
 
 {% block content %}
 
-{% if role_joueur == 1  %}
+{% with messages = get_flashed_messages() %}
+	{% if messages %}
+		{% for msg in messages %}
+			<P> {{msg}}</p>
+		{% endfor %}
+	{% endif %}
+{% endwith %}
+
+{% if list_games[session["game_id"]].players[session["ID"]].role == Role.SPY  %}
    <form action=# method="post">
       <p> <label for="propose">Proposition (1 word):</label></p>
       <p> <input type="text" id="propose" name= "word_proposal" /></p>
@@ -12,26 +20,24 @@
       <p> <input type="text" id="number_of_words-related" name= "number-of-words" /></p>
       <p> <input type="submit" value="Propose" name="submit" /></p>
    </form>
-   <p> SPY de l'équipe {{couleur_joueur}}</p>
+   <p> SPY de l'équipe {{list_games[session["game_id"]].players[session["ID"]].color.name}}</p>
 {% else  %}
-   <p> GUESSER de l'équipe {{couleur_joueur}} </p>
+   <p> GUESSER de l'équipe {{list_games[session["game_id"]].players[session["ID"]].color.name}} </p>
 {% endif %}
 
-<p> {{Partie_en_cours.message}} </p>
-
 <body>
-    {% if Partie_en_cours.current_team_color == couleur_joueur_chiffre and Partie_en_cours.current_role == role_joueur %}
+    {% if list_games[session["game_id"]].current_team_color == list_games[session["game_id"]].players[session["ID"]].color and list_games[session["game_id"]].current_role == list_games[session["game_id"]].players[session["ID"]].role %}
         <p> C'est à votre tour</p>
     {% endif  %}
 
-    {% if Partie_en_cours.current_team_color == 2  %}
-        {% if Partie_en_cours.current_role == 1  %}
+    {% if list_games[session["game_id"]].current_team_color == Color.BLUE  %}
+        {% if list_games[session["game_id"]].current_role == Role.SPY  %}
         <p style="color:blue;">C'est le tour de l'équipe bleue et le leader doit faire une proposition</p>
         {% else  %}
         <p style="color:blue;">les chercheurs de l'équipe bleu doivent valider un mot</p>
         {% endif  %}
     {% else  %}
-        {% if Partie_en_cours.current_role == 1  %}
+        {% if list_games[session["game_id"]].current_role == Role.SPY  %}
         <p style="color:red;">C'est le tour de l'équipe rouge et le leader doit faire une proposition</p>
         {% else  %}
         <p style="color:red;">les chercheurs de l'équipe rouge doivent valider un mot</p>
@@ -40,16 +46,16 @@
 </body>
 
 <body>
-    {% if couleur_joueur_chiffre == 2  %}
-        <p style="color:blue;">Il vous reste {{Partie_en_cours.blue_guesses_left}} mot(s) à trouver. Il reste {{Partie_en_cours.red_guesses_left}} mot(s) à l'équipe rouge. Vous avez {{Partie_en_cours.blue_rest}} proposition(s) bonus </p>
+    {% if list_games[session["game_id"]].players[session["ID"]].color == Color.BLUE  %}
+        <p style="color:blue;">Il vous reste {{list_games[session["game_id"]].blue_guesses_left}} mot(s) à trouver. Il reste {{list_games[session["game_id"]].red_guesses_left}} mot(s) à l'équipe rouge. Vous avez {{list_games[session["game_id"]]}} proposition(s) bonus </p>
     {% else  %}
-        <p style="color:red;">Il vous reste {{Partie_en_cours.red_guesses_left}} mot(s) à trouver. Il reste {{Partie_en_cours.blue_guesses_left}} mot(s) à l'équipe bleu. Vous avez {{Partie_en_cours.red_rest}} proposition(s) bonus </p>
+        <p style="color:red;">Il vous reste {{list_games[session["game_id"]].red_guesses_left}} mot(s) à trouver. Il reste {{list_games[session["game_id"]].blue_guesses_left}} mot(s) à l'équipe bleu. Vous avez {{list_games[session["game_id"]].red_rest}} proposition(s) bonus </p>
     {% endif  %}
 </body>
 
 
 <!-- AFFICHAGE LEADER -->
-{% if role_joueur == 1  %}
+{% if list_games[session["game_id"]].players[session["ID"]].role == Role.SPY  %}
     <table border="1" style="text-align: center;" cellpadding="25" cellspacing="10" >
         <tr>
             <td bgcolor="white">Légende</td>
@@ -64,79 +70,27 @@
     </table>
 
     <table border="1" style="text-align: center;" cellpadding="25" cellspacing="10" >
-
-        <tr>
-            {% for i in range(0,5)  %}
-               {% if Partie_en_cours.deck[i].color == 2  %}
-               <td bgcolor="cadetBlue">{{Partie_en_cours.deck[i].text}}</td>
-               {% elif Partie_en_cours.deck[i].color == 1  %}
-               <td bgcolor="salmon">{{Partie_en_cours.deck[i].text}}</td>
-               {% elif Partie_en_cours.deck[i].color == 4  %}
-               <td bgcolor="khaki">{{Partie_en_cours.deck[i].text}}</td>
-               {% else  %}
-               <td bgcolor="black" style="color:white;">{{Partie_en_cours.deck[i].text}}</td>
-               {% endif  %}
-            {% endfor  %}
-       </tr>
-
-       <tr>
-          {% for i in range(5,10)  %}
-              {% if Partie_en_cours.deck[i].color == 2  %}
-              <td bgcolor="cadetBlue">{{Partie_en_cours.deck[i].text}}</td>
-              {% elif Partie_en_cours.deck[i].color == 1  %}
-              <td bgcolor="salmon">{{Partie_en_cours.deck[i].text}}</td>
-              {% elif Partie_en_cours.deck[i].color == 4  %}
-              <td bgcolor="khaki">{{Partie_en_cours.deck[i].text}}</td>
-              {% else  %}
-              <td bgcolor="black" style="color:white;">{{Partie_en_cours.deck[i].text}}</td>
-              {% endif  %}
-          {% endfor  %}
-       </tr>
-       <tr>
-          {% for i in range(10,15)  %}
-              {% if Partie_en_cours.deck[i].color == 2  %}
-              <td bgcolor="cadetBlue">{{Partie_en_cours.deck[i].text}}</td>
-              {% elif Partie_en_cours.deck[i].color == 1  %}
-              <td bgcolor="salmon">{{Partie_en_cours.deck[i].text}}</td>
-              {% elif Partie_en_cours.deck[i].color == 4  %}
-              <td bgcolor="khaki">{{Partie_en_cours.deck[i].text}}</td>
-              {% else  %}
-              <td bgcolor="black" style="color:white;">{{Partie_en_cours.deck[i].text}}</td>
-              {% endif  %}
-          {% endfor  %}
-       </tr>
-       <tr>
-          {% for i in range(15,20)  %}
-              {% if Partie_en_cours.deck[i].color == 2  %}
-              <td bgcolor="cadetBlue">{{Partie_en_cours.deck[i].text}}</td>
-              {% elif Partie_en_cours.deck[i].color == 1  %}
-              <td bgcolor="salmon">{{Partie_en_cours.deck[i].text}}</td>
-              {% elif Partie_en_cours.deck[i].color == 4  %}
-              <td bgcolor="khaki">{{Partie_en_cours.deck[i].text}}</td>
-              {% else  %}
-              <td bgcolor="black" style="color:white;">{{Partie_en_cours.deck[i].text}}</td>
-              {% endif  %}
-          {% endfor  %}
-        </tr>
-        <tr>
-          {% for i in range(20,25)  %}
-              {% if Partie_en_cours.deck[i].color == 2  %}
-              <td bgcolor="cadetBlue">{{Partie_en_cours.deck[i].text}}</td>
-              {% elif Partie_en_cours.deck[i].color == 1  %}
-              <td bgcolor="salmon">{{Partie_en_cours.deck[i].text}}</td>
-              {% elif Partie_en_cours.deck[i].color == 4  %}
-              <td bgcolor="khaki">{{Partie_en_cours.deck[i].text}}</td>
-              {% else  %}
-              <td bgcolor="black" style="color:white;">{{Partie_en_cours.deck[i].text}}</td>
-              {% endif  %}
-          {% endfor  %}
-       </tr>
+        {% for j in range(0,5)  %}
+            <tr>
+                {% for i in range(0,5)  %}
+                   {% if list_games[session["game_id"]].deck[j*5+i].color == Color.BLUE  %}
+                   <td bgcolor="cadetBlue">{{list_games[session["game_id"]].deck[j*5+i].text}}</td>
+                   {% elif list_games[session["game_id"]].deck[j*5+i].color == Color.RED  %}
+                   <td bgcolor="salmon">{{list_games[session["game_id"]].deck[j*5+i].text}}</td>
+                   {% elif list_games[session["game_id"]].deck[j*5+i].color == Color.NEUTRAL  %}
+                   <td bgcolor="khaki">{{list_games[session["game_id"]].deck[j*5+i].text}}</td>
+                   {% else  %}
+                   <td bgcolor="black" style="color:white;">{{list_games[session["game_id"]].deck[j*5+i].text}}</td>
+                   {% endif  %}
+                {% endfor  %}
+           </tr>
+        {% endfor  %}
     </table>
 
 <!-- AFFICHAGE GUESSER -->
 {% else %}
-    {% if Partie_en_cours.current_team_color == couleur_joueur_chiffre and Partie_en_cours.current_role == role_joueur %}
-        <p>votre SPY vous propose le mot {{Partie_en_cours.current_proposal}} en {{Partie_en_cours.current_number_proposal}}. Il vous reste maintenant {{Partie_en_cours.current_number_proposal-Partie_en_cours.current_guesse}} propositions à faire. </p>
+    {% if list_games[session["game_id"]].current_team_color == list_games[session["game_id"]].players[session["ID"]].color and list_games[session["game_id"]].current_role == list_games[session["game_id"]].players[session["ID"]].role %}
+        <p>votre SPY vous propose le mot {{list_games[session["game_id"]].current_proposal}} en {{list_games[session["game_id"]].current_number_proposal}}. Il vous reste maintenant {{list_games[session["game_id"]].current_number_proposal-list_games[session["game_id"]].current_guesse}} proposition(s) à faire. </p>
     {% endif %}
     <form action=# method="post"><input type="submit" value="passer" name="submit" /></form>
 
@@ -152,91 +106,25 @@
     </table>
 
     <table border="1" style="text-align: center;" cellpadding="25" cellspacing="10">
-        <tr>
-            {% for i in range(0,5)  %}
-                {% if i in Partie_en_cours.guesses %}
-                    {% if Partie_en_cours.deck[i].color == 2  %}
-                    <td bgcolor="Blue">{{Partie_en_cours.deck[i].text}}</td>
-                    {% elif Partie_en_cours.deck[i].color == 1  %}
-                    <td bgcolor="red">{{Partie_en_cours.deck[i].text}}</td>
-                    {% elif Partie_en_cours.deck[i].color == 4  %}
-                    <td bgcolor="yellow">{{Partie_en_cours.deck[i].text}}</td>
+        {% for j in range(0,5)  %}
+            <tr>
+                {% for i in range(0,5)  %}
+                    {% if (j*5+i) in list_games[session["game_id"]].guesses %}
+                        {% if list_games[session["game_id"]].deck[j*5+i].color == Color.Blue  %}
+                        <td bgcolor="Blue">{{list_games[session["game_id"]].deck[j*5+i].text}}</td>
+                        {% elif list_games[session["game_id"]].deck[j*5+i].color == Color.RED  %}
+                        <td bgcolor="red">{{list_games[session["game_id"]].deck[j*5+i].text}}</td>
+                        {% elif list_games[session["game_id"]].deck[j*5+i].color == Color.NEUTRAL  %}
+                        <td bgcolor="yellow">{{list_games[session["game_id"]].deck[j*5+i].text}}</td>
+                        {% else  %}
+                        <td bgcolor="black" style="color:white;">{{list_games[session["game_id"]].deck[j*5+i].text}}</td>
+                        {% endif  %}
                     {% else  %}
-                    <td bgcolor="black" style="color:white;">{{Partie_en_cours.deck[i].text}}</td>
+                    <td bgcolor="grey"><form action=# method="post"><input type="submit" value={{list_games[session["game_id"]].deck[j*5+i].text}} name="submit" /></form></td>
                     {% endif  %}
-                {% else  %}
-                <td bgcolor="grey"><form action=# method="post"><input type="submit" value={{Partie_en_cours.deck[i].text}} name="submit" /></form></td>
-                {% endif  %}
-            {% endfor  %}
-       </tr>
-       <tr>
-          {% for i in range(5,10)  %}
-              {% if i in Partie_en_cours.guesses %}
-                  {% if Partie_en_cours.deck[i].color == 2  %}
-                  <td bgcolor="Blue">{{Partie_en_cours.deck[i].text}}</td>
-                  {% elif Partie_en_cours.deck[i].color == 1  %}
-                  <td bgcolor="red">{{Partie_en_cours.deck[i].text}}</td>
-                  {% elif Partie_en_cours.deck[i].color == 4  %}
-                  <td bgcolor="yellow">{{Partie_en_cours.deck[i].text}}</td>
-                  {% else  %}
-                  <td bgcolor="black" style="color:white;">{{Partie_en_cours.deck[i].text}}</td>
-                  {% endif  %}
-              {% else  %}
-                  <td bgcolor="grey"><form action=# method="post"><input type="submit" value={{Partie_en_cours.deck[i].text}} name="submit" /></form></td>
-              {% endif  %}
-          {% endfor  %}
-       </tr>
-       <tr>
-          {% for i in range(10,15)  %}
-              {% if i in Partie_en_cours.guesses %}
-                  {% if Partie_en_cours.deck[i].color == 2  %}
-                  <td bgcolor="Blue">{{Partie_en_cours.deck[i].text}}</td>
-                  {% elif Partie_en_cours.deck[i].color == 1  %}
-                  <td bgcolor="red">{{Partie_en_cours.deck[i].text}}</td>
-                  {% elif Partie_en_cours.deck[i].color == 4  %}
-                  <td bgcolor="yellow">{{Partie_en_cours.deck[i].text}}</td>
-                  {% else  %}
-                  <td bgcolor="black" style="color:white;">{{Partie_en_cours.deck[i].text}}</td>
-                  {% endif  %}
-              {% else  %}
-                  <td bgcolor="grey"><form action=# method="post"><input type="submit" value={{Partie_en_cours.deck[i].text}} name="submit" /></form></td>
-              {% endif  %}
-          {% endfor  %}
-       </tr>
-       <tr>
-          {% for i in range(15,20)  %}
-              {% if i in Partie_en_cours.guesses %}
-                  {% if Partie_en_cours.deck[i].color == 2  %}
-                  <td bgcolor="Blue">{{Partie_en_cours.deck[i].text}}</td>
-                  {% elif Partie_en_cours.deck[i].color == 1  %}
-                  <td bgcolor="red">{{Partie_en_cours.deck[i].text}}</td>
-                  {% elif Partie_en_cours.deck[i].color == 4  %}
-                  <td bgcolor="yellow">{{Partie_en_cours.deck[i].text}}</td>
-                  {% else  %}
-                  <td bgcolor="black" style="color:white;">{{Partie_en_cours.deck[i].text}}</td>
-                  {% endif  %}
-              {% else  %}
-                  <td bgcolor="grey"><form action=# method="post"><input type="submit" value={{Partie_en_cours.deck[i].text}} name="submit" /></form></td>
-              {% endif  %}
-          {% endfor  %}
-       </tr>
-        <tr>
-          {% for i in range(20,25)  %}
-              {% if i in Partie_en_cours.guesses %}
-                  {% if Partie_en_cours.deck[i].color == 2  %}
-                  <td bgcolor="Blue">{{Partie_en_cours.deck[i].text}}</td>
-                  {% elif Partie_en_cours.deck[i].color == 1  %}
-                  <td bgcolor="red">{{Partie_en_cours.deck[i].text}}</td>
-                  {% elif Partie_en_cours.deck[i].color == 4  %}
-                  <td bgcolor="yellow">{{Partie_en_cours.deck[i].text}}</td>
-                  {% else  %}
-                  <td bgcolor="black" style="color:white;">{{Partie_en_cours.deck[i].text}}</td>
-                  {% endif  %}
-              {% else  %}
-                   <td bgcolor="grey"><form action=# method="post"><input type="submit" value={{Partie_en_cours.deck[i].text}} name="submit" /></form></td>
-              {% endif  %}
-          {% endfor  %}
-       </tr>
+                {% endfor  %}
+           </tr>
+       {% endfor  %}
     </table>
 
 {% endif %}

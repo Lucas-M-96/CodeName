@@ -9,13 +9,18 @@ table_de_carte = ["Vol", "Chef", "Rame","Charge","Tambour","Cellule","Sol","Chem
 #
 
 class Color(enum.IntEnum):
-    """Represent a team color
+    """Represent a color
     """
     RED = 1
     BLUE = 2
     DARK = 3
     NEUTRAL = 4
 
+class Role(enum.IntEnum):
+    """Represent a role
+    """
+    SPY = 1
+    GUESSER = 2
 
 class TurnType(enum.Enum):
     """Represent a type of turn, either 'guess' or 'play'"""
@@ -44,9 +49,10 @@ class Player:
 
     def __init__(self, player_id, name, r, c, p):
         # attributes forever
+        if not isinstance(r,Role):
+            raise TypeError('Given role is not of type Role:', r)
         if not isinstance(c, Color):
             raise TypeError('Given color is not of type Color:', c)
-
         self.player_id = player_id
         self.name = name
         self.color = c
@@ -54,13 +60,7 @@ class Player:
         self.password = p
 
     def __str__(self):
-        """Return id, name"""
-        if self.role==1:
-            role_name="spy"
-        else:
-
-            role_name="guesser"
-        return ";".join([str(self.player_id), self.name, role_name, self.color.name])
+        return " / ".join([str(self.player_id), self.name, self.role.name, self.color.name])
 
 
 class Lobby:
@@ -177,10 +177,10 @@ class Lobby:
 
     def set_next_role(self):
         next_role = self.current_role
-        if next_role == 1:
-            self.current_role = 2
-        if next_role == 2:
-            self.current_role = 1
+        if next_role == Role.SPY:
+            self.current_role = Role.GUESSER
+        if next_role == Role.GUESSER:
+            self.current_role = Role.SPY
 
     def register_player(self, name, r, c, p):
         """Create a new player"""
@@ -208,7 +208,7 @@ class Lobby:
         # shuffle deck at the beginning of gameturn
         self.generate_new_deck()
         self.current_turn_type = TurnType.PROPOSAL
-        self.current_role = 1
+        self.current_role = Role.GUESSER
         self.current_number_proposal = 0
         self.current_guesse = 0
         self.red_players = 0

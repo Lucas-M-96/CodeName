@@ -44,37 +44,32 @@
 	<form action=# method="post">
 	<input type="submit" value="Join an other game" name="submit"/>
 	</form>
+
 	<br/>
 
 <!-- Liste des joueurs -->
-	<p>List of players aready signed in: (id-name-role-color)</p>
+	<p>List of players aready signed in: (id/name/role/color)</p>
 
 	{% if list_games[session["game_id"]].players|length >0 %}
 		{% for ply in list_games[session["game_id"]].players.values() %}
-			<p>{{ply.player_id}} / {{ply.name}} / 
-				{% if ply.role==1 %}
-					spy
-				{% else %}
-					guesser
-				{% endif %}
-			 / {{ply.color.name}} 
-			</p>
+			<p>{{ply}}</p>
 		{% endfor %}
 	{% else %}
 		<p>none</p>
 	{% endif %}
 
-<!-- Inscrire un nouveau joueur -->
 	<br/>
-	{% if "name" not in session %}
+
+<!-- Inscrire un nouveau joueur -->
+	{% if "ID" not in session %}
 	<form action=# method="post">
 		<p> <label for="new_player_name">Player name: </label>
 			<input type="text" id="new_player_name" name= "new_player_name" /></p>
 		<p> <label for="new_player_role">Role: </label>
-			<input type="radio" id="1" value="1" name= "new_player_role" />
-			<label for="1"> Spy </label>
-			<input type="radio" id="2" value="2" name= "new_player_role" />
-			<label for="2"> Guesser </label></p>
+			<input type="radio" id="SPY" value="SPY" name= "new_player_role" />
+			<label for="SPY"> SPY </label>
+			<input type="radio" id="GUESSER" value="GUESSER" name= "new_player_role" />
+			<label for="GUESSER"> GUESSER </label></p>
 		<p> <label for="new_player_color">Color: </label>
 			<input type="radio" id="RED" value="RED" name= "new_player_color" />
 			<label for="RED"> RED </label>
@@ -85,8 +80,9 @@
 		<p> <input type="submit" value="Add player" name="submit" /></p>
 	</form>
 
+	<br/>
+
 <!-- Reprendre un joueur déjà inscrit -->
-	</br>
 		<form action=# method="post">
 		<p> <label for="sign_in_ID">Sign in ID: </label>
 			<input type="number" id="sign_in_ID" name= "sign_in_ID" /></p>
@@ -97,13 +93,7 @@
 <!-- Details et options session actuelle + afficher le plateau -->
 	{% else %}
 		<p>Currently  signed in as :
-		{{session["ID"]}} / {{session["name"]}} / 
-		{% if session["role"]==1 %}
-			spy
-		{% else %}
-			guesser
-		{% endif %}
-		 / {{session["color"]}} </p>
+		{{list_games[session["game_id"]].players[session["ID"]]}} </p>
 		<form action=# method="post">
 		<p> <input type="submit" value="Sign out" name="submit"/></p>
 		<p> <input type="submit" value="Delete player" name="submit"/></p>

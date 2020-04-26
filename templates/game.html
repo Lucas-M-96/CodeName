@@ -6,64 +6,126 @@
 {% with messages = get_flashed_messages() %}
 	{% if messages %}
 		{% for msg in messages %}
-			<p class="textgreen"> {{msg}}</p>
+			<p class="fondred"> {{msg}}</p>
 		{% endfor %}
 	{% endif %}
 {% endwith %}
 
-{% if list_games[session["game_id"]].players[session["ID"]].role.name == "SPY"  %}
+<center><table border="3" class="tableau" cellpadding="5" cellspacing="8" >
+   <td bgcolor="white">
+    <p class="fondgreen">Joueur : </p>
+    {% if list_games[session["game_id"]].players[session["ID"]].role.name == "SPY"  %}
+        {% if list_games[session["game_id"]].players[session["ID"]].color.name == "BLUE"  %}
+            <p> {{list_games[session["game_id"]].players[session["ID"]].name}}, vous êtes un SPY de l'équipe <span class="textblue">{{list_games[session["game_id"]].players[session["ID"]].color.name}}</span></p>
+        {% else  %}
+           <p> {{list_games[session["game_id"]].players[session["ID"]].name}}, vous êtes un SPY de l'équipe <span class="textred">{{list_games[session["game_id"]].players[session["ID"]].color.name}}</span></p>
+        {% endif %}
+    {% else  %}
+        {% if list_games[session["game_id"]].players[session["ID"]].color.name == "BLUE"  %}
+           <p> {{list_games[session["game_id"]].players[session["ID"]].name}}, vous êtes un GUESSER de l'équipe <span class="textblue">{{list_games[session["game_id"]].players[session["ID"]].color.name}}</span></p>
+        {% else  %}
+           <p> {{list_games[session["game_id"]].players[session["ID"]].name}}, vous êtes un GUESSER de l'équipe <span class="textred">{{list_games[session["game_id"]].players[session["ID"]].color.name}}</span></p>
+        {% endif %}
+    {% endif %}
+    {% if list_games[session["game_id"]].current_team_color == list_games[session["game_id"]].players[session["ID"]].color and list_games[session["game_id"]].current_role == list_games[session["game_id"]].players[session["ID"]].role %}
+         {% if list_games[session["game_id"]].players[session["ID"]].role.name == "SPY"  %}
+            <p class="fondgreen"> C'est à votre tour, proposez un mot</p>
+         {% else  %}
+            <p class="fondgreen"> C'est à votre tour, validez un mot ou passez.</p>
+         {% endif %}
+    {% elif list_games[session["game_id"]].current_team_color.name == "BLUE"  %}
+        {% if list_games[session["game_id"]].current_role.name == "SPY"  %}
+        <p>Le SPY de <span class="textblue">l'équipe bleue</span> doit faire une proposition</p>
+        {% else  %}
+        <p>Le(s) Guesser(s) de <span class="textblue">l'équipe bleue</span> doivent valider un mot (ou passer)</p>
+        {% endif  %}
+    {% else  %}
+        {% if list_games[session["game_id"]].current_role.name == "SPY"  %}
+        <p>Le SPY de <span class="textred">l'équipe rouge</span> doit faire une proposition</p>
+        {% else  %}
+        <p>Le(s) Guesser(s) de <span class="textred">l'équipe rouge</span> doivent valider un mot (ou passer)</p>
+        {% endif  %}
+    {% endif  %}
+   </td>
+
+   <td bgcolor="white">
+    {% if list_games[session["game_id"]].players[session["ID"]].role.name == "SPY"  %}
    <form action=# method="post">
-      <p> <div><label for="propose">Proposition (1 word):</label></div>
-      <div> <input type="text" id="propose" name= "word_proposal" /></div></p>
+      <p><label for="propose">Proposition (1 word):</label><span><input type="text" id="propose" name= "word_proposal" /></span></p>
       <p> <div><label for="number_of_words-related">Number of worlds related to your proposal:</label></div>
       </div><input type="text" id="number_of_words-related" name= "number-of-words" /></div></p>
-      <p> <input type="submit" class="boutonPropose" value="Propose" name="submit" /></p>
+      {% if list_games[session["game_id"]].players[session["ID"]].color.name == "BLUE"  %}
+      <p> <input type="submit" class="boutonProposeBleu" value="Propose" name="submit" /></p>
+      {% else  %}
+      <p> <input type="submit" class="boutonProposeRouge" value="Propose" name="submit" /></p>
+      {% endif  %}
    </form>
-    {% if list_games[session["game_id"]].players[session["ID"]].color.name == "BLUE"  %}
-        <p> Vous êtes: SPY de l'équipe <span class="textblue">{{list_games[session["game_id"]].players[session["ID"]].color.name}}</span></p>
-    {% else  %}
-       <p> Vous êtes: SPY de l'équipe <span class="textred">{{list_games[session["game_id"]].players[session["ID"]].color.name}}</span></p>
-    {% endif %}
-{% else  %}
-    {% if list_games[session["game_id"]].players[session["ID"]].color.name == "BLUE"  %}
-       <p> GUESSER de l'équipe <span class="textblue">{{list_games[session["game_id"]].players[session["ID"]].color.name}}</span></p>
-    {% else  %}
-       <p> GUESSER de l'équipe <span class="textred">{{list_games[session["game_id"]].players[session["ID"]].color.name}}</span></p>
-    {% endif %}
-{% endif %}
-
-<body>
-    {% if list_games[session["game_id"]].current_team_color == list_games[session["game_id"]].players[session["ID"]].color and list_games[session["game_id"]].current_role == list_games[session["game_id"]].players[session["ID"]].role %}
-        <p class="tour"> C'est à votre tour</p>
-    {% endif  %}
-
-    {% if list_games[session["game_id"]].current_team_color.name == "BLUE"  %}
-        {% if list_games[session["game_id"]].current_role.name == "SPY"  %}
-        <p>Le SPY de <span class="textblue">l'équipe bleue</span> doit doit faire une proposition</p>
+   {% else  %}
+        {% if list_games[session["game_id"]].current_team_color == list_games[session["game_id"]].players[session["ID"]].color and list_games[session["game_id"]].current_role == list_games[session["game_id"]].players[session["ID"]].role %}
+            <p class="smallspace">Proposition de votre SPY : </p>
+            <p><span class="proposition">{{list_games[session["game_id"]].current_proposal}} en {{list_games[session["game_id"]].current_number_proposal}}</span>.</p>
+            <p class="smallspace">Il vous reste <span class="proposition">{{list_games[session["game_id"]].current_number_proposal-list_games[session["game_id"]].current_guesse}}</span> proposition(s) à faire. </p>
+        {% endif %}
+        {% if list_games[session["game_id"]].players[session["ID"]].color.name == "BLUE"  %}
+            {% if list_games[session["game_id"]].current_guesse == list_games[session["game_id"]].current_number_proposal and list_games[session["game_id"]].blue_rest != 0 %}
+                <p class="fondgreen">Vous pouvez utiliser une de vos propositions bonus</p>
+            {% endif  %}
+            <form action=# method="post"><input type="submit" value="passer" name="submit" class="boutonPasserBleu"/></form>
         {% else  %}
-        <p>Guesser de <span class="textblue">l'équipe bleue</span>, à vous de valider un mot</p>
+            {% if list_games[session["game_id"]].current_guesse == list_games[session["game_id"]].current_number_proposal and list_games[session["game_id"]].red_rest != 0 %}
+                <p class="fondgreen">Vous pouvez utiliser une de vos propositions bonus</p>
+            {% endif  %}
+            <form action=# method="post"><input type="submit" value="passer" name="submit" class="boutonPasserRouge"/></form>
         {% endif  %}
-    {% else  %}
-        {% if list_games[session["game_id"]].current_role.name == "SPY"  %}
-        <p>Le SPY de <span class="textred">l'équipe rouge</span> doit doit faire une proposition</p>
-        {% else  %}
-        <p>Guesser de <span class="textred">l'équipe rouge</span>, à vous de valider un mot</p>
-        {% endif  %}
-    {% endif  %}
-</body>
+   {% endif  %}
+   </td>
 
-<body>
-    {% if list_games[session["game_id"]].players[session["ID"]].color.name == "BLUE"  %}
-        <p><span class="textblue"> {{list_games[session["game_id"]].blue_guesses_left}}</span> - <span class="textred">{{list_games[session["game_id"]].red_guesses_left}}</span>.  <span class="textblue">{{list_games[session["game_id"]].blue_rest}}</span> proposition(s) bonus pour votre équipe</p>
-    {% else  %}
-        <p><span class="textred"> {{list_games[session["game_id"]].red_guesses_left}}</span> - <span class="textblue"> {{list_games[session["game_id"]].blue_guesses_left}}</span>. <span class="textred">{{list_games[session["game_id"]].red_rest}}</span> proposition(s) bonus pour votre équipe</p>
-    {% endif  %}
-</body>
+    <td bgcolor="white">
+        <p class="fondgreen">Partie en cours : </p>
+        <p class="smallspace">Mots restants: <span class="textblue">{{list_games[session["game_id"]].blue_guesses_left}}</span> - <span class="textred">{{list_games[session["game_id"]].red_guesses_left}}</span></p>
+        <p class="smallspace">Propositions Bonus : <span class="textblue">{{list_games[session["game_id"]].blue_rest}}</span> - <span class="textred">{{list_games[session["game_id"]].red_rest}}</span></p>
+   </td>
 
+    <td bgcolor="white">
+        <p class="fondgreen">Score: </p>
+        <p>Parties gagnées: <span class="textblue">{{list_games[session["game_id"]].blue_wins}}</span> - <span class="textred">{{list_games[session["game_id"]].red_wins}}</span></p>
+    </td>
+
+
+</table></center>
 
 <!-- AFFICHAGE SPY -->
 {% if list_games[session["game_id"]].players[session["ID"]].role.name == "SPY"  %}
-    <table border="1" class="Legende" cellpadding="20" cellspacing="8" class="Legende" >
+
+    <center><table border="2" class="tableau" cellpadding="22" cellspacing="7" >
+        {% for j in range(0,5)  %}
+            <tr>
+                {% for i in range(0,5)  %}
+                    {% if (j*5+i) in list_games[session["game_id"]].guesses %}
+                        {% if list_games[session["game_id"]].deck[j*5+i].color.name == "BLUE"  %}
+                        <td bgcolor="Blue">{{list_games[session["game_id"]].deck[j*5+i].text}}</td>
+                        {% elif list_games[session["game_id"]].deck[j*5+i].color.name == "RED"  %}
+                        <td bgcolor="red">{{list_games[session["game_id"]].deck[j*5+i].text}}</td>
+                        {% elif list_games[session["game_id"]].deck[j*5+i].color.name == "NEUTRAL"  %}
+                        <td bgcolor="yellow">{{list_games[session["game_id"]].deck[j*5+i].text}}</td>
+                        {% else  %}
+                        <td bgcolor="black" style="color:white;">{{list_games[session["game_id"]].deck[j*5+i].text}}</td>
+                        {% endif  %}
+                   {% elif list_games[session["game_id"]].deck[j*5+i].color.name == "BLUE"  %}
+                        <td bgcolor="cadetBlue">{{list_games[session["game_id"]].deck[j*5+i].text}}</td>
+                   {% elif list_games[session["game_id"]].deck[j*5+i].color.name == "RED"  %}
+                        <td bgcolor="salmon">{{list_games[session["game_id"]].deck[j*5+i].text}}</td>
+                   {% elif list_games[session["game_id"]].deck[j*5+i].color.name == "NEUTRAL"  %}
+                        <td bgcolor="khaki">{{list_games[session["game_id"]].deck[j*5+i].text}}</td>
+                   {% else  %}
+                        <td bgcolor="black" style="color:white;">{{list_games[session["game_id"]].deck[j*5+i].text}}</td>
+                   {% endif  %}
+                {% endfor  %}
+           </tr>
+        {% endfor  %}
+    </table></center>
+
+    <center><table border="1" class="tableau" cellpadding="15" cellspacing="7" >
         <tr>
             <td bgcolor="white">Légende</td>
             <td bgcolor="salmon">Rouge pas trouvé</td>
@@ -74,45 +136,12 @@
             <td bgcolor="yellow">Neutre révélé</td>
             <td bgcolor="black" style="color:white;">Assasin --> défaite</td>
         </tr>
-    </table>
-
-    <table border="1" style="text-align: center;" cellpadding="20" cellspacing="8" class="tableau" >
-        {% for j in range(0,5)  %}
-            <tr>
-                {% for i in range(0,5)  %}
-                   {% if list_games[session["game_id"]].deck[j*5+i].color.name == "BLUE"  %}
-                   <td bgcolor="cadetBlue">{{list_games[session["game_id"]].deck[j*5+i].text}}</td>
-                   {% elif list_games[session["game_id"]].deck[j*5+i].color.name == "RED"  %}
-                   <td bgcolor="salmon">{{list_games[session["game_id"]].deck[j*5+i].text}}</td>
-                   {% elif list_games[session["game_id"]].deck[j*5+i].color.name == "NEUTRAL"  %}
-                   <td bgcolor="khaki">{{list_games[session["game_id"]].deck[j*5+i].text}}</td>
-                   {% else  %}
-                   <td bgcolor="black" style="color:white;">{{list_games[session["game_id"]].deck[j*5+i].text}}</td>
-                   {% endif  %}
-                {% endfor  %}
-           </tr>
-        {% endfor  %}
-    </table>
+    </table></center>
 
 <!-- AFFICHAGE GUESSER -->
 {% else %}
-    {% if list_games[session["game_id"]].current_team_color == list_games[session["game_id"]].players[session["ID"]].color and list_games[session["game_id"]].current_role == list_games[session["game_id"]].players[session["ID"]].role %}
-        <p>Proposition de votre SPY : <span class="proposition">{{list_games[session["game_id"]].current_proposal}} en {{list_games[session["game_id"]].current_number_proposal}}</span>. Il vous reste <span class="proposition">{{list_games[session["game_id"]].current_number_proposal-list_games[session["game_id"]].current_guesse}}</span> proposition(s) à faire. </p>
-    {% endif %}
-    <form action=# method="post"><input type="submit" value="passer" name="submit" class="boutonPasser"/></form>
 
-    <table border="1" style="text-align: center;" cellpadding="20" cellspacing="8" class="Legende" >
-        <tr>
-            <td bgcolor="white">Légende</td>
-            <td bgcolor="gray">Mot pas révélé</td>
-            <td bgcolor="red">Mot Rouge</td>
-            <td bgcolor="Blue">Mot Bleu</td>
-            <td bgcolor="yellow">Mot Neutre</td>
-            <td bgcolor="black" style="color:white;">Assasin --> défaite</td>
-        </tr>
-    </table>
-
-    <table border="1" style="text-align: center;" cellpadding="20" cellspacing="8" class="tableau">
+    <center><table border="1" class="tableau" cellpadding="8" cellspacing="7">
         {% for j in range(0,5)  %}
             <tr>
                 {% for i in range(0,5)  %}
@@ -132,7 +161,18 @@
                 {% endfor  %}
            </tr>
        {% endfor  %}
-    </table>
+    </table></center>
+
+    <center><table border="1" class="tableau" cellpadding="10" cellspacing="7" >
+        <tr>
+            <td bgcolor="white">Légende</td>
+            <td bgcolor="gray">Mot pas révélé</td>
+            <td bgcolor="red">Mot Rouge</td>
+            <td bgcolor="Blue">Mot Bleu</td>
+            <td bgcolor="yellow">Mot Neutre</td>
+            <td bgcolor="black" style="color:white;">Assasin --> défaite</td>
+        </tr>
+    </table></center>
 
 {% endif %}
 {% endblock %}

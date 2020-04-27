@@ -131,12 +131,32 @@ def game():
 		for i in range(0,25):
 			if request.form["submit"]==list_games[session["game_id"]].deck[i].text:
 				list_games[session["game_id"]].guess(session["ID"], list_games[session["game_id"]].players[session["ID"]].color,list_games[session["game_id"]].players[session["ID"]].role, i)
-			if request.form["submit"]=="passer":
-				list_games[session["game_id"]].guess(session["ID"], list_games[session["game_id"]].players[session["ID"]].color, list_games[session["game_id"]].players[session["ID"]].role, 25)
+		if request.form["submit"]=="passer":
+			list_games[session["game_id"]].guess(session["ID"], list_games[session["game_id"]].players[session["ID"]].color, list_games[session["game_id"]].players[session["ID"]].role, 25)
 		if request.form["submit"]=="Propose":
 			player_proposal = request.form["word_proposal"]
 			number_of_words_related = int(request.form["number-of-words"])
 			list_games[session["game_id"]].propose(list_games[session["game_id"]].players[session["ID"]].color, list_games[session["game_id"]].players[session["ID"]].role, player_proposal, number_of_words_related)
+		if request.form["submit"]=="Voir/Cacher les mots trouvés":
+			if list_games[session["game_id"]].players[session["ID"]].affichage == 1:
+				list_games[session["game_id"]].players[session["ID"]].affichage = 2
+			else:
+				list_games[session["game_id"]].players[session["ID"]].affichage = 1
+		if request.form["submit"]=="OUI":
+			list_games[session["game_id"]].players[session["ID"]].replay = 1
+		if request.form["submit"]=="Valider":
+			list_games[session["game_id"]].players[session["ID"]].replay = 2
+			player_role = request.form["player_role"]
+			list_games[session["game_id"]].players[session["ID"]].role = Role[player_role]
+			replay = 1
+			for player in list_games[session["game_id"]].players.values():
+				if player.replay != 2:
+					replay = 2
+			if replay == 1:
+				#TODO pour vérifier s'il y a bien 1 seul SPY par équipe et au moins 1 guesser par équipe
+				list_games[session["game_id"]].generate_new_round()
+		if request.form["submit"]=="NON":
+			list_games[session["game_id"]].players[session["ID"]].replay = 3
 		flash(list_games[session["game_id"]].message, "info")
 	print(list_games[session["game_id"]].status())
 	return render_template("game.html", list_games=list_games)

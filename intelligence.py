@@ -58,6 +58,9 @@ class Player:
         self.color = c
         self.role = r
         self.password = p
+        self.affichage = 1
+        self.replay = 0
+
 
     def __str__(self):
         return " / ".join([str(self.player_id), self.name, self.role.name, self.color.name])
@@ -97,6 +100,7 @@ class Lobby:
         self.current_number_proposal = None
         self.current_proposal = None
         self.message = None
+        self.couleur_vainqueur = None
         self.blue_rest = 0
         self.red_rest = 0
         self.blue_guesses_left = None
@@ -125,6 +129,9 @@ class Lobby:
         self.red_rest = 0
         self.blue_guesses_left = None
         self.red_guesses_left = None
+        self.couleur_vainqueur = None
+        for player in self.players.values():
+            player.replay = 0
         self.start_game()
 
     def generate_new_deck(self):
@@ -280,17 +287,21 @@ class Lobby:
                                 self.blue_guesses_left -= 1
                             if self.red_guesses_left == 0:
                                 self.red_wins += 1
+                                self.couleur_vainqueur = 1
                                 self.update_current_wins()
                                 self.close_game()
                             if self.blue_guesses_left == 0:
                                 self.blue_wins += 1
+                                self.couleur_vainqueur = 2
                                 self.update_current_wins()
                                 self.close_game()
                         elif card.color == Color.DARK:
                             if team_color == Color.RED:
                                 self.blue_wins += 1
+                                self.couleur_vainqueur = 2
                             if team_color == Color.BLUE:
                                 self.red_wins += 1
+                                self.couleur_vainqueur = 1
                             out_of_guess = 1
                             self.update_current_wins()
                             self.close_game()
@@ -325,10 +336,12 @@ class Lobby:
                             out_of_guess = 1
                             if self.red_guesses_left == 0:
                                 self.red_wins += 1
+                                self.couleur_vainqueur = 1
                                 self.update_current_wins()
                                 self.close_game()
                             elif self.blue_guesses_left == 0:
                                 self.blue_wins += 1
+                                self.couleur_vainqueur = 2
                                 self.update_current_wins()
                                 self.close_game()
                             else:

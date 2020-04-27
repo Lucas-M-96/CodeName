@@ -4,21 +4,56 @@
 		<title>{% block title %}{% endblock %}</title>
 		<link href="./static/css/styles.css" rel="stylesheet" />
 		<style>
+			body {
+				background-color: Goldenrod;
+			}
+
 			html, p, input, span, div, label, form, title{
 				margin-left: auto;
 				margin-right: auto;
 				text-align: center;
+				margin: 6;
 			}
 
 			.boutonGuess {
 				margin-left: auto;
 				margin-right: auto;
-				padding:3px 0 3px 0;
+				padding:11;
 				font:Bold 16px Arial;
 				background:gray;
 				color:#fff;
-				width:200px;
-				border-radius:1px;
+				border:none;
+			}
+
+			.boutonVert {
+				margin-left: auto;
+				margin-right: auto;
+				padding:10;
+				font:Bold 16px Arial;
+				background:green;
+				color:#fff;
+				border:none;
+				margin: 4;
+			}
+
+			.boutonRouge {
+				margin-left: auto;
+				margin-right: auto;
+				padding:10;
+				font:Bold 16px Arial;
+				background:red;
+				color:#fff;
+				border:none;
+				margin: 4;
+			}
+
+			.boutonChangeView {
+				margin-left: auto;
+				margin-right: auto;
+				padding:2;
+				font:Bold 16px Arial;
+				background:Green;
+				color:#fff;
 				border:none;
 			}
 
@@ -32,6 +67,7 @@
 				width:200px;
 				border-radius:2px;
 				border:none;
+				margin: 2;
 			}
 
 			.boutonProposeRouge {
@@ -44,6 +80,7 @@
 				width:200px;
 				border-radius:2px;
 				border:none;
+				margin: 2;
 			}
 
 			.boutonPasserBleu {
@@ -56,6 +93,7 @@
 				width:200px;
 				border-radius:2px;
 				border:none;
+				margin: 3;
 			}
 
 			.boutonPasserRouge {
@@ -68,6 +106,7 @@
 				width:200px;
 				border-radius:2px;
 				border:none;
+				margin: 3;
 			}
 
 			.textblue {
@@ -78,6 +117,25 @@
 				text-align: center;
 			}
 
+			.textred {
+				margin-left: auto;
+				margin-right: auto;
+				color:red;
+				font:Bold 16px Arial;
+				text-align: center;
+			}
+
+			.fondmarron {
+				margin-left: auto;
+				margin-right: auto;
+				color:white;
+				font:Bold 16px Arial;
+				text-align: center;
+				background:DarkGoldenrod;
+				line-height: 140%;
+				vertical-align:top;
+			}
+
 			.fondgreen {
 				margin-left: auto;
 				margin-right: auto;
@@ -86,15 +144,116 @@
 				text-align: center;
 				background:Green;
 				line-height: 140%;
+				vertical-align:top;
 			}
 
-			.fondred {
+			.fondRedTextWhite {
 				margin-left: auto;
 				margin-right: auto;
 				color:white;
 				font:Bold 16px Arial;
 				text-align: center;
 				background:red;
+				line-height: 140%;
+			}
+
+			.fondBlueTextWhite {
+				margin-left: auto;
+				margin-right: auto;
+				color:white;
+				font:Bold 16px Arial;
+				text-align: center;
+				background:blue;
+				line-height: 140%;
+			}
+
+			.fondDarkTextWhite {
+				margin-left: auto;
+				margin-right: auto;
+				color:white;
+				font:Bold 16px Arial;
+				text-align: center;
+				background:black;
+				line-height: 140%;
+			}
+
+			.fondKhakiTextBlack {
+				margin-left: auto;
+				margin-right: auto;
+				color:Black;
+				font:Bold 16px Arial;
+				text-align: center;
+				background:khaki;
+				line-height: 140%;
+			}
+
+			.fondGrayTextWhite {
+				margin-left: auto;
+				margin-right: auto;
+				color:White;
+				font:Bold 16px Arial;
+				text-align: center;
+				background:gray;
+				line-height: 140%;
+			}
+
+			.fondRedTextRed {
+				margin-left: auto;
+				margin-right: auto;
+				color:red;
+				font:Bold 16px Arial;
+				text-align: center;
+				background:red;
+				line-height: 140%;
+			}
+
+			.fondBlueTextBlue {
+				margin-left: auto;
+				margin-right: auto;
+				color:Blue;
+				font:Bold 16px Arial;
+				text-align: center;
+				background:blue;
+				line-height: 140%;
+			}
+
+			.fondKhakiTextKhaki {
+				margin-left: auto;
+				margin-right: auto;
+				color:Khaki;
+				font:Bold 16px Arial;
+				text-align: center;
+				background:khaki;
+				line-height: 140%;
+			}
+
+			.fondRedTextBlack {
+				margin-left: auto;
+				margin-right: auto;
+				color:Black;
+				font:Bold 16px Arial;
+				text-align: center;
+				background:red;
+				line-height: 140%;
+			}
+
+			.fondBlueTextBlack {
+				margin-left: auto;
+				margin-right: auto;
+				color:Black;
+				font:Bold 16px Arial;
+				text-align: center;
+				background:blue;
+				line-height: 140%;
+			}
+
+			.fondKhakiTextGray {
+				margin-left: auto;
+				margin-right: auto;
+				color:Gray;
+				font:Bold 16px Arial;
+				text-align: center;
+				background:khaki;
 				line-height: 140%;
 			}
 
@@ -110,28 +269,16 @@
 				margin-left: auto;
 				margin-right: auto;
 				font:Bold 20px Arial;
-				text-align: center;
-			}
-
-			.textred {
-				margin-left: auto;
-				margin-right: auto;
-				color:red;
-				font:Bold 16px Arial;
+				background Color
 				text-align: center;
 			}
 
 			.tableau {
 				margin-left: auto;
 				margin-right: auto;
-				margin : 5;
 				text-align: center;
 			}
 
-			body
-			{
-				background-color: LemonChiffon;
-			}
 		</style>
 	</head>
 

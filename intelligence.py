@@ -122,7 +122,6 @@ class Lobby:
 
     def generate_new_round(self):
         self.guesses[:] = []
-        self.current_turn_type = None
         self.current_role = None
         self.current_number_proposal = None
         self.blue_rest = 0
@@ -130,8 +129,6 @@ class Lobby:
         self.blue_guesses_left = None
         self.red_guesses_left = None
         self.couleur_vainqueur = None
-        for player in self.players.values():
-            player.replay = 0
         self.start_game()
 
     def generate_new_deck(self):
@@ -191,13 +188,15 @@ class Lobby:
 
     def register_player(self, name, r, c, p):
         """Create a new player"""
+        self.message = ""
+
         try:
             current_id = max(self.players.keys())+1
         except:
             current_id=1
         # if all players already joined
         if len(self.players) == self.number_of_players:
-            raise RuntimeError('A player is trying to join a full lobby. His name: ', name)
+            self.message ="A player is trying to join a full lobby"
         # else append a new Player instance to the list of players
         # the name argument is the chosen username
         else:
@@ -248,23 +247,23 @@ class Lobby:
 
             if team_color == Color.RED:
                 if len(self.number_of_guesses) < (self.red_players - 1):
-                    self.message ="il manque la supposition de certaines personnes"
+                    self.message ="The guess of some people is missing"
                     out_of_guess = 3
                 else:
                     for i in range(0, len(self.number_of_guesses)-1):
                         if self.number_of_guesses[i] != self.number_of_guesses[i+1]:
-                            self.message = "tous les joueurs n'ont pas les mêmes suppositions, celles-ci sont réinitialisées"
+                            self.message = "All players don't have the same guess, these are reset"
                             out_of_guess = 4
                     if out_of_guess == 4:
                         self.number_of_guesses[:] = []
             else:
                 if len(self.number_of_guesses) < (self.blue_players - 1):
-                    self.message ="il manque la supposition de certaines personnes"
+                    self.message ="The guess of some people is missing"
                     out_of_guess = 3
                 else:
                     for i in range(0, len(self.number_of_guesses)-1):
                         if self.number_of_guesses[i] != self.number_of_guesses[i+1]:
-                            self.message = "tous les joueurs n'ont pas les mêmes suppositions, celles-ci sont réinitialisées"
+                            self.message = "All players don't have the same guess, these are reset"
                             out_of_guess = 4
                     if out_of_guess == 4:
                         self.number_of_guesses[:] = []
@@ -384,7 +383,7 @@ class Lobby:
                         self.set_next_role()
                         self.current_turn_type = TurnType.PROPOSAL
                 else:
-                    self.message = "ce mot a déjà été révélé"
+                    self.message = "that word has already been revealed"
 
     def propose(self, team_color, player_role, given_proposal, number):
         """Assign a proposal to the rest of the team, if it's his turn"""
@@ -408,12 +407,38 @@ class Lobby:
     def start_game(self):
         """Start the game, set all necessary attributes"""
 
+        nb_red_spy = 0
+        nb_red_guesser = 0
+        nb_blue_spy = 0
+        nb_blue_guesser = 0
+        self.message = ""
+
         # is the game ready
         if self.number_of_players != len(self.players):
-            self.message = "Not all players have joined."
+            self.message = "Not all players have joined. "
 
-        else:
+        for ply in self.players.values():
+            if ply.color.value == 1 and ply.role.value == 1:
+                nb_red_spy += 1
+            elif ply.color.value == 1 and ply.role.value == 2:
+                nb_red_guesser += 1
+            elif ply.color.value == 2 and ply.role.value == 1:
+                nb_blue_spy += 1
+            elif ply.color.value == 2 and ply.role.value == 2:
+                nb_blue_guesser += 1
+
+        if nb_red_spy != 1:
+            self.message = self.message + " There's not just one Red SPY. "
+        if nb_blue_spy != 1:
+            self.message = self.message + " There's not just one Blue SPY. "
+        if nb_red_guesser == 0:
+            self.message = self.message + " There is no red GUESSER. "
+        if nb_blue_guesser == 0:
+            self.message = self.message + " There is no blue GUESSER. "
+        if self.message == "":
             # the game can start!
+            for player in self.players.values():
+                player.replay = 0
             self.message = ""
             self.prepare_gameturn()
 

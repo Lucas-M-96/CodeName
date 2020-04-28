@@ -53,6 +53,7 @@ def start_menu():
 			except:
 				session["ID"]=1
 			list_games[session["game_id"]].register_player(new_player_name,Role[new_player_role],Color[new_player_color],new_player_password)
+			flash(list_games[session["game_id"]].message, "info")
 			print(list_games[session["game_id"]].status())
 
 		# RECUPERER UN JOUEUR EXISTANT
@@ -84,41 +85,13 @@ def start_menu():
 		if request.form["submit"]=="Start game":
 			# print(len(list_games[session["game_id"]].deck))
 			# Creation du jeu si ce n'est pas encore fait
-			nb_red_spy=nb_red_guesser=nb_blue_spy=nb_blue_guesser=0
-			errors["missing_players"]=0
-			errors["role"]=[]
-			del errors["role"][:]
 			if len(list_games[session["game_id"]].deck)==0:
-				if list_games[session["game_id"]].number_of_players == len(list_games[session["game_id"]].players):
-					for ply in list_games[session["game_id"]].players.values():
-						if ply.color.value==1 and ply.role.value==1:
-							nb_red_spy+=1
-						elif ply.color.value==1 and ply.role.value==2:
-							nb_red_guesser+=1
-						elif ply.color.value==2 and ply.role.value==1:
-							nb_blue_spy+=1
-						elif ply.color.value==2 and ply.role.value==2:
-							nb_blue_guesser+=1
-					if nb_red_spy != 1:
-						errors["role"].append("Red spy ")
-					if nb_blue_spy != 1:
-						errors["role"].append("Blue spy ")
-					if nb_red_guesser == 0:
-						errors["role"].append("Red guesser ")
-					if nb_blue_guesser == 0:
-						errors["role"].append("Blue guesser ")
-					if len(errors["role"])==0:
-						list_games[session["game_id"]].start_game()
-						print("Start game")
-						return redirect(url_for("game"))
-					else:
-						print("Issues encoutered with following roles : ")
-						print(errors["role"])
-						return redirect(url_for("start_menu"))
+				list_games[session["game_id"]].start_game()
+				if len(list_games[session["game_id"]].deck) == 0:
+					flash(list_games[session["game_id"]].message, "info")
 				else:
-					errors["missing_players"]=list_games[session["game_id"]].number_of_players-len(list_games[session["game_id"]].players)
-					print(str(errors["missing_players"])+" players missing")
-					return redirect(url_for("start_menu"))
+					print("Start game")
+					return redirect(url_for("game"))
 			else:
 				return redirect(url_for("game"))
 
@@ -131,20 +104,20 @@ def game():
 		for i in range(0,25):
 			if request.form["submit"]==list_games[session["game_id"]].deck[i].text:
 				list_games[session["game_id"]].guess(session["ID"], list_games[session["game_id"]].players[session["ID"]].color,list_games[session["game_id"]].players[session["ID"]].role, i)
-		if request.form["submit"]=="passer":
+		if request.form["submit"]=="Pass":
 			list_games[session["game_id"]].guess(session["ID"], list_games[session["game_id"]].players[session["ID"]].color, list_games[session["game_id"]].players[session["ID"]].role, 25)
 		if request.form["submit"]=="Propose":
 			player_proposal = request.form["word_proposal"]
 			number_of_words_related = int(request.form["number-of-words"])
 			list_games[session["game_id"]].propose(list_games[session["game_id"]].players[session["ID"]].color, list_games[session["game_id"]].players[session["ID"]].role, player_proposal, number_of_words_related)
-		if request.form["submit"]=="Voir/Cacher les mots trouvés":
+		if request.form["submit"]=="Show/Hide found words":
 			if list_games[session["game_id"]].players[session["ID"]].affichage == 1:
 				list_games[session["game_id"]].players[session["ID"]].affichage = 2
 			else:
 				list_games[session["game_id"]].players[session["ID"]].affichage = 1
-		if request.form["submit"]=="OUI":
+		if request.form["submit"]=="YES":
 			list_games[session["game_id"]].players[session["ID"]].replay = 1
-		if request.form["submit"]=="Valider":
+		if request.form["submit"]=="Comfirm":
 			list_games[session["game_id"]].players[session["ID"]].replay = 2
 			player_role = request.form["player_role"]
 			list_games[session["game_id"]].players[session["ID"]].role = Role[player_role]
@@ -153,9 +126,8 @@ def game():
 				if player.replay != 2:
 					replay = 2
 			if replay == 1:
-				#TODO pour vérifier s'il y a bien 1 seul SPY par équipe et au moins 1 guesser par équipe
 				list_games[session["game_id"]].generate_new_round()
-		if request.form["submit"]=="NON":
+		if request.form["submit"]=="NO":
 			list_games[session["game_id"]].players[session["ID"]].replay = 3
 		flash(list_games[session["game_id"]].message, "info")
 	print(list_games[session["game_id"]].status())

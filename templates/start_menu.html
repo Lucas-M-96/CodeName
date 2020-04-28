@@ -29,20 +29,20 @@
 
 <!-- Creation ou inscription à une partie -->
 	<p>Create or join a game by entering its N° </p>
-	<form action=# method="post">
+	<form action="" method="post">
 		<p> <label for="new_game_id">Game N°: </label>
 			<input type="number" id="new_game_id" name= "new_game_id" /></p>
 		<p> <label for="new_game_nb_players">Number of players: (only if a new game is created) </label>
 			<input type="number" id="new_game_nb_players" name= "new_game_nb_players" /></p>
-		<p> <input type="submit" value="Create or join game" name="submit" /></p>
+		<p> <input type="submit" value="Create or join game" name="submit" class="boutonStartMenu"/></p>
 	</form>
 {% else %}
 
 <!-- Gestion de la partie -->
 	<p>You are joining the game N°{{list_games[session["game_id"]].lobby_id}} / Number of players : {{list_games[session["game_id"]].number_of_players}}</p>
 
-	<form action=# method="post">
-	<input type="submit" value="Join an other game" name="submit"/>
+	<form action="" method="post">
+	<input type="submit" value="Join an other game" name="submit" class="boutonStartMenu"/>
 	</form>
 
 	<br/>
@@ -50,54 +50,71 @@
 <!-- Liste des joueurs -->
 	<p>List of players aready signed in: (id/name/role/color)</p>
 
+<!--2 blocs pour différentier les 2 équipes -->
 	{% if list_games[session["game_id"]].players|length >0 %}
-		{% for ply in list_games[session["game_id"]].players.values() %}
-			<p>{{ply}}</p>
-		{% endfor %}
-	{% else %}
-		<p>none</p>
-	{% endif %}
-
-	<br/>
+		<center><table class="tableau" cellpadding="15" cellspacing="15" >
+            <td valign="top" width=50% class="fondBlueTextWhite">
+                {% for ply in list_games[session["game_id"]].players.values() %}
+					{% if ply.color.name == "BLUE" %}
+                            <p>{{ply}}</p>
+					{% endif  %}
+                {% endfor  %}
+            </td>
+            <td valign="top" width=50% class="fondRedTextWhite">
+                {% for ply in list_games[session["game_id"]].players.values() %}
+					{% if ply.color.name == "RED" %}
+                            <p>{{ply}}</p>
+					{% endif  %}
+                {% endfor  %}
+            </td>
+        </table></center>
+	{% endif  %}
 
 <!-- Inscrire un nouveau joueur -->
 	{% if "ID" not in session %}
-	<form action=# method="post">
-		<p> <label for="new_player_name">Player name: </label>
-			<input type="text" id="new_player_name" name= "new_player_name" /></p>
-		<p> <label for="new_player_role">Role: </label>
-			<input type="radio" id="SPY" value="SPY" name= "new_player_role" />
-			<label for="SPY"> SPY </label>
-			<input type="radio" id="GUESSER" value="GUESSER" name= "new_player_role" />
-			<label for="GUESSER"> GUESSER </label></p>
-		<p> <label for="new_player_color">Color: </label>
-			<input type="radio" id="RED" value="RED" name= "new_player_color" />
-			<label for="RED"> RED </label>
-			<input type="radio" id="BLUE" value="BLUE" name= "new_player_color" />
-			<label for="BLUE"> BLUE </label></p>
-		<p> <label for="new_player_password">Password: </label>
-			<input type="text" id="new_player_password" name= "new_player_password" /></p>
-		<p> <input type="submit" value="Add player" name="submit" /></p>
-	</form>
+	<center><table class="tableau" cellpadding="5" cellspacing="30" >
+		<td class="fondmarronstartmenu" valign="top" width=50%>
+			<p class="proposition">Create a new player and sign in :</p>
+			<form action="" method="post">
+				<p> <label for="new_player_name">Player name: </label>
+					<input type="text" id="new_player_name" name= "new_player_name" /></p>
+				<p> <label for="new_player_role">Role: </label>
+					<input type="radio" id="SPY" value="SPY" name= "new_player_role" />
+					<label for="SPY"> SPY </label>
+					<input type="radio" id="GUESSER" value="GUESSER" name= "new_player_role" />
+					<label for="GUESSER"> GUESSER </label></p>
+				<p> <label for="new_player_color">Color: </label>
+					<input type="radio" id="RED" value="RED" name= "new_player_color" />
+					<label for="RED"> RED </label>
+					<input type="radio" id="BLUE" value="BLUE" name= "new_player_color" />
+					<label for="BLUE"> BLUE </label></p>
+				<p> <label for="new_player_password">Password: </label>
+					<input type="text" id="new_player_password" name= "new_player_password" /></p>
+				<p> <input type="submit" value="Add player" name="submit" class="boutonStartMenu"/></p>
+			</form>
+		</td>
 
-	<br/>
-
-<!-- Reprendre un joueur déjà inscrit -->
-		<form action=# method="post">
-		<p> <label for="sign_in_ID">Sign in ID: </label>
-			<input type="number" id="sign_in_ID" name= "sign_in_ID" /></p>
-		<p> <label for="sign_in_password">Password: </label>
-			<input type="text" id="sign_in_password" name= "sign_in_password" /></p>
-		<p> <input type="submit" value="Sign in as" name="submit" /></p>
+		<td class="fondmarronstartmenu" valign="top" width=50%>
+		<!-- Reprendre un joueur déjà inscrit -->
+			<p class="proposition">Sign in as an existing player :</p>
+			<form action="" method="post">
+			<p> <label for="sign_in_ID">Sign in ID: </label>
+				<input type="number" id="sign_in_ID" name= "sign_in_ID" /></p>
+			<p> <label for="sign_in_password">Password: </label>
+				<input type="text" id="sign_in_password" name= "sign_in_password" /></p>
+			<p> <input type="submit" value="Sign in as" name="submit" class="boutonStartMenu"/></p>
+		</td>
+	</table></center>
 
 <!-- Details et options session actuelle + afficher le plateau -->
 	{% else %}
-		<p>Currently  signed in as :
+		<br/>
+		<p class="fondmarronstartmenu">Currently  signed in as :
 		{{list_games[session["game_id"]].players[session["ID"]]}} </p>
-		<form action=# method="post">
-		<p> <input type="submit" value="Sign out" name="submit"/></p>
-		<p> <input type="submit" value="Delete player" name="submit"/></p>
-		<p> <input type="submit" value="Start game" name="submit"/></p>
+		<form action="" method="post">
+		<p> <input type="submit" value="Sign out" name="submit" class="boutonStartMenu"/></p>
+		<p> <input type="submit" value="Delete player" name="submit" class="boutonStartMenu"/></p>
+		<p> <input type="submit" value="Start game" name="submit" class="boutonStartMenu"/></p>
 		</form>
 
 	{% endif %}

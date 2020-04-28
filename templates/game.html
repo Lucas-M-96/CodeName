@@ -8,35 +8,35 @@
     <div class="fondRedTextWhite">
         {% for player in list_games[session["game_id"]].players.values() %}
             {% if player.replay == 3 %}
-                <p>Un des joueurs a refusé une revanche. Veuillez vous rediriger vers le menu d'accueil.</p>
+                <p>One of the players don't want a rematch. Please redirect to the home menu.</p>
             {% endif  %}
         {% endfor  %}
     </div>
 
     <div class="fondmarron">
-        <p>La partie est finie</p>
+        <p>Game's over.</p>
         {% if list_games[session["game_id"]].couleur_vainqueur == 1 %}
-            <p class="textred">L'équipe rouge a gagné cette partie</p>
+            <p class="textred">The red team won that game</p>
         {% else  %}
-            <p class="textblue">L'équipe bleu a gagné cette partie</p>
+            <p class="textblue">The blue team won that game</p>
         {% endif  %}
-        <p>Parties gagnées: <span class="textblue">{{list_games[session["game_id"]].blue_wins}}</span> - <span class="textred">{{list_games[session["game_id"]].red_wins}}</span></p>
-        <p>Voulez vous faire une revanche ?</p>
+        <p>Games won: <span class="textblue">{{list_games[session["game_id"]].blue_wins}}</span> - <span class="textred">{{list_games[session["game_id"]].red_wins}}</span></p>
+        <p>Do you want a rematch?</p>
         {% if list_games[session["game_id"]].players[session["ID"]].replay != 2 %}
-        <form action=# method="post"><input type="submit" value="OUI" name="submit" class="boutonVert"/><input type="submit" value="NON" name="submit" class="boutonRouge"/></form>
+        <form action="" method="post"><input type="submit" value="YES" name="submit" class="boutonVert"/><input type="submit" value="NO" name="submit" class="boutonRouge"/></form>
         {% endif %}
-        {% if list_games[session["game_id"]].players[session["ID"]].replay == 1 %}
-        <form action=# method="post">
+        {% if list_games[session["game_id"]].players[session["ID"]].replay == 1 or list_games[session["game_id"]].players[session["ID"]].replay == 2 %}
+        <form action="" method="post">
             <p> <label for="player_role">Role (1 SPY per team only): </label>
 			<input type="radio" id="SPY" value="SPY" name= "player_role" />
 			<label for="SPY"> SPY </label>
 			<input type="radio" id="GUESSER" value="GUESSER" name= "player_role" />
 			<label for="GUESSER"> GUESSER </label></p>
-            <p> <input type="submit" value="Valider" name="submit" class="boutonVert"/></p>
+            <p> <input type="submit" value="Comfirm" name="submit" class="boutonVert"/></p>
         </form>
         {% endif %}
         {% if list_games[session["game_id"]].players[session["ID"]].replay == 2 %}
-            <p>En attente de la réponse de certain joueurs</p>
+            <p>Waiting the answer from certain players</p>
         {% endif %}
         <center><table class="tableau" cellpadding="30" cellspacing="15" >
             <td valign="top" width=50% class="fondBlueTextWhite">
@@ -71,46 +71,46 @@
 
 <center><table class="tableau" cellpadding="5" cellspacing="8" >
    <td valign="top" width=30% bgcolor="white">
-    <p class="fondgreen">Section joueur : </p>
-    <p>Nombre de joueurs : <span class="textred">{{list_games[session["game_id"]].red_players}}</span> - <span class="textblue">{{list_games[session["game_id"]].blue_players}}</span></p>
+    <p class="fondgreen">Player section : </p>
+    <p>Number of players : <span class="textred">{{list_games[session["game_id"]].red_players}}</span> - <span class="textblue">{{list_games[session["game_id"]].blue_players}}</span></p>
     {% if list_games[session["game_id"]].players[session["ID"]].role.name == "SPY"  %}
         {% if list_games[session["game_id"]].players[session["ID"]].color.name == "BLUE"  %}
-            <p> {{list_games[session["game_id"]].players[session["ID"]].name}}, vous êtes un SPY de l'équipe <span class="textblue">{{list_games[session["game_id"]].players[session["ID"]].color.name}}</span></p>
+            <p> {{list_games[session["game_id"]].players[session["ID"]].name}}, you're a <span class="textblue">{{list_games[session["game_id"]].players[session["ID"]].color.name}}</span> team SPY</p>
         {% else  %}
-           <p> {{list_games[session["game_id"]].players[session["ID"]].name}}, vous êtes un SPY de l'équipe <span class="textred">{{list_games[session["game_id"]].players[session["ID"]].color.name}}</span></p>
+           <p> {{list_games[session["game_id"]].players[session["ID"]].name}}, you're a <span class="textred">{{list_games[session["game_id"]].players[session["ID"]].color.name}}</span> team SPY</p>
         {% endif %}
     {% else  %}
         {% if list_games[session["game_id"]].players[session["ID"]].color.name == "BLUE"  %}
-           <p> {{list_games[session["game_id"]].players[session["ID"]].name}}, vous êtes un GUESSER de l'équipe <span class="textblue">{{list_games[session["game_id"]].players[session["ID"]].color.name}}</span></p>
+           <p> {{list_games[session["game_id"]].players[session["ID"]].name}}, you're a <span class="textblue">{{list_games[session["game_id"]].players[session["ID"]].color.name}}</span> team GUESSER</p>
         {% else  %}
-           <p> {{list_games[session["game_id"]].players[session["ID"]].name}}, vous êtes un GUESSER de l'équipe <span class="textred">{{list_games[session["game_id"]].players[session["ID"]].color.name}}</span></p>
+           <p> {{list_games[session["game_id"]].players[session["ID"]].name}}, you're a <span class="textred">{{list_games[session["game_id"]].players[session["ID"]].color.name}}</span> team GUESSER</p>
         {% endif %}
     {% endif %}
     {% if list_games[session["game_id"]].current_team_color == list_games[session["game_id"]].players[session["ID"]].color and list_games[session["game_id"]].current_role == list_games[session["game_id"]].players[session["ID"]].role %}
          {% if list_games[session["game_id"]].players[session["ID"]].role.name == "SPY"  %}
-            <p class="fondgreen"> C'est à votre tour, proposez un mot</p>
+            <p class="fondgreen"> It's your turn, propose a word.</p>
          {% else  %}
-            <p class="fondgreen"> C'est à votre tour, validez un mot ou passez.</p>
+            <p class="fondgreen"> It's your turn, validate a word or pass.</p>
          {% endif %}
     {% elif list_games[session["game_id"]].current_team_color.name == "BLUE"  %}
         {% if list_games[session["game_id"]].current_role.name == "SPY"  %}
-        <p>Le SPY de <span class="textblue">l'équipe bleue</span> doit faire une proposition</p>
+        <p>The <span class="textblue">Blue team</span> SPY has to make a proposal</p>
         {% else  %}
-        <p>Le(s) Guesser(s) de <span class="textblue">l'équipe bleue</span> doivent valider un mot (le même) ou passer</p>
+        <p>The <span class="textblue">Blue team</span> have to validate a word (the same one) or pass</p>
         {% endif  %}
     {% else  %}
         {% if list_games[session["game_id"]].current_role.name == "SPY"  %}
-        <p>Le SPY de <span class="textred">l'équipe rouge</span> doit faire une proposition</p>
+        <p>The <span class="textred">Red team</span> SPY has to make a proposal</p>
         {% else  %}
-        <p>Le(s) Guesser(s) de <span class="textred">l'équipe rouge</span> doivent valider un mot (le même) ou passer</p>
+        <p>The <span class="textred">Red team</span> have to validate a word (the same one) or pass</p>
         {% endif  %}
     {% endif  %}
    </td>
 
    <td valign="top" width=30% bgcolor="white">
     {% if list_games[session["game_id"]].players[session["ID"]].role.name == "SPY"  %}
-   <form action=# method="post">
-      <label for="propose">Proposition (1 word):</label><span><input type="text" id="propose" name= "word_proposal" /></span>
+   <form action="" method="post">
+      <label for="propose">Proposal (1 word):</label><span><input type="text" id="propose" name= "word_proposal" /></span>
       <label for="number_of_words-related">Number of worlds related to your proposal:</label><span><input type="text" id="number_of_words-related" name= "number-of-words" /></span>
       {% if list_games[session["game_id"]].players[session["ID"]].color.name == "BLUE"  %}
       <input type="submit" class="boutonProposeBleu" value="Propose" name="submit" />
@@ -120,32 +120,32 @@
    </form>
    {% else  %}
         {% if list_games[session["game_id"]].current_team_color == list_games[session["game_id"]].players[session["ID"]].color and list_games[session["game_id"]].current_role == list_games[session["game_id"]].players[session["ID"]].role %}
-            <p class="smallspace">Proposition de votre SPY : <span class="proposition">{{list_games[session["game_id"]].current_proposal}} en {{list_games[session["game_id"]].current_number_proposal}}</span>.</p>
-            <p class="smallspace">Il vous reste <span class="proposition">{{list_games[session["game_id"]].current_number_proposal-list_games[session["game_id"]].current_guesse}}</span> proposition(s) à faire. </p>
+            <p class="smallspace">Proposal from your SPY: <span class="proposition">{{list_games[session["game_id"]].current_proposal}} in {{list_games[session["game_id"]].current_number_proposal}}</span>.</p>
+            <p class="smallspace">You still have <span class="proposition">{{list_games[session["game_id"]].current_number_proposal-list_games[session["game_id"]].current_guesse}}</span> guesse(s) to make. </p>
         {% endif %}
         {% if list_games[session["game_id"]].players[session["ID"]].color.name == "BLUE"  %}
             {% if list_games[session["game_id"]].current_guesse == list_games[session["game_id"]].current_number_proposal and list_games[session["game_id"]].blue_rest != 0 %}
-                <p class="fondgreen">Vous pouvez utiliser une de vos propositions bonus</p>
+                <p class="fondgreen">You can use one of your bonus guesse(s)</p>
             {% endif  %}
-            <form action=# method="post"><input type="submit" value="passer" name="submit" class="boutonPasserBleu"/></form>
+            <form action="" method="post"><input type="submit" value="Pass" name="submit" class="boutonPasserBleu"/></form>
         {% else  %}
             {% if list_games[session["game_id"]].current_guesse == list_games[session["game_id"]].current_number_proposal and list_games[session["game_id"]].red_rest != 0 %}
-                <p class="fondgreen">Vous pouvez utiliser une de vos propositions bonus</p>
+                <p class="fondgreen">You can use one of your bonus guesse(s)</p>
             {% endif  %}
-            <form action=# method="post"><input type="submit" value="passer" name="submit" class="boutonPasserRouge"/></form>
+            <form action="" method="post"><input type="submit" value="Pass" name="submit" class="boutonPasserRouge"/></form>
         {% endif  %}
    {% endif  %}
    </td>
 
     <td valign="top" width=20% bgcolor="white">
-        <p class="fondgreen">Partie en cours : </p>
-        <p class="smallspace">Mots restants: <span class="textblue">{{list_games[session["game_id"]].blue_guesses_left}}</span> - <span class="textred">{{list_games[session["game_id"]].red_guesses_left}}</span></p>
-        <p class="smallspace">Propositions Bonus : <span class="textblue">{{list_games[session["game_id"]].blue_rest}}</span> - <span class="textred">{{list_games[session["game_id"]].red_rest}}</span></p>
+        <p class="fondgreen">Game in progress : </p>
+        <p class="smallspace">Words remaining : <span class="textblue">{{list_games[session["game_id"]].blue_guesses_left}}</span> - <span class="textred">{{list_games[session["game_id"]].red_guesses_left}}</span></p>
+        <p class="smallspace">Bonus guesse(s) : <span class="textblue">{{list_games[session["game_id"]].blue_rest}}</span> - <span class="textred">{{list_games[session["game_id"]].red_rest}}</span></p>
    </td>
 
     <td valign="top" width=20% bgcolor="white">
         <p class="fondgreen">Score: </p>
-        <p>Parties gagnées: <span class="textblue">{{list_games[session["game_id"]].blue_wins}}</span> - <span class="textred">{{list_games[session["game_id"]].red_wins}}</span></p>
+        <p>Games won: <span class="textblue">{{list_games[session["game_id"]].blue_wins}}</span> - <span class="textred">{{list_games[session["game_id"]].red_wins}}</span></p>
     </td>
 
 
@@ -196,10 +196,10 @@
 
     <center><table class="tableau" cellpadding="8" cellspacing="5" >
         <tr>
-            <td width=26% class="fondgreen"><form action=# method="post"><input type="submit" class="boutonChangeView" value="Voir/Cacher les mots trouvés" name="submit" /></form></td>
-            <td width=18% class="fondBlueTextWhite">Mot Bleu</td>
-            <td width=18% class="fondRedTextWhite">Mot Rouge</td>
-            <td width=18% class="fondKhakiTextBlack">Mot Neutre</td>
+            <td width=26% class="fondgreen"><form action="" method="post"><input type="submit" class="boutonChangeView" value="Show/Hide found words" name="submit" /></form></td>
+            <td width=18% class="fondBlueTextWhite">Blue word</td>
+            <td width=18% class="fondRedTextWhite">Red word</td>
+            <td width=18% class="fondKhakiTextBlack">Neutral word</td>
             <td width=18% class="fondDarkTextWhite">Assasin</td>
         </tr>
     </table></center>
@@ -234,7 +234,7 @@
                             {% endif  %}
                         {% endif  %}
                     {% else  %}
-                    <td width=20% class="fondGrayTextWhite"><form action=# method="post"><input type="submit" class="boutonGuess" value={{list_games[session["game_id"]].deck[j*5+i].text}} name="submit" /></form></td>
+                    <td width=20% class="fondGrayTextWhite"><form action="" method="post"><input type="submit" class="boutonGuess" value={{list_games[session["game_id"]].deck[j*5+i].text}} name="submit" /></form></td>
                     {% endif  %}
                 {% endfor  %}
            </tr>
@@ -243,11 +243,11 @@
 
     <center><table class="tableau" cellpadding="7" cellspacing="5" >
         <tr>
-            <td width=25% class="fondgreen"><form action=# method="post"><input type="submit" class="boutonChangeView" value="Voir/Cacher les mots trouvés" name="submit" /></form></td>
-            <td width=15% class="fondGrayTextWhite">Mot pas révélé</td>
-            <td width=15% class="fondBlueTextWhite">Mot Bleu</td>
-            <td width=15% class="fondRedTextWhite">Mot Rouge</td>
-            <td width=15% class="fondKhakiTextBlack">Mot Neutre</td>
+            <td width=25% class="fondgreen"><form action="" method="post"><input type="submit" class="boutonChangeView" value="Show/Hide found words" name="submit" /></form></td>
+            <td width=15% class="fondGrayTextWhite">Word not revealed</td>
+            <td width=15% class="fondBlueTextWhite">Blue word</td>
+            <td width=15% class="fondRedTextWhite">Red word</td>
+            <td width=15% class="fondKhakiTextBlack">Neutral Word</td>
             <td width=15% class="fondDarkTextWhite">Assasin</td>
         </tr>
     </table></center>

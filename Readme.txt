@@ -1,5 +1,8 @@
 TO DO
 
+- GEstion des bugs:
+	- Gestion de l'appui sur un bouton si jamais les form sont vides (ajout de boucles)
+
 - interface WEB :
 
 	- Messages utilisateurs pour ajouts de joueurs/joueurs manquants/etc.

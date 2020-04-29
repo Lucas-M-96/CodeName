@@ -9,7 +9,7 @@
 {% with messages = get_flashed_messages() %}
 	{% if messages %}
 		{% for msg in messages %}
-			<P> {{msg}}</p>
+			<p class="fondRedTextWhite"> {{msg}}</p>
 		{% endfor %}
 	{% endif %}
 {% endwith %}
@@ -94,14 +94,14 @@
 				<p> <label for="new_player_name">Player name: </label>
 					<input type="text" id="new_player_name" name= "new_player_name" /></p>
 				<p> <label for="new_player_role">Role: </label>
-					<input type="radio" id="SPY" value="SPY" name= "new_player_role" />
+					<input type="radio" id="SPY" value="SPY" name= "new_player_role" checked/>
 					<label for="SPY"> SPY </label>
 					<input type="radio" id="GUESSER" value="GUESSER" name= "new_player_role" />
 					<label for="GUESSER"> GUESSER </label></p>
 				<p> <label for="new_player_color">Color: </label>
-					<input type="radio" id="RED" value="RED" name= "new_player_color" />
+					<input type="radio" id="RED" value="RED" name= "new_player_color" checked/>
 					<label for="RED"> RED </label>
-					<input type="radio" id="BLUE" value="BLUE" name= "new_player_color" />
+					<input type="radio" id="BLUE" value="BLUE" name= "new_player_color"/>
 					<label for="BLUE"> BLUE </label></p>
 				<p> <label for="new_player_password">Password: </label>
 					<input type="text" id="new_player_password" name= "new_player_password" /></p>

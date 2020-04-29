@@ -1,7 +1,6 @@
 TO DO
 
-- GEstion des bugs:
-	- Gestion de l'appui sur un bouton si jamais les form sont vides (ajout de boucles)
+- Suppression de parties (supprimer une partie quand elle est finie) + bouton "supprimer une partie"  --> si jamais on est dedans seulement ?
 
 - interface WEB :
 

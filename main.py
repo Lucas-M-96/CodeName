@@ -21,17 +21,23 @@ def start_menu():
 		# CREER UN JEU OU CHOISIR UN JEU A REJOINDRE
 		if request.form["submit"]=="Create or join game":
 			new_game_id=request.form["new_game_id"]
-			session["game_id"]=new_game_id
 			if new_game_id not in list_games:
-				new_game_nb_players=int(request.form["new_game_nb_players"])
-				new_game=Lobby(new_game_id,new_game_nb_players)
-				list_games[new_game.lobby_id]=new_game
-				print("New game created")
+				session["game_id"] = new_game_id
+				test = request.form["new_game_nb_players"]
+				if len(test) != 0:
+					new_game_nb_players=int(request.form["new_game_nb_players"])
+					if new_game_nb_players > 3:
+						new_game=Lobby(new_game_id,new_game_nb_players)
+						list_games[new_game.lobby_id]=new_game
+						flash("New game created")
+					else:
+						flash("you haven't fill in enough players to play CodeNames. Please fill in at least 4 players", "info")
+				else:
+					flash("You forgot to fill in the number of players.", "info")
 			else:
-				print("Game succesfully joined")
+				flash("This game already exist. Please create an other game whit a different number","info")
 			if "ID" in session:
 				del session["ID"]
-			print(list_games[new_game_id].status())
 			#print(type(new_game.number_of_players))
 			#session["game"]=new_game
 			return redirect(url_for("start_menu"))
@@ -56,27 +62,33 @@ def start_menu():
 			new_player_role=request.form["new_player_role"]
 			new_player_color=request.form["new_player_color"]
 			new_player_password=request.form["new_player_password"]
-			try:
-				session["ID"] = max(list_games[session["game_id"]].players.keys())+1
-			except:
-				session["ID"]=1
-			list_games[session["game_id"]].register_player(new_player_name,Role[new_player_role],Color[new_player_color],new_player_password)
-			flash(list_games[session["game_id"]].message, "info")
-			print(list_games[session["game_id"]].status())
+			if len(new_player_name) != 0 and len(new_player_password) != 0:
+				list_games[session["game_id"]].register_player(new_player_name,Role[new_player_role],Color[new_player_color],new_player_password)
+				flash(list_games[session["game_id"]].message, "info")
+				print(list_games[session["game_id"]].status())
+				try:
+					session["ID"] = max(list_games[session["game_id"]].players.keys()) + 1
+				except:
+					session["ID"] = 1
+			else:
+				flash("informations are missing to add a new player. Please fill in all fields", "info")
 
 		# RECUPERER UN JOUEUR EXISTANT
 		if request.form["submit"]=="Sign in as":
-			sign_in_ID=int(request.form["sign_in_ID"])
-			sign_in_password=request.form["sign_in_password"]
-			if sign_in_ID in list_games[session["game_id"]].players.keys():
-				if sign_in_password == list_games[session["game_id"]].players[sign_in_ID].password:
-					session["ID"]=list_games[session["game_id"]].players[sign_in_ID].player_id
-					return redirect(url_for("start_menu"))
+			test = request.form["sign_in_ID"]
+			if len(test) != 0:
+				sign_in_ID=int(request.form["sign_in_ID"])
+				sign_in_password=request.form["sign_in_password"]
+				if sign_in_ID in list_games[session["game_id"]].players.keys():
+					if sign_in_password == list_games[session["game_id"]].players[sign_in_ID].password:
+						session["ID"]=list_games[session["game_id"]].players[sign_in_ID].player_id
+						return redirect(url_for("start_menu"))
+					else:
+						flash("Wrong password","info") # a mettre en forme correctement
 				else:
-					flash("Wrong password","info") # a mettre en forme correctement
+					flash("No players matching with this ID","info") # a mettre en forme correctement
 			else:
-				flash("No players matching with this ID","info") # a mettre en forme correctement
-
+				flash("You didn't fill in your ID", "info")
 
 		# SIGN OUT JOUEUR
 		if request.form["submit"]=="Sign out":

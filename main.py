@@ -36,6 +36,14 @@ def start_menu():
 			#session["game"]=new_game
 			return redirect(url_for("start_menu"))
 
+		# CHOISIR UN JEU A REJOINDRE
+		for id in list_games:
+			ButtonValue = "Join game " + id
+			if request.form["submit"] == ButtonValue:
+				session["game_id"] = id
+				print("Game succesfully joined")
+				return redirect(url_for("start_menu"))
+
 		# CHANGER DE JEU
 		if request.form["submit"]=="Join an other game":
 			del session["game_id"]

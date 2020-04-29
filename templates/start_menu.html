@@ -14,28 +14,43 @@
 	{% endif %}
 {% endwith %}
 
-<!-- Affichage des parties actives -->
+
 {% if "game_id" not in session or session["game_id"] not in list_games.keys() %}
-	<p>List of active games:</p>
+<!-- Creation ou inscription à une partie -->
+	<p class="proposition">Create a new game :</p>
+	<div class="fondmarronstartmenu">
+	<form action="" method="post">
+		<p> <label for="new_game_id">Game N°: </label>
+			<input type="number" id="new_game_id" name= "new_game_id" /></p>
+		<p> <label for="new_game_nb_players">Number of players: </label>
+			<input type="number" id="new_game_nb_players" name= "new_game_nb_players" /></p>
+		<p> <input type="submit" value="Create or join game" name="submit" class="boutonStartMenu"/></p>
+	</form>
+	</div>
+
+	<p>OR</p>
+
+<!-- Affichage des parties actives -->
+	<p class="proposition">Join an existing game. List of active games:</p>
 	{% if list_games|length >0 %}
 		{% for id in list_games %}
-			<p> - Game N°{{id}} / Number of players : {{list_games[id].number_of_players}}</p>
+			<div class="fondmarronstartmenu">
+				<form action="" method="post"><p> - Game N°{{id}} / Number of players : {{list_games[id].number_of_players}}<span><input type="submit" value="Join game {{id}}" name="submit" class="boutonStartMenu"/></span></p></form>
+				<p> Players already sign in :
+				{% for ply in list_games[id].players.values() %}
+					{% if ply.color.name == "BLUE" %}
+                        <span class="textblue"> {{ply.name}}, {{ply.role.name}} /</span>
+					{% else  %}
+						<span class="textred"> {{ply.name}}, {{ply.role.name}} /</span>
+					{% endif  %}
+                {% endfor  %}
+				</p>
+			</div>
 		{% endfor %}
 	{% else %}
 		none
 	{% endif %}
 
-	<br/>
-
-<!-- Creation ou inscription à une partie -->
-	<p>Create or join a game by entering its N° </p>
-	<form action="" method="post">
-		<p> <label for="new_game_id">Game N°: </label>
-			<input type="number" id="new_game_id" name= "new_game_id" /></p>
-		<p> <label for="new_game_nb_players">Number of players: (only if a new game is created) </label>
-			<input type="number" id="new_game_nb_players" name= "new_game_nb_players" /></p>
-		<p> <input type="submit" value="Create or join game" name="submit" class="boutonStartMenu"/></p>
-	</form>
 {% else %}
 
 <!-- Gestion de la partie -->

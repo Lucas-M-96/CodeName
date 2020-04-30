@@ -24,7 +24,7 @@
 			<input type="number" id="new_game_id" name= "new_game_id" /></p>
 		<p> <label for="new_game_nb_players">Number of players: </label>
 			<input type="number" id="new_game_nb_players" name= "new_game_nb_players" /></p>
-		<p> <input type="submit" value="Create or join game" name="submit" class="boutonStartMenu"/></p>
+		<p> <input type="submit" value="Create game" name="submit" class="boutonStartMenu"/></p>
 	</form>
 	</div>
 
@@ -87,45 +87,45 @@
 
 <!-- Inscrire un nouveau joueur -->
 	{% if "ID" not in session %}
-	<center><table class="tableau" cellpadding="5" cellspacing="30" >
-		<td class="fondmarronstartmenu" valign="top" width=50%>
-			<p class="proposition">Create a new player and sign in :</p>
-			<form action="" method="post">
-				<p> <label for="new_player_name">Player name: </label>
-					<input type="text" id="new_player_name" name= "new_player_name" /></p>
-				<p> <label for="new_player_role">Role: </label>
-					<input type="radio" id="SPY" value="SPY" name= "new_player_role" checked/>
-					<label for="SPY"> SPY </label>
-					<input type="radio" id="GUESSER" value="GUESSER" name= "new_player_role" />
-					<label for="GUESSER"> GUESSER </label></p>
-				<p> <label for="new_player_color">Color: </label>
-					<input type="radio" id="RED" value="RED" name= "new_player_color" checked/>
-					<label for="RED"> RED </label>
-					<input type="radio" id="BLUE" value="BLUE" name= "new_player_color"/>
-					<label for="BLUE"> BLUE </label></p>
-				<p> <label for="new_player_password">Password: </label>
-					<input type="text" id="new_player_password" name= "new_player_password" /></p>
-				<p> <input type="submit" value="Add player" name="submit" class="boutonStartMenu"/></p>
-			</form>
-		</td>
+		<center><table class="tableau" cellpadding="5" cellspacing="30" >
+			<td class="fondmarronstartmenu" valign="top" width=50%>
+				<p class="proposition">Create a new player and sign in :</p>
+				<form action="" method="post">
+					<p> <label for="new_player_name">Player name: </label>
+						<input type="text" id="new_player_name" name= "new_player_name" /></p>
+					<p> <label for="new_player_role">Role: </label>
+						<input type="radio" id="SPY" value="SPY" name= "new_player_role" checked/>
+						<label for="SPY"> SPY </label>
+						<input type="radio" id="GUESSER" value="GUESSER" name= "new_player_role" />
+						<label for="GUESSER"> GUESSER </label></p>
+					<p> <label for="new_player_color">Color: </label>
+						<input type="radio" id="RED" value="RED" name= "new_player_color" checked/>
+						<label for="RED"> RED </label>
+						<input type="radio" id="BLUE" value="BLUE" name= "new_player_color"/>
+						<label for="BLUE"> BLUE </label></p>
+					<p> <label for="new_player_password">Password: </label>
+						<input type="text" id="new_player_password" name= "new_player_password" /></p>
+					<p> <input type="submit" value="Add player" name="submit" class="boutonStartMenu"/></p>
+				</form>
+			</td>
 
-		<td class="fondmarronstartmenu" valign="top" width=50%>
-		<!-- Reprendre un joueur déjà inscrit -->
-			<p class="proposition">Sign in as an existing player :</p>
-			<form action="" method="post">
-			<p> <label for="sign_in_ID">Sign in ID: </label>
-				<input type="number" id="sign_in_ID" name= "sign_in_ID" /></p>
-			<p> <label for="sign_in_password">Password: </label>
-				<input type="text" id="sign_in_password" name= "sign_in_password" /></p>
-			<p> <input type="submit" value="Sign in as" name="submit" class="boutonStartMenu"/></p>
-		</td>
-	</table></center>
+			<td class="fondmarronstartmenu" valign="top" width=50%>
+			<!-- Reprendre un joueur déjà inscrit -->
+				<p class="proposition">Sign in as an existing player :</p>
+				<form action="" method="post">
+				<p> <label for="sign_in_ID">Sign in ID: </label>
+					<input type="number" id="sign_in_ID" name= "sign_in_ID" /></p>
+				<p> <label for="sign_in_password">Password: </label>
+					<input type="text" id="sign_in_password" name= "sign_in_password" /></p>
+				<p> <input type="submit" value="Sign in as" name="submit" class="boutonStartMenu"/></p>
+			</td>
+		</table></center>
 
 <!-- Details et options session actuelle + afficher le plateau -->
 	{% else %}
 		<br/>
-		<p class="fondmarronstartmenu">Currently  signed in as :
-		{{list_games[session["game_id"]].players[session["ID"]]}} </p>
+		<p class="fondmarronstartmenu">Currently signed in as :
+		{{list_games[session["game_id"]].players[session["ID"]]}}<p>
 		<form action="" method="post">
 		<p> <input type="submit" value="Sign out" name="submit" class="boutonStartMenu"/></p>
 		<p> <input type="submit" value="Delete player" name="submit" class="boutonStartMenu"/></p>

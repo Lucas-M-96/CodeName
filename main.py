@@ -19,7 +19,7 @@ def start_menu():
 	if request.method=="POST":
 
 		# CREER UN JEU OU CHOISIR UN JEU A REJOINDRE
-		if request.form["submit"]=="Create or join game":
+		if request.form["submit"]=="Create game":
 			new_game_id=request.form["new_game_id"]
 			if new_game_id not in list_games:
 				session["game_id"] = new_game_id
@@ -35,7 +35,7 @@ def start_menu():
 				else:
 					flash("You forgot to fill in the number of players.", "info")
 			else:
-				flash("This game already exist. Please create an other game whit a different number","info")
+				flash("This game already exist. Please create an other game whith a different number","info")
 			if "ID" in session:
 				del session["ID"]
 			#print(type(new_game.number_of_players))
@@ -66,10 +66,11 @@ def start_menu():
 				list_games[session["game_id"]].register_player(new_player_name,Role[new_player_role],Color[new_player_color],new_player_password)
 				flash(list_games[session["game_id"]].message, "info")
 				print(list_games[session["game_id"]].status())
-				try:
+				"""try:
 					session["ID"] = max(list_games[session["game_id"]].players.keys()) + 1
 				except:
-					session["ID"] = 1
+					session["ID"] = 1"""
+				session["ID"] = max(list_games[session["game_id"]].players.keys())
 			else:
 				flash("informations are missing to add a new player. Please fill in all fields", "info")
 

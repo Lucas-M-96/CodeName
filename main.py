@@ -129,8 +129,17 @@ def game():
 			list_games[session["game_id"]].guess(session["ID"], list_games[session["game_id"]].players[session["ID"]].color, list_games[session["game_id"]].players[session["ID"]].role, 25)
 		if request.form["submit"]=="Propose":
 			player_proposal = request.form["word_proposal"]
-			number_of_words_related = int(request.form["number-of-words"])
-			list_games[session["game_id"]].propose(list_games[session["game_id"]].players[session["ID"]].color, list_games[session["game_id"]].players[session["ID"]].role, player_proposal, number_of_words_related)
+			number_of_words_related = request.form["number-of-words"]
+			if len(player_proposal) != 0 and len(number_of_words_related) != 0:
+				number_of_words_related = int(request.form["number-of-words"])
+				list_games[session["game_id"]].propose(list_games[session["game_id"]].players[session["ID"]].color, list_games[session["game_id"]].players[session["ID"]].role, player_proposal, number_of_words_related)
+			else:
+				if len(player_proposal) == 0:
+					flash("You must propose a word", "info")
+				if len(number_of_words_related) == 0:
+					flash("You must indicate how many words are related to your proposal", "info")
+
+
 		if request.form["submit"]=="Show/Hide found words":
 			if list_games[session["game_id"]].players[session["ID"]].affichage == 1:
 				list_games[session["game_id"]].players[session["ID"]].affichage = 2

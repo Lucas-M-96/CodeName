@@ -96,13 +96,13 @@
         {% if list_games[session["game_id"]].current_role.name == "SPY"  %}
         <p>The <span class="textblue">Blue team</span> SPY has to make a proposal</p>
         {% else  %}
-        <p>The <span class="textblue">Blue team</span> have to validate a word (the same one) or pass</p>
+        <p>The <span class="textblue">Blue team</span> GUESSER(S) have to validate a word (the same one) or pass</p>
         {% endif  %}
     {% else  %}
         {% if list_games[session["game_id"]].current_role.name == "SPY"  %}
         <p>The <span class="textred">Red team</span> SPY has to make a proposal</p>
         {% else  %}
-        <p>The <span class="textred">Red team</span> have to validate a word (the same one) or pass</p>
+        <p>The <span class="textred">Red team</span> GUESSER(S) have to validate a word (the same one) or pass</p>
         {% endif  %}
     {% endif  %}
    </td>

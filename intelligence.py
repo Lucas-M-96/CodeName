@@ -60,6 +60,9 @@ class Player:
         self.password = p
         self.affichage = 1
         self.replay = 0
+        self.actualiser_mots = 0
+        self.actualiser_role = 0
+        self.actualiser_nb_de_joueurs = 0
 
 
     def __str__(self):
@@ -110,6 +113,7 @@ class Lobby:
         self.red_players = 0
         self.blue_players = 0
         self.number_of_guesses = []
+        self.suivi_du_jeu = []
 
         # attributes for keeping track of the current gameturn
         self.current_guesse = None
@@ -278,6 +282,10 @@ class Lobby:
                     if given_guess < 25 and given_guess >= 0 :
                         self.guesses.append(given_guess)
                         card = self.deck[given_guess]
+                        action_a_ajouter = "- The " + team_color.name + " GUESSER(S) chose the word " + card.text
+                        self.suivi_du_jeu.append(action_a_ajouter)
+                        if len(self.suivi_du_jeu) > 4:
+                            del self.suivi_du_jeu[0]
                         if card.color == team_color:
                             self.current_guesse += 1
                             if team_color == Color.RED:
@@ -349,6 +357,10 @@ class Lobby:
                                 self.current_turn_type = TurnType.PROPOSAL
                     elif given_guess == 25:
                         out_of_guess = 1
+                        action_a_ajouter = "- The " + team_color.name + " GUESSER(S) chose to pass"
+                        self.suivi_du_jeu.append(action_a_ajouter)
+                        if len(self.suivi_du_jeu) > 4:
+                            del self.suivi_du_jeu[0]
                         if self.current_guesse == self.current_number_proposal:
                             if team_color == Color.RED:
                                 self.red_rest += 1
@@ -400,6 +412,10 @@ class Lobby:
             self.current_proposal = given_proposal
             self.current_number_proposal = number
             self.current_guesse = 0
+            action_a_ajouter = "- The " + team_color.name + " SPY propose : " + given_proposal + " in " + str(number)
+            self.suivi_du_jeu.append(action_a_ajouter)
+            if len(self.suivi_du_jeu) > 4:
+                del self.suivi_du_jeu[0]
             self.set_next_role()
             self.current_turn_type = TurnType.GUESS
 

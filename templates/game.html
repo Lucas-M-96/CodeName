@@ -70,7 +70,7 @@
 {% endwith %}
 
 <center><table class="tableau" cellpadding="5" cellspacing="8" >
-   <td valign="top" width=30% bgcolor="white">
+   <td valign="top" width=22% bgcolor="white">
     <p class="fondgreen">Player section : </p>
     <p>Number of players : <span class="textred">{{list_games[session["game_id"]].red_players}}</span> - <span class="textblue">{{list_games[session["game_id"]].blue_players}}</span></p>
     {% if list_games[session["game_id"]].players[session["ID"]].role.name == "SPY"  %}
@@ -111,7 +111,7 @@
     {% if list_games[session["game_id"]].players[session["ID"]].role.name == "SPY"  %}
    <form action="" method="post">
       <label for="propose">Proposal (1 word):</label><span><input type="text" id="propose" name= "word_proposal" /></span>
-      <label for="number_of_words-related">Number of worlds related to your proposal:</label><span><input type="text" id="number_of_words-related" name= "number-of-words" /></span>
+      <label for="number_of_words-related">Number of worlds related to your proposal:</label><span><input type="number" id="number_of_words-related" name= "number-of-words" /></span>
       {% if list_games[session["game_id"]].players[session["ID"]].color.name == "BLUE"  %}
       <input type="submit" class="boutonProposeBleu" value="Propose" name="submit" />
       {% else  %}
@@ -137,15 +137,20 @@
    {% endif  %}
    </td>
 
-    <td valign="top" width=20% bgcolor="white">
+    <td valign="top" width=18% bgcolor="white">
         <p class="fondgreen">Game in progress : </p>
         <p class="smallspace">Words remaining : <span class="textblue">{{list_games[session["game_id"]].blue_guesses_left}}</span> - <span class="textred">{{list_games[session["game_id"]].red_guesses_left}}</span></p>
         <p class="smallspace">Bonus guesse(s) : <span class="textblue">{{list_games[session["game_id"]].blue_rest}}</span> - <span class="textred">{{list_games[session["game_id"]].red_rest}}</span></p>
-   </td>
-
-    <td valign="top" width=20% bgcolor="white">
         <p class="fondgreen">Score: </p>
         <p>Games won: <span class="textblue">{{list_games[session["game_id"]].blue_wins}}</span> - <span class="textred">{{list_games[session["game_id"]].red_wins}}</span></p>
+    </td>
+
+    <td valign="top" width=30% bgcolor="white">
+        <p class="fondgreen">game monitoring: </p>
+        <p>{{list_games[session["game_id"]].suivi_du_jeu[3]}}</p>
+        <p>{{list_games[session["game_id"]].suivi_du_jeu[2]}}</p>
+        <p>{{list_games[session["game_id"]].suivi_du_jeu[1]}}</p>
+        <p>{{list_games[session["game_id"]].suivi_du_jeu[0]}}</p>
     </td>
 
 

@@ -1,4 +1,4 @@
-from flask import Flask, render_template,request,redirect,url_for,session,flash
+from flask import Flask, render_template,request,redirect,url_for,session,flash, json
 from intelligence import *
 # from flask_sqlalchemy import SQLAlchemy
 
@@ -71,6 +71,8 @@ def start_menu():
 				except:
 					session["ID"] = 1"""
 				session["ID"] = max(list_games[session["game_id"]].players.keys())
+				session["nb_mots_trouvés"] = 0
+				session["Tour de jeu"] = list_games[session["game_id"]].current_role
 			else:
 				flash("informations are missing to add a new player. Please fill in all fields", "info")
 
@@ -121,6 +123,7 @@ def start_menu():
 @app.route("/game", methods=["POST","GET"])
 def game():
 	global list_games
+	list_games[session["game_id"]].message = ""
 	if request.method == "POST":
 		for i in range(0,25):
 			if request.form["submit"]==list_games[session["game_id"]].deck[i].text:
@@ -162,6 +165,18 @@ def game():
 		flash(list_games[session["game_id"]].message, "info")
 	print(list_games[session["game_id"]].status())
 	return render_template("game.html", list_games=list_games)
+
+@app.route("/test_actualisation", methods=["POST","GET"])
+def test_actualisation():
+	if list_games[session["game_id"]].players[session["ID"]].actualiser_mots != len(list_games[session["game_id"]].guesses):
+		list_games[session["game_id"]].players[session["ID"]].actualiser_mots = len(list_games[session["game_id"]].guesses)
+		return "true"
+	if list_games[session["game_id"]].players[session["ID"]].actualiser_role != list_games[session["game_id"]].current_role:
+		list_games[session["game_id"]].players[session["ID"]].actualiser_role = list_games[session["game_id"]].current_role
+		return "true"
+	if list_games[session["game_id"]].players[session["ID"]].actualiser_nb_de_joueurs != len(list_games[session["game_id"]].players):
+		list_games[session["game_id"]].players[session["ID"]].actualiser_nb_de_joueurs = len(list_games[session["game_id"]].players)
+		return "true"
 
 if __name__=="__main__":
 	#db.create.all()

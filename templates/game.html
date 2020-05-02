@@ -258,11 +258,26 @@
     </table></center>
 
 
-<script>
-    fetch("/test_actualisation")
-    .then(response => response.json())
-    .then(data => console.log(data));
+<script type="text/javascript">
 
+    var requestURL = "/test_actualisation";
+    var request = new XMLHttpRequest();
+    request.open('GET', requestURL);
+    request.responseType = 'json';
+    request.send();
+    request.onload = function() {
+    var test_actualisation = request.response;
+        actualiserPage(test_actualisation);
+    }
+
+    function actualiserPage(jsonObj) {7
+        console.log(jsonObj['status'])
+        if (jsonObj['status']="true") {
+            console.log('cest vrai');
+        } else {
+            console.log('cest faux');
+        }
+    }
 
 </script>
 

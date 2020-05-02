@@ -124,12 +124,12 @@
             <p class="smallspace">You still have <span class="proposition">{{list_games[session["game_id"]].current_number_proposal-list_games[session["game_id"]].current_guesse}}</span> guesse(s) to make. </p>
         {% endif %}
         {% if list_games[session["game_id"]].players[session["ID"]].color.name == "BLUE"  %}
-            {% if list_games[session["game_id"]].current_guesse == list_games[session["game_id"]].current_number_proposal and list_games[session["game_id"]].blue_rest != 0 %}
+            {% if list_games[session["game_id"]].current_guesse == list_games[session["game_id"]].current_number_proposal and list_games[session["game_id"]].blue_rest != 0 and list_games[session["game_id"]].current_role == list_games[session["game_id"]].players[session["ID"]].role %}
                 <p class="fondgreen">You can use one of your bonus guesse(s)</p>
             {% endif  %}
             <form action="" method="post"><input type="submit" value="Pass" name="submit" class="boutonPasserBleu"/></form>
         {% else  %}
-            {% if list_games[session["game_id"]].current_guesse == list_games[session["game_id"]].current_number_proposal and list_games[session["game_id"]].red_rest != 0 %}
+            {% if list_games[session["game_id"]].current_guesse == list_games[session["game_id"]].current_number_proposal and list_games[session["game_id"]].red_rest != 0 and list_games[session["game_id"]].current_role == list_games[session["game_id"]].players[session["ID"]].role %}
                 <p class="fondgreen">You can use one of your bonus guesse(s)</p>
             {% endif  %}
             <form action="" method="post"><input type="submit" value="Pass" name="submit" class="boutonPasserRouge"/></form>
@@ -260,6 +260,7 @@
 
 <script type="text/javascript">
 
+    setInterval(function(){
     var requestURL = "/test_actualisation";
     var request = new XMLHttpRequest();
     request.open('GET', requestURL);
@@ -267,17 +268,18 @@
     request.send();
     request.onload = function() {
     var test_actualisation = request.response;
-        actualiserPage(test_actualisation);
+        actualiserPage(test_actualisation)
     }
 
     function actualiserPage(jsonObj) {
         console.log(jsonObj['status'])
         if (jsonObj['status']) {
-            document.location.reload(true);
+            window.location = document.location;
+        } else {
         }
     }
+    }, 5000);
 
-    var intervalID = window.setInterval(actualiserPage(test_actualisation), 5000);
 
 </script>
 

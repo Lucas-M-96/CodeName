@@ -1,5 +1,29 @@
 {% extends "base.html" %}
 
+{% block script %}<script language=javascript>
+
+			console.log('coucou');
+			setInterval(function(){
+			var requestURL = "/test_actualisation";
+			var request = new XMLHttpRequest();
+			request.open('GET', requestURL);
+			request.responseType = 'json';
+			request.send();
+			request.onload = function() {
+			var test_actualisation = request.response;
+				actualiserPage(test_actualisation)
+			}
+
+			function actualiserPage(jsonObj) {
+				console.log(jsonObj['status'])
+				if (jsonObj['status']) {
+					window.location = document.location;
+				} else {
+				}
+			}
+			}, 5000);
+			</script>{% endblock %}
+
 {% block title %}Game{% endblock %}
 
 {% block content %}
@@ -212,7 +236,7 @@
 <!-- AFFICHAGE GUESSER -->
 {% else %}
 
-    <center><table border= "3" class="tableau" cellpadding="5" cellspacing="5">
+    <center><table border= "3" class="tableau" cellpadding="16" cellspacing="5">
         {% for j in range(0,5)  %}
             <tr>
                 {% for i in range(0,5)  %}
@@ -256,32 +280,6 @@
             <td width=15% class="fondDarkTextWhite">Assasin</td>
         </tr>
     </table></center>
-
-
-<script type="text/javascript">
-
-    setInterval(function(){
-    var requestURL = "/test_actualisation";
-    var request = new XMLHttpRequest();
-    request.open('GET', requestURL);
-    request.responseType = 'json';
-    request.send();
-    request.onload = function() {
-    var test_actualisation = request.response;
-        actualiserPage(test_actualisation)
-    }
-
-    function actualiserPage(jsonObj) {
-        console.log(jsonObj['status'])
-        if (jsonObj['status']) {
-            window.location = document.location;
-        } else {
-        }
-    }
-    }, 5000);
-
-
-</script>
 
 {% endif %}
 {% endblock %}

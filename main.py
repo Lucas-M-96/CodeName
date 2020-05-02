@@ -125,11 +125,14 @@ def game():
 	global list_games
 	list_games[session["game_id"]].message = ""
 	if request.method == "POST":
+
 		for i in range(0,25):
 			if request.form["submit"]==list_games[session["game_id"]].deck[i].text:
 				list_games[session["game_id"]].guess(session["ID"], list_games[session["game_id"]].players[session["ID"]].color,list_games[session["game_id"]].players[session["ID"]].role, i)
+
 		if request.form["submit"]=="Pass":
 			list_games[session["game_id"]].guess(session["ID"], list_games[session["game_id"]].players[session["ID"]].color, list_games[session["game_id"]].players[session["ID"]].role, 25)
+
 		if request.form["submit"]=="Propose":
 			player_proposal = request.form["word_proposal"]
 			number_of_words_related = request.form["number-of-words"]
@@ -152,6 +155,7 @@ def game():
 			list_games[session["game_id"]].players[session["ID"]].replay = 1
 		if request.form["submit"]=="Comfirm":
 			list_games[session["game_id"]].players[session["ID"]].replay = 2
+			list_games[session["game_id"]].actualisation_replay += 1
 			player_role = request.form["player_role"]
 			list_games[session["game_id"]].players[session["ID"]].role = Role[player_role]
 			replay = 1
@@ -164,18 +168,38 @@ def game():
 			list_games[session["game_id"]].players[session["ID"]].replay = 3
 		flash(list_games[session["game_id"]].message, "info")
 	print(list_games[session["game_id"]].status())
+	list_games[session["game_id"]].players[session["ID"]].actualiser_mots = len(list_games[session["game_id"]].guesses)
+	list_games[session["game_id"]].players[session["ID"]].actualiser_nb_de_joueurs = len(list_games[session["game_id"]].players)
+	list_games[session["game_id"]].players[session["ID"]].actualiser_role = list_games[session["game_id"]].current_role
+	list_games[session["game_id"]].players[session["ID"]].actualiser_nb_de_joueurs_voulant_rejouer = list_games[session["game_id"]].actualisation_replay
 	return render_template("game.html", list_games=list_games)
+
 
 @app.route("/test_actualisation", methods=["POST","GET"])
 def test_actualisation():
 	if list_games[session["game_id"]].players[session["ID"]].actualiser_mots != len(list_games[session["game_id"]].guesses):
 		list_games[session["game_id"]].players[session["ID"]].actualiser_mots = len(list_games[session["game_id"]].guesses)
+		list_games[session["game_id"]].players[session["ID"]].actualiser_nb_de_joueurs = len(list_games[session["game_id"]].players)
+		list_games[session["game_id"]].players[session["ID"]].actualiser_role = list_games[session["game_id"]].current_role
+		list_games[session["game_id"]].players[session["ID"]].actualiser_nb_de_joueurs_voulant_rejouer = list_games[session["game_id"]].actualisation_replay
 		return {'status':True}
 	if list_games[session["game_id"]].players[session["ID"]].actualiser_role != list_games[session["game_id"]].current_role:
+		list_games[session["game_id"]].players[session["ID"]].actualiser_mots = len(list_games[session["game_id"]].guesses)
+		list_games[session["game_id"]].players[session["ID"]].actualiser_nb_de_joueurs = len(list_games[session["game_id"]].players)
 		list_games[session["game_id"]].players[session["ID"]].actualiser_role = list_games[session["game_id"]].current_role
+		list_games[session["game_id"]].players[session["ID"]].actualiser_nb_de_joueurs_voulant_rejouer = list_games[session["game_id"]].actualisation_replay
 		return {'status':True}
 	if list_games[session["game_id"]].players[session["ID"]].actualiser_nb_de_joueurs != len(list_games[session["game_id"]].players):
+		list_games[session["game_id"]].players[session["ID"]].actualiser_mots = len(list_games[session["game_id"]].guesses)
 		list_games[session["game_id"]].players[session["ID"]].actualiser_nb_de_joueurs = len(list_games[session["game_id"]].players)
+		list_games[session["game_id"]].players[session["ID"]].actualiser_role = list_games[session["game_id"]].current_role
+		list_games[session["game_id"]].players[session["ID"]].actualiser_nb_de_joueurs_voulant_rejouer = list_games[session["game_id"]].actualisation_replay
+		return {'status':True}
+	if list_games[session["game_id"]].players[session["ID"]].actualiser_nb_de_joueurs_voulant_rejouer != list_games[session["game_id"]].actualisation_replay:
+		list_games[session["game_id"]].players[session["ID"]].actualiser_mots = len(list_games[session["game_id"]].guesses)
+		list_games[session["game_id"]].players[session["ID"]].actualiser_nb_de_joueurs = len(list_games[session["game_id"]].players)
+		list_games[session["game_id"]].players[session["ID"]].actualiser_role = list_games[session["game_id"]].current_role
+		list_games[session["game_id"]].players[session["ID"]].actualiser_nb_de_joueurs_voulant_rejouer = list_games[session["game_id"]].actualisation_replay
 		return {'status':True}
 	else:
 		return {'status':False}

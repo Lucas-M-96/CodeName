@@ -63,6 +63,7 @@ class Player:
         self.actualiser_mots = 0
         self.actualiser_role = 0
         self.actualiser_nb_de_joueurs = 0
+        self.actualiser_nb_de_joueurs_voulant_rejouer = 0
 
 
     def __str__(self):
@@ -114,6 +115,7 @@ class Lobby:
         self.blue_players = 0
         self.number_of_guesses = []
         self.suivi_du_jeu = []
+        self.actualisation_replay = 0
 
         # attributes for keeping track of the current gameturn
         self.current_guesse = None
@@ -133,6 +135,7 @@ class Lobby:
         self.blue_guesses_left = None
         self.red_guesses_left = None
         self.couleur_vainqueur = None
+        self.actualisation_replay = 0
         self.start_game()
 
     def generate_new_deck(self):
@@ -390,7 +393,7 @@ class Lobby:
                                 self.current_turn_type = TurnType.PROPOSAL
                             else :
                                 self.blue_rest -= 1
-                    elif self.current_guesse > self.current_number_proposal:
+                    elif self.current_guesse > self.current_number_proposal and self.red_guesses_left != 0 and self.blue_guesses_left != 0:
                         self.set_next_team_color()
                         self.set_next_role()
                         self.current_turn_type = TurnType.PROPOSAL

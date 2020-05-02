@@ -257,5 +257,14 @@
         </tr>
     </table></center>
 
+
+<script>
+    fetch("/test_actualisation")
+    .then(response => response.json())
+    .then(data => console.log(data));
+
+
+</script>
+
 {% endif %}
 {% endblock %}

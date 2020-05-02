@@ -170,13 +170,15 @@ def game():
 def test_actualisation():
 	if list_games[session["game_id"]].players[session["ID"]].actualiser_mots != len(list_games[session["game_id"]].guesses):
 		list_games[session["game_id"]].players[session["ID"]].actualiser_mots = len(list_games[session["game_id"]].guesses)
-		return "true"
+		return {'status':True}
 	if list_games[session["game_id"]].players[session["ID"]].actualiser_role != list_games[session["game_id"]].current_role:
 		list_games[session["game_id"]].players[session["ID"]].actualiser_role = list_games[session["game_id"]].current_role
-		return "true"
+		return {'status':True}
 	if list_games[session["game_id"]].players[session["ID"]].actualiser_nb_de_joueurs != len(list_games[session["game_id"]].players):
 		list_games[session["game_id"]].players[session["ID"]].actualiser_nb_de_joueurs = len(list_games[session["game_id"]].players)
-		return "true"
+		return {'status':True}
+	else:
+		return {'status':False}
 
 if __name__=="__main__":
 	#db.create.all()

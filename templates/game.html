@@ -270,14 +270,14 @@
         actualiserPage(test_actualisation);
     }
 
-    function actualiserPage(jsonObj) {7
+    function actualiserPage(jsonObj) {
         console.log(jsonObj['status'])
-        if (jsonObj['status']="true") {
-            console.log('cest vrai');
-        } else {
-            console.log('cest faux');
+        if (jsonObj['status']) {
+            document.location.reload(true);
         }
     }
+
+    var intervalID = window.setInterval(actualiserPage(test_actualisation), 5000);
 
 </script>
 

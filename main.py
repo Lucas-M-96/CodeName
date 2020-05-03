@@ -12,7 +12,7 @@ app.secret_key="tmp"
 global list_games
 list_games={}
 
-@app.route("/start_menu", methods=["POST","GET"])
+@app.route("/", methods=["POST","GET"])
 def start_menu():
 	global list_games
 	errors={}
@@ -177,6 +177,7 @@ def game():
 
 @app.route("/test_actualisation", methods=["POST","GET"])
 def test_actualisation():
+	global list_games
 	if list_games[session["game_id"]].players[session["ID"]].actualiser_mots != len(list_games[session["game_id"]].guesses):
 		list_games[session["game_id"]].players[session["ID"]].actualiser_mots = len(list_games[session["game_id"]].guesses)
 		list_games[session["game_id"]].players[session["ID"]].actualiser_nb_de_joueurs = len(list_games[session["game_id"]].players)
@@ -203,6 +204,18 @@ def test_actualisation():
 		return {'status':True}
 	else:
 		return {'status':False}
+
+@app.route("/administrateur", methods=["POST","GET"])
+def administrateur():
+	global list_games
+	if request.method == "POST":
+		for id in list_games:
+			ButtonValue = "Delete game " + id
+			if request.form["submit"] == ButtonValue:
+				del list_games[id]
+				print("Game succesfully Deleted")
+				return render_template("administrateur.html", list_games=list_games)
+	return render_template("administrateur.html", list_games=list_games)
 
 if __name__=="__main__":
 	#db.create.all()

@@ -3,26 +3,35 @@
 	<head>
 		<title>{% block title %}{% endblock %}</title>
 		<link href="./static/css/styles.css" rel="stylesheet" />
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
 		<style>
 			body {
 				background-color: Goldenrod;
 			}
 
-			html, p, input, span, div, label, form, title{
+			html, p, span, div, title{
 				margin-left: auto;
 				margin-right: auto;
 				text-align: center;
-				margin: 6;
-				font:16px Optima;
+				margin: 0.5%;
+				font:100% Optima;
+			}
+
+			input, label, form{
+				margin-left: auto;
+				margin-right: auto;
+				text-align: center;
+				margin: 0.5%;
+				padding: 0.5%;
+				font:100% Optima;
 			}
 
 			.boutonStartMenu {
 				border:none;
-				padding:6;
-				border-radius:8px;
+				padding:1%;
+				border-radius:1%;
 				background:Green;
-				font:16px Optima;
+				font:100% Optima;
 				color:#fff;
 			}
 
@@ -30,7 +39,7 @@
 				margin-left: auto;
 				margin-right: auto;
 				padding:0;
-				font:Bold 16px Optima;
+				font:Bold 100% Optima;
 				background:gray;
 				color:#fff;
 				border:none;
@@ -39,30 +48,30 @@
 			.boutonVert {
 				margin-left: auto;
 				margin-right: auto;
-				padding:10;
-				font:Bold 16px Optima;
+				padding:2%;
+				font:Bold 100% Optima;
 				background:green;
 				color:#fff;
 				border:none;
-				margin: 4;
+				margin: 1%;
 			}
 
 			.boutonRouge {
 				margin-left: auto;
 				margin-right: auto;
-				padding:10;
-				font:Bold 16px Optima;
+				padding:2%;
+				font:Bold 100% Optima;
 				background:red;
 				color:#fff;
 				border:none;
-				margin: 4;
+				margin: 1%;
 			}
 
 			.boutonChangeView {
 				margin-left: auto;
 				margin-right: auto;
-				padding:2;
-				font:Bold 16px Optima;
+				padding:0.5%;
+				font:Bold 100% Optima;
 				background:Green;
 				color:#fff;
 				border:none;
@@ -71,59 +80,59 @@
 			.boutonProposeBleu {
 				margin-left: auto;
 				margin-right: auto;
-				padding:3px 0 3px 0;
-				font:Bold 16px Optima;
+				padding:1% 0 1% 0;
+				font:Bold 100%  Optima;
 				background:Blue;
 				color:#fff;
-				width:200px;
-				border-radius:2px;
+				width:50% ;
+				border-radius:2% ;
 				border:none;
-				margin: 2;
+				margin: 0.5% ;
 			}
 
 			.boutonProposeRouge {
 				margin-left: auto;
 				margin-right: auto;
-				padding:3px 0 3px 0;
-				font:Bold 16px Optima;
+				padding:1%  0 1%  0;
+				font:Bold 100%  Optima;
 				background:red;
 				color:#fff;
-				width:200px;
-				border-radius:2px;
+				width:50%;
+				border-radius:2%;
 				border:none;
-				margin: 2;
+				margin: 0.5%;
 			}
 
 			.boutonPasserBleu {
 				margin-left: auto;
 				margin-right: auto;
-				padding:6px 0 6px 0;
-				font:Bold 16px Optima;
+				padding:2% 0 2% 0;
+				font:Bold 100% Optima;
 				background:blue;
 				color:#fff;
-				width:200px;
-				border-radius:2px;
+				width:50%;
+				border-radius:2%;
 				border:none;
-				margin: 3;
+				margin: 1%;
 			}
 
 			.boutonPasserRouge {
 				margin-left: auto;
 				margin-right: auto;
-				padding:6px 0 6px 0;
-				font:Bold 16px Optima;
+				padding:2% 0 2% 0;
+				font:Bold 100% Optima;
 				background:red;
 				color:#fff;
-				width:200px;
-				border-radius:2px;
+				width:50%;
+				border-radius:2%;
 				border:none;
-				margin: 3;
+				margin: 1%;
 			}
 
 			.textblue {
 				margin-left: auto;
 				margin-right: auto;
-				font:Bold 16px Optima;
+				font:Bold 100% Optima;
 				color:blue;
 				text-align: center;
 			}
@@ -132,7 +141,7 @@
 				margin-left: auto;
 				margin-right: auto;
 				color:red;
-				font:Bold 16px Optima;
+				font:Bold 100% Optima;
 				text-align: center;
 			}
 
@@ -140,7 +149,8 @@
 				margin-left: auto;
 				margin-right: auto;
 				color:Black;
-				font:16px Optima;
+				padding:0.5%;
+				font:100% Optima;
 				text-align: center;
 				background:DarkGoldenrod;
 				line-height: 120%;
@@ -151,10 +161,10 @@
 				margin-left: auto;
 				margin-right: auto;
 				color:white;
-				font:Bold 16px Optima;
+				font:Bold 100% Optima;
 				text-align: center;
 				background:DarkGoldenrod;
-				line-height: 140%;
+				line-height: 100%;
 				vertical-align:top;
 			}
 
@@ -162,10 +172,10 @@
 				margin-left: auto;
 				margin-right: auto;
 				color:white;
-				font:Bold 16px Optima;
+				font:Bold 100% Optima;
 				text-align: center;
 				background:Green;
-				line-height: 140%;
+				line-height: 100%;
 				vertical-align:top;
 			}
 
@@ -173,110 +183,110 @@
 				margin-left: auto;
 				margin-right: auto;
 				color:white;
-				font:Bold 16px Optima;
+				font:Bold 100% Optima;
 				text-align: center;
 				background:red;
-				line-height: 140%;
+				line-height: 100%;
 			}
 
 			.fondBlueTextWhite {
 				margin-left: auto;
 				margin-right: auto;
 				color:white;
-				font:Bold 16px Optima;
+				font:Bold 100% Optima;
 				text-align: center;
 				background:blue;
-				line-height: 140%;
+				line-height: 100%;
 			}
 
 			.fondDarkTextWhite {
 				margin-left: auto;
 				margin-right: auto;
 				color:white;
-				font:Bold 16px Optima;
+				font:Bold 100% Optima;
 				text-align: center;
 				background:black;
-				line-height: 140%;
+				line-height: 100%;
 			}
 
 			.fondKhakiTextBlack {
 				margin-left: auto;
 				margin-right: auto;
 				color:Black;
-				font:Bold 16px Optima;
+				font:Bold 100% Optima;
 				text-align: center;
 				background:khaki;
-				line-height: 140%;
+				line-height: 100%;
 			}
 
 			.fondGrayTextWhite {
 				margin-left: auto;
 				margin-right: auto;
 				color:White;
-				font:Bold 16px Optima;
+				font:Bold 100% Optima;
 				text-align: center;
 				background:gray;
-				line-height: 140%;
+				line-height: 100%;
 			}
 
 			.fondRedTextRed {
 				margin-left: auto;
 				margin-right: auto;
 				color:red;
-				font:Bold 16px Optima;
+				font:Bold 100% Optima;
 				text-align: center;
 				background:red;
-				line-height: 140%;
+				line-height: 100%;
 			}
 
 			.fondBlueTextBlue {
 				margin-left: auto;
 				margin-right: auto;
 				color:Blue;
-				font:Bold 16px Optima;
+				font:Bold 100% Optima;
 				text-align: center;
 				background:blue;
-				line-height: 140%;
+				line-height: 100%;
 			}
 
 			.fondKhakiTextKhaki {
 				margin-left: auto;
 				margin-right: auto;
 				color:Khaki;
-				font:Bold 16px Optima;
+				font:Bold 100% Optima;
 				text-align: center;
 				background:khaki;
-				line-height: 140%;
+				line-height: 100%;
 			}
 
 			.fondRedTextBlack {
 				margin-left: auto;
 				margin-right: auto;
 				color:Black;
-				font:Bold 16px Optima;
+				font:Bold 100% Optima;
 				text-align: center;
 				background:red;
-				line-height: 140%;
+				line-height: 100%;
 			}
 
 			.fondBlueTextBlack {
 				margin-left: auto;
 				margin-right: auto;
 				color:Black;
-				font:Bold 16px Optima;
+				font:Bold 100% Optima;
 				text-align: center;
 				background:blue;
-				line-height: 140%;
+				line-height: 100%;
 			}
 
 			.fondKhakiTextGray {
 				margin-left: auto;
 				margin-right: auto;
 				color:Gray;
-				font:Bold 16px Optima;
+				font:Bold 120% Optima;
 				text-align: center;
 				background:khaki;
-				line-height: 140%;
+				line-height: 100%;
 			}
 
 			.smallspace {
@@ -284,13 +294,13 @@
 				margin-right: auto;
 				color:black;
 				text-align: center;
-				line-height: 1em;
+				line-height: 1%;
 			}
 
 			.proposition {
 				margin-left: auto;
 				margin-right: auto;
-				font:Bold 20px Optima;
+				font:Bold 125% Optima;
 				background Color
 				text-align: center;
 			}
@@ -299,7 +309,103 @@
 				margin-left: auto;
 				margin-right: auto;
 				text-align: center;
+				overflow-x: auto;
 			}
+
+			.tableauDeMots{
+				margin-left: auto;
+				margin-right: auto;
+				text-align: center;
+				overflow-x: auto;
+    			border-collapse: separate;
+    			border-spacing: 2% 0.5%;
+			}
+
+			@media (max-width: 640px) {
+
+			.tableauDeMots tr{margin-left: auto; margin-right: auto; display: table-cell; font:Bold 80% Optima;}
+			.tableauDeMots td{padding: 25 4 25 4; margin:10 0 10 0; max-widht: 20%}
+			.tableauDeMots {text-align: center;}
+
+			.tableau {display: table-cell;}
+			.tableau td {width: 100%;}
+
+			.boutonGuess {
+				margin-left: auto;
+				margin-right: auto;
+				padding:5;
+				font:Bold 80% Optima;
+				background:gray;
+				color:#fff;
+				border:none;
+			}
+
+			input, label, form{
+				margin-left: auto;
+				margin-right: auto;
+				text-align: center;
+				margin: 2%;
+				padding: 1%;
+				font:100% Optima;
+			}
+
+			* {
+				box-sizing: border-box;
+			}
+
+			/* passer body (et tous les éléments de largeur fixe) en largeur automatique */
+
+			body {
+				width: auto;
+				margin: 0;
+				padding: 0;
+			}
+
+			/* fixer une largeur maximale de 100% aux éléments potentiellement problématiques */
+
+			img, table, td, blockquote, code, pre, textarea, input, iframe, object, embed, video {
+				max-width: 100%;
+			}
+
+
+			/* gestion des mots longs */
+
+			textarea, table, td, th, tr, code, pre, samp {
+				-webkit-hyphens: auto; /* césure propre */
+				-moz-hyphens: auto;
+				hyphens: auto;
+				display: block;
+				margin-left: auto;
+				margin-right: auto;
+				text-align: center;
+				width: auto!important;
+				margin: 1%;
+			  }
+
+				word-wrap: break-word; /* passage à la ligne forcé */
+
+			}
+
+			code, pre, samp {
+				white-space: pre-wrap; /* passage à la ligne spécifique pour les éléments à châsse fixe */
+			}
+
+			/* masquer les éléments superflus */
+
+			.hide_mobile {
+				display: none !important;
+			}
+
+			@media (max-device-width:768px) and (orientation: landscape) {
+			  html {
+			   -webkit-text-size-adjust: 100%;
+			   -ms-text-size-adjust: 100%;
+			  }
+			}
+
+		}
+
+
 
 		</style>
 
@@ -310,6 +416,6 @@
 	<body>
 		<h1>{% block en_tete %}{% endblock %}</h1>
 			{% block content %}{% endblock %}
-	</body>
+			</body>
 
 </html>

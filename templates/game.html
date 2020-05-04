@@ -183,7 +183,7 @@
 <!-- AFFICHAGE SPY -->
 {% if list_games[session["game_id"]].players[session["ID"]].role.name == "SPY"  %}
 
-    <center><table border= "3" class="tableau" cellpadding="22" cellspacing="5" >
+    <center><table border= "3" class="tableauDeMots" cellpadding=22% cellspacing=5% >
         {% for j in range(0,5)  %}
             <tr>
                 {% for i in range(0,5)  %}
@@ -223,7 +223,7 @@
         {% endfor  %}
     </table></center>
 
-    <center><table class="tableau" cellpadding="8" cellspacing="5" >
+    <center><table border= "3" class="tableau" cellpadding="8" cellspacing="5" >
         <tr>
             <td width=26% class="fondgreen"><form action="" method="post"><input type="submit" class="boutonChangeView" value="Show/Hide found words" name="submit" /></form></td>
             <td width=18% class="fondBlueTextWhite">Blue word</td>
@@ -236,7 +236,7 @@
 <!-- AFFICHAGE GUESSER -->
 {% else %}
 
-    <center><table border= "3" class="tableau" cellpadding="16" cellspacing="5">
+    <center><table border= "3" class="tableauDeMots" cellpadding="16%" cellspacing="5%">
         {% for j in range(0,5)  %}
             <tr>
                 {% for i in range(0,5)  %}

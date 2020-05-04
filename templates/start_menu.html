@@ -54,7 +54,7 @@
 {% else %}
 
 <!-- Gestion de la partie -->
-	<p>You are joining the game N°{{list_games[session["game_id"]].lobby_id}} / Number of players : {{list_games[session["game_id"]].number_of_players}}</p>
+	<p>You are joining game N°{{list_games[session["game_id"]].lobby_id}} / Number of players : {{list_games[session["game_id"]].number_of_players}}</p>
 
 	<form action="" method="post">
 	<input type="submit" value="Join an other game" name="submit" class="boutonStartMenu"/>
@@ -67,7 +67,7 @@
 
 <!--2 blocs pour différentier les 2 équipes -->
 	{% if list_games[session["game_id"]].players|length >0 %}
-		<center><table class="tableau" cellpadding="15" cellspacing="15" >
+		<center><table class="tableau" cellpadding=2% cellspacing=4% >
             <td valign="top" width=50% class="fondBlueTextWhite">
                 {% for ply in list_games[session["game_id"]].players.values() %}
 					{% if ply.color.name == "BLUE" %}
@@ -87,9 +87,9 @@
 
 <!-- Inscrire un nouveau joueur -->
 	{% if "ID" not in session %}
-		<center><table class="tableau" cellpadding="5" cellspacing="30" >
+		<center><table class="tableau" cellpadding=5% cellspacing=5% >
 			<td class="fondmarronstartmenu" valign="top" width=50%>
-				<p class="proposition">Create a new player and sign in :</p>
+				<p class="proposition">Create a new player and sign in</p>
 				<form action="" method="post">
 					<p> <label for="new_player_name">Player name: </label>
 						<input type="text" id="new_player_name" name= "new_player_name" /></p>
@@ -111,7 +111,7 @@
 
 			<td class="fondmarronstartmenu" valign="top" width=50%>
 			<!-- Reprendre un joueur déjà inscrit -->
-				<p class="proposition">Sign in as an existing player :</p>
+				<p class="proposition">Sign in as an existing player</p>
 				<form action="" method="post">
 				<p> <label for="sign_in_ID">Sign in ID: </label>
 					<input type="number" id="sign_in_ID" name= "sign_in_ID" /></p>

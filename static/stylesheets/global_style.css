@@ -1,0 +1,157 @@
+			
+body {
+	background-color: Goldenrod;
+}
+
+html, p, span, div, title{
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	margin: 0.5%;
+	font:100% Optima;
+}
+
+input, label, form{
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	margin: 0.5%;
+	padding: 0.5%;
+	font:100% Optima;
+}
+
+.tableau {
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	overflow-x: auto;
+}
+
+.proposition {
+	margin-left: auto;
+	margin-right: auto;
+	font:Bold 125% Optima;
+	background Color
+	text-align: center;
+}
+
+.textblue {
+	margin-left: auto;
+	margin-right: auto;
+	font:Bold 100% Optima;
+	color:blue;
+	text-align: center;
+}
+
+.textred {
+	margin-left: auto;
+	margin-right: auto;
+	color:red;
+	font:Bold 100% Optima;
+	text-align: center;
+}
+
+.fondRedTextWhite {
+	margin-left: auto;
+	margin-right: auto;
+	color:white;
+	font:Bold 100% Optima;
+	text-align: center;
+	background:red;
+	line-height: 100%;
+}
+
+.fondBlueTextWhite {
+	margin-left: auto;
+	margin-right: auto;
+	color:white;
+	font:Bold 100% Optima;
+	text-align: center;
+	background:blue;
+	line-height: 100%;
+}
+
+/* VERSION MOBILE */
+		@media (max-width: 640px) {
+
+		.tableauDeMots tr{margin-left: auto; margin-right: auto; display: table-cell; font:Bold 80% Optima;}
+		.tableauDeMots td{padding: 25 4 25 4; margin:10 0 10 0; max-widht: 20%}
+		.tableauDeMots {text-align: center;}
+
+		.tableau {display: table-cell;}
+		.tableau td {width: 100%;}
+
+		.boutonGuess {
+			margin-left: auto;
+			margin-right: auto;
+			padding:5;
+			font:Bold 80% Optima;
+			background:gray;
+			color:#fff;
+			border:none;
+		}
+
+		input, label, form{
+			margin-left: auto;
+			margin-right: auto;
+			text-align: center;
+			margin: 2%;
+			padding: 1%;
+			font:100% Optima;
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		/* passer body (et tous les éléments de largeur fixe) en largeur automatique */
+
+		body {
+			width: auto;
+			margin: 0;
+			padding: 0;
+		}
+
+		/* fixer une largeur maximale de 100% aux éléments potentiellement problématiques */
+
+		img, table, td, blockquote, code, pre, textarea, input, iframe, object, embed, video {
+			max-width: 100%;
+		}
+
+
+		/* gestion des mots longs */
+
+		textarea, table, td, th, tr, code, pre, samp {
+			-webkit-hyphens: auto; /* césure propre */
+			-moz-hyphens: auto;
+			hyphens: auto;
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+			text-align: center;
+			width: auto!important;
+			margin: 1%;
+		  }
+
+			word-wrap: break-word; /* passage à la ligne forcé */
+
+		}
+
+		code, pre, samp {
+			white-space: pre-wrap; /* passage à la ligne spécifique pour les éléments à châsse fixe */
+		}
+
+		/* masquer les éléments superflus */
+
+		.hide_mobile {
+			display: none !important;
+		}
+
+		@media (max-device-width:768px) and (orientation: landscape) {
+		  html {
+		   -webkit-text-size-adjust: 100%;
+		   -ms-text-size-adjust: 100%;
+		  }
+		}
+
+	}

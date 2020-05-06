@@ -1,0 +1,226 @@
+/* BOUTONS */
+
+	.boutonGuess {
+		margin-left: auto;
+		margin-right: auto;
+		padding:0;
+		font:Bold 100% Optima;
+		background:gray;
+		color:#fff;
+		border:none;
+	}
+
+	.boutonVert {
+		margin-left: auto;
+		margin-right: auto;
+		padding:2%;
+		font:Bold 100% Optima;
+		background:green;
+		color:#fff;
+		border:none;
+		margin: 1%;
+	}
+
+	.boutonRouge {
+		margin-left: auto;
+		margin-right: auto;
+		padding:2%;
+		font:Bold 100% Optima;
+		background:red;
+		color:#fff;
+		border:none;
+		margin: 1%;
+	}
+
+	.boutonChangeView {
+		margin-left: auto;
+		margin-right: auto;
+		padding:0.5%;
+		font:Bold 100% Optima;
+		background:Green;
+		color:#fff;
+		border:none;
+	}
+
+	.boutonProposeBleu {
+		margin-left: auto;
+		margin-right: auto;
+		padding:1% 0 1% 0;
+		font:Bold 100%  Optima;
+		background:Blue;
+		color:#fff;
+		width:50% ;
+		border-radius:2% ;
+		border:none;
+		margin: 0.5% ;
+	}
+
+	.boutonProposeRouge {
+		margin-left: auto;
+		margin-right: auto;
+		padding:1%  0 1%  0;
+		font:Bold 100%  Optima;
+		background:red;
+		color:#fff;
+		width:50%;
+		border-radius:2%;
+		border:none;
+		margin: 0.5%;
+	}
+
+	.boutonPasserBleu {
+		margin-left: auto;
+		margin-right: auto;
+		padding:2% 0 2% 0;
+		font:Bold 100% Optima;
+		background:blue;
+		color:#fff;
+		width:50%;
+		border-radius:2%;
+		border:none;
+		margin: 1%;
+	}
+
+	.boutonPasserRouge {
+		margin-left: auto;
+		margin-right: auto;
+		padding:2% 0 2% 0;
+		font:Bold 100% Optima;
+		background:red;
+		color:#fff;
+		width:50%;
+		border-radius:2%;
+		border:none;
+		margin: 1%;
+	}
+
+/* Divers */
+
+	.smallspace {
+		margin-left: auto;
+		margin-right: auto;
+		color:black;
+		text-align: center;
+		line-height: 1%;
+	}
+
+	.tableauDeMots{
+		margin-left: auto;
+		margin-right: auto;
+		text-align: center;
+		overflow-x: auto;
+		border-collapse: separate;
+		border-spacing: 2% 0.5%;
+	}
+
+	.fondmarron {
+		margin-left: auto;
+		margin-right: auto;
+		color:white;
+		font:Bold 100% Optima;
+		text-align: center;
+		background:DarkGoldenrod;
+		line-height: 100%;
+		vertical-align:top;
+	}
+
+	.fondgreen {
+		margin-left: auto;
+		margin-right: auto;
+		color:white;
+		font:Bold 100% Optima;
+		text-align: center;
+		background:Green;
+		line-height: 100%;
+		vertical-align:top;
+	}
+
+	.fondDarkTextWhite {
+		margin-left: auto;
+		margin-right: auto;
+		color:white;
+		font:Bold 100% Optima;
+		text-align: center;
+		background:black;
+		line-height: 100%;
+	}
+
+	.fondKhakiTextBlack {
+		margin-left: auto;
+		margin-right: auto;
+		color:Black;
+		font:Bold 100% Optima;
+		text-align: center;
+		background:khaki;
+		line-height: 100%;
+	}
+
+	.fondGrayTextWhite {
+		margin-left: auto;
+		margin-right: auto;
+		color:White;
+		font:Bold 100% Optima;
+		text-align: center;
+		background:gray;
+		line-height: 100%;
+	}
+
+	.fondRedTextRed {
+		margin-left: auto;
+		margin-right: auto;
+		color:red;
+		font:Bold 100% Optima;
+		text-align: center;
+		background:red;
+		line-height: 100%;
+	}
+
+	.fondBlueTextBlue {
+		margin-left: auto;
+		margin-right: auto;
+		color:Blue;
+		font:Bold 100% Optima;
+		text-align: center;
+		background:blue;
+		line-height: 100%;
+	}
+
+	.fondKhakiTextKhaki {
+		margin-left: auto;
+		margin-right: auto;
+		color:Khaki;
+		font:Bold 100% Optima;
+		text-align: center;
+		background:khaki;
+		line-height: 100%;
+	}
+
+	.fondRedTextBlack {
+		margin-left: auto;
+		margin-right: auto;
+		color:Black;
+		font:Bold 100% Optima;
+		text-align: center;
+		background:red;
+		line-height: 100%;
+	}
+
+	.fondBlueTextBlack {
+		margin-left: auto;
+		margin-right: auto;
+		color:Black;
+		font:Bold 100% Optima;
+		text-align: center;
+		background:blue;
+		line-height: 100%;
+	}
+
+	.fondKhakiTextGray {
+		margin-left: auto;
+		margin-right: auto;
+		color:Gray;
+		font:Bold 120% Optima;
+		text-align: center;
+		background:khaki;
+		line-height: 100%;
+	}

@@ -1,32 +1,42 @@
 {% extends "base.html" %}
 
-{% block script %}<script language=javascript>
+{% block additionnal_head %}
 
-			console.log('coucou');
-			setInterval(function(){
-			var requestURL = "/test_actualisation";
-			var request = new XMLHttpRequest();
-			request.open('GET', requestURL);
-			request.responseType = 'json';
-			request.send();
-			request.onload = function() {
-			var test_actualisation = request.response;
-				actualiserPage(test_actualisation)
-			}
+    <title>Game</title>
+    <link rel="stylesheet" type="text/CSS" href="{{url_for('static',filename='stylesheets/game_style.css')}}">
 
-			function actualiserPage(jsonObj) {
-				console.log(jsonObj['status'])
-				if (jsonObj['status']) {
-					window.location = document.location;
-				} else {
-				}
-			}
-			}, 5000);
-			</script>{% endblock %}
+{% endblock %}
 
-{% block title %}Game{% endblock %}
 
-{% block content %}
+{% block script %}
+
+    <script language=javascript>
+    	console.log('coucou');
+    	setInterval(function(){
+        	var requestURL = "/test_actualisation";
+        	var request = new XMLHttpRequest();
+        	request.open('GET', requestURL);
+        	request.responseType = 'json';
+        	request.send();
+
+        	request.onload = function() {
+                var test_actualisation = request.response;
+        		actualiserPage(test_actualisation)
+        	}
+        	function actualiserPage(jsonObj) {
+        		console.log(jsonObj['status'])
+        		if (jsonObj['status']) {
+        			window.location = document.location;
+        		} else {
+        		}
+        	}
+        }, 5000);
+	</script>
+
+{% endblock %}
+
+
+{% block body_content %}
 
 {% if list_games[session["game_id"]].current_turn_type.name == "GAME_OVER"  %}
     <div class="fondRedTextWhite">

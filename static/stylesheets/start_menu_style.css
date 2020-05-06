@@ -1,0 +1,20 @@
+.fondmarronstartmenu {
+	margin-left: auto;
+	margin-right: auto;
+	color:Black;
+	padding:0.5%;
+	font:100% Optima;
+	text-align: center;
+	background:DarkGoldenrod;
+	line-height: 120%;
+	vertical-align:top;
+}
+
+.boutonStartMenu {
+	border:none;
+	padding:1%;
+	border-radius:1%;
+	background:Green;
+	font:100% Optima;
+	color:#fff;
+}

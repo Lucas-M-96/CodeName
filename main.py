@@ -1,4 +1,4 @@
-from flask import Flask, render_template,request,redirect,url_for,session,flash, json
+from flask import Flask, render_template,request,redirect,url_for,session,flash, json, jsonify
 from intelligence import *
 # from flask_sqlalchemy import SQLAlchemy
 
@@ -8,7 +8,6 @@ app.secret_key="tmp"
 #app.config["SQLALCHEMY_TRACK_MODIFICATIONS"]=False
 
 #db=SQLAlchemy(app)
-
 global list_games
 list_games={}
 
@@ -18,7 +17,7 @@ def start_menu():
 	errors={}
 	if request.method=="POST":
 
-		# CREER UN JEU OU CHOISIR UN JEU A REJOINDRE
+		# CREER UN JEU
 		if request.form["submit"]=="Create game":
 			new_game_id=request.form["new_game_id"]
 			if new_game_id not in list_games:
@@ -118,7 +117,13 @@ def start_menu():
 			else:
 				return redirect(url_for("game"))
 
-	return render_template("start_menu.html",list_games=list_games,errors=errors)
+	list_games_java={}
+	game_java=Lobby(1,4)
+	game_java.register_player("Lucas",Role["SPY"],Color["BLUE"],"mdp")
+	list_games_java[game_java.lobby_id]=game_java.serialize()
+	game_java2=Lobby(2,5)
+	list_games_java[game_java2.lobby_id]=game_java2.serialize()
+	return render_template("start_menu.html",list_games=list_games,list_games_java=list_games_java,errors=errors)
 
 @app.route("/game", methods=["POST","GET"])
 def game():

@@ -4,7 +4,7 @@
 
     <title>Start Menu</title>
     <link rel="stylesheet" type="text/CSS" href="{{url_for('static',filename='stylesheets/start_menu_style.css')}}">
-
+    
 {% endblock %}
 
 {% block body_content %}
@@ -18,7 +18,6 @@
 			{% endfor %}
 		{% endif %}
 	{% endwith %}
-
 
 	{% if "game_id" not in session or session["game_id"] not in list_games.keys() %}
 	<!-- Creation ou inscription à une partie -->
@@ -35,8 +34,19 @@
 
 		<p>OR</p>
 
-	<!-- Affichage des parties actives -->
+	<!-- AFFICHAGE JAVA SCRIPT ET AJAX PARTIES ACTIVES -->
+		<p>
+			<div>Parties actives:</div>
+			<div id="list_active_games"></div>
+		</p>
 
+<script language='javascript'>
+
+	var list_games={{list_games_java|tojson}};
+
+</script>
+
+	<!-- Affichage des parties actives -->
 		<p class="proposition">Join an existing game. List of active games:</p>
 		{% if list_games|length >0 %}
 			{% for id in list_games %}
@@ -141,6 +151,12 @@
 		{% endif %}
 
 	{% endif %}
+
+{% endblock %}
+
+{% block script %}
+
+	<script type='text/Javascript' src="{{url_for('static',filename='scriptfiles/start_menu_script.js')}}"></script>
 
 {% endblock %}
 

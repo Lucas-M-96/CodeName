@@ -69,6 +69,9 @@ class Player:
     def __str__(self):
         return " / ".join([str(self.player_id), self.name, self.role.name, self.color.name])
 
+    def serialize(self):
+        return {"player_id":self.player_id,"name":self.name,"role":self.role.name,"color":self.color.name}
+
 
 class Lobby:
     """Represent a table and a running game.
@@ -82,13 +85,13 @@ class Lobby:
         """Create a new game instance"""
         # attributes for keeping track of the current game
         self.players = {}
+        self.serialized_players={}
         self.redCards = []
         self.blueCards = []
         self.neutralCards = []
         self.guesses = []
         self.number_of_players = number_of_players
         self.lobby_id = lobby_id
-
 
         # these values are set in the prepare_gameturn f'n
         # here, we set the default
@@ -125,6 +128,11 @@ class Lobby:
         self.deck = []
         self.cards_order = random.sample(range(0, len(table_de_carte)), len(table_de_carte))
         # when all players join, a gameturn must be prepared and the game can start
+
+    def serialize(self):
+        for ply in self.players:
+            self.serialized_players[ply]=self.players[ply].serialize()
+        return {"id":self.lobby_id,"nb":self.number_of_players,"players":self.serialized_players}
 
     def generate_new_round(self):
         self.guesses[:] = []

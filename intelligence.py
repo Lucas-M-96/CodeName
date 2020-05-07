@@ -130,9 +130,9 @@ class Lobby:
         # when all players join, a gameturn must be prepared and the game can start
 
     def serialize(self):
-        for ply in self.players:
-            self.serialized_players[ply]=self.players[ply].serialize()
-        return {"id":self.lobby_id,"nb":self.number_of_players,"players":self.serialized_players}
+        for ply_id in self.players:
+            self.serialized_players[str(ply_id)]=self.players[ply_id].serialize()
+        return {"id":self.lobby_id,"nb_players":self.number_of_players,"players":self.serialized_players}
 
     def generate_new_round(self):
         self.guesses[:] = []

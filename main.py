@@ -1,4 +1,5 @@
 from flask import Flask, render_template,request,redirect,url_for,session,flash, json, jsonify
+import json
 from intelligence import *
 # from flask_sqlalchemy import SQLAlchemy
 
@@ -10,6 +11,8 @@ app.secret_key="tmp"
 #db=SQLAlchemy(app)
 global list_games
 list_games={}
+global list_games_serialized
+list_games_serialized={}
 
 @app.route("/", methods=["POST","GET"])
 def start_menu():
@@ -117,13 +120,27 @@ def start_menu():
 			else:
 				return redirect(url_for("game"))
 
-	list_games_java={}
-	game_java=Lobby(1,4)
+	for i in list_games:
+		list_games_serialized[i]=list_games[i].serialize()
+	"""game_java=Lobby(1,4)
 	game_java.register_player("Lucas",Role["SPY"],Color["BLUE"],"mdp")
-	list_games_java[game_java.lobby_id]=game_java.serialize()
+	list_games_java[str(game_java.lobby_id)]=game_java.serialize()
 	game_java2=Lobby(2,5)
-	list_games_java[game_java2.lobby_id]=game_java2.serialize()
-	return render_template("start_menu.html",list_games=list_games,list_games_java=list_games_java,errors=errors)
+	list_games_java[str(game_java2.lobby_id)]=game_java2.serialize()"""
+	return render_template("start_menu.html",list_games=list_games,errors=errors)
+
+
+@app.route("/test_actualisation_start_menu", methods=["POST","GET"])
+def test_actualisation_start_menu():
+	print("Main entered")
+	list_game_sent_xhr=json.loads(request.form['list_game_send_xhr'])
+	sync={}
+	if list_game_sent_xhr==list_games_serialized:
+		sync["status"]="Not necessary"
+	else:
+		sync["status"]="Required"
+		sync["data"]=list_games_serialized
+	return sync
 
 @app.route("/game", methods=["POST","GET"])
 def game():

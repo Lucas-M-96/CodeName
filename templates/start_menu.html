@@ -36,17 +36,13 @@
 
 	<!-- AFFICHAGE JAVA SCRIPT ET AJAX PARTIES ACTIVES -->
 		<p>
-			<div>Parties actives:</div>
-			<div id="list_active_games"></div>
+			<p class="proposition">Join an existing game. List of active games:</p>
+			<div class="fondmarronstartmenu" id="list_of_active_games">
+				<!-- Remplissage avec du JavaScript-->
+			</div>
 		</p>
 
-<script language='javascript'>
-
-	var list_games={{list_games_java|tojson}};
-
-</script>
-
-	<!-- Affichage des parties actives -->
+	<!-- Affichage des parties actives
 		<p class="proposition">Join an existing game. List of active games:</p>
 		{% if list_games|length >0 %}
 			{% for id in list_games %}
@@ -65,7 +61,7 @@
 			{% endfor %}
 		{% else %}
 			none
-		{% endif %}
+		{% endif %}-->
 
 	{% else %}
 

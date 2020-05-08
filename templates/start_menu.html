@@ -4,10 +4,12 @@
 
     <title>Start Menu</title>
     <link rel="stylesheet" type="text/CSS" href="{{url_for('static',filename='stylesheets/start_menu_style.css')}}">
-
+    
 {% endblock %}
 
 {% block body_content %}
+
+	<p id='test'></p>
 
 	<h1>Start Menu</h1>
 
@@ -18,7 +20,6 @@
 			{% endfor %}
 		{% endif %}
 	{% endwith %}
-
 
 	{% if "game_id" not in session or session["game_id"] not in list_games.keys() %}
 	<!-- Creation ou inscription à une partie -->
@@ -35,8 +36,13 @@
 
 		<p>OR</p>
 
-	<!-- Affichage des parties actives -->
+	<!-- Affichage des parties actives (ecriture a la volée en AJAX) -->
+		<p>
+			<p class="proposition">Join an existing game. List of active games:</p>
+			<div class="fondmarronstartmenu" id="list_of_active_games"></div>
+		</p>
 
+	<!-- Affichage des parties actives
 		<p class="proposition">Join an existing game. List of active games:</p>
 		{% if list_games|length >0 %}
 			{% for id in list_games %}
@@ -55,7 +61,7 @@
 			{% endfor %}
 		{% else %}
 			none
-		{% endif %}
+		{% endif %}-->
 
 	{% else %}
 
@@ -68,10 +74,18 @@
 
 		<br/>
 
-	<!-- Liste des joueurs -->
-		<p>List of players aready signed in: (id/name/role/color)</p>
+	<!--Liste des membres de chaque equipe (ecriture a la volee avec AJAX) -->
 
-	<!--2 blocs pour différentier les 2 équipes -->
+		<div id='teams_details'>
+			<h3>List of players already signed in: </h3>
+			<span class='legend'>(ID - Name - Role)</span>
+			<div id='block_team_container'>
+				<div id='block_team_blue' class="fondBlueTextWhite"></div>
+				<div id='block_team_red' class="fondRedTextWhite"></div>
+			</div>
+		</div>
+
+	<!--Liste des membres de chaque equipe
 		{% if list_games[session["game_id"]].players|length >0 %}
 			<center><table class="tableau" cellpadding=2% cellspacing=4% >
 	            <td valign="top" width=50% class="fondBlueTextWhite">
@@ -89,7 +103,7 @@
 	                {% endfor  %}
 	            </td>
 	        </table></center>
-		{% endif  %}
+		{% endif  %}-->
 
 	<!-- Inscrire un nouveau joueur -->
 		{% if "ID" not in session %}
@@ -141,6 +155,12 @@
 		{% endif %}
 
 	{% endif %}
+
+{% endblock %}
+
+{% block script %}
+
+	<script type='text/Javascript' src="{{url_for('static',filename='scriptfiles/start_menu_script.js')}}"></script>
 
 {% endblock %}
 

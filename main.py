@@ -127,14 +127,6 @@ def start_menu():
 	print(list_games_serialized)
 	for i in list_games:
 		list_games_serialized[str(i)]=list_games[i].serialize()
-		try:
-			print(list_games[i].serialize())
-		except:
-			print("non dispo")
-	
-	if "game_id" in session:
-		print(list_games[session["game_id"]].players)
-		print(list_games_serialized[str(session["game_id"])]["players"])
 
 	return render_template("start_menu.html",list_games=list_games,errors=errors)
 

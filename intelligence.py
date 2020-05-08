@@ -130,6 +130,7 @@ class Lobby:
         # when all players join, a gameturn must be prepared and the game can start
 
     def serialize(self):
+        self.serialized_players.clear()
         for ply_id in self.players:
             self.serialized_players[str(ply_id)]=self.players[ply_id].serialize()
         return {"id":self.lobby_id,"nb_players":self.number_of_players,"players":self.serialized_players}

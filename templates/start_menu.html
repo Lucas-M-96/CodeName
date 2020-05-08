@@ -9,6 +9,8 @@
 
 {% block body_content %}
 
+	<p id='test'></p>
+
 	<h1>Start Menu</h1>
 
 	{% with messages = get_flashed_messages() %}
@@ -34,12 +36,10 @@
 
 		<p>OR</p>
 
-	<!-- AFFICHAGE JAVA SCRIPT ET AJAX PARTIES ACTIVES -->
+	<!-- Affichage des parties actives (ecriture a la volée en AJAX) -->
 		<p>
 			<p class="proposition">Join an existing game. List of active games:</p>
-			<div class="fondmarronstartmenu" id="list_of_active_games">
-				<!-- Remplissage avec du JavaScript-->
-			</div>
+			<div class="fondmarronstartmenu" id="list_of_active_games"></div>
 		</p>
 
 	<!-- Affichage des parties actives
@@ -74,10 +74,18 @@
 
 		<br/>
 
-	<!-- Liste des joueurs -->
-		<p>List of players aready signed in: (id/name/role/color)</p>
+	<!--Liste des membres de chaque equipe (ecriture a la volee avec AJAX) -->
 
-	<!--2 blocs pour différentier les 2 équipes -->
+		<div id='teams_details'>
+			<h3>List of players already signed in: </h3>
+			<span class='legend'>(ID - Name - Role)</span>
+			<div id='block_team_container'>
+				<div id='block_team_blue' class="fondBlueTextWhite"></div>
+				<div id='block_team_red' class="fondRedTextWhite"></div>
+			</div>
+		</div>
+
+	<!--Liste des membres de chaque equipe
 		{% if list_games[session["game_id"]].players|length >0 %}
 			<center><table class="tableau" cellpadding=2% cellspacing=4% >
 	            <td valign="top" width=50% class="fondBlueTextWhite">
@@ -95,7 +103,7 @@
 	                {% endfor  %}
 	            </td>
 	        </table></center>
-		{% endif  %}
+		{% endif  %}-->
 
 	<!-- Inscrire un nouveau joueur -->
 		{% if "ID" not in session %}

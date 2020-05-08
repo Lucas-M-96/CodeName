@@ -22,7 +22,7 @@ def start_menu():
 
 		# CREER UN JEU
 		if request.form["submit"]=="Create game":
-			new_game_id=request.form["new_game_id"]
+			new_game_id=int(request.form["new_game_id"])
 			if new_game_id not in list_games:
 				session["game_id"] = new_game_id
 				test = request.form["new_game_nb_players"]
@@ -46,7 +46,7 @@ def start_menu():
 
 		# CHOISIR UN JEU A REJOINDRE
 		for id in list_games:
-			ButtonValue = "Join game " + id
+			ButtonValue = "Join game " + str(id)
 			if request.form["submit"] == ButtonValue:
 				session["game_id"] = id
 				print("Game succesfully joined")
@@ -55,11 +55,13 @@ def start_menu():
 		# CHANGER DE JEU
 		if request.form["submit"]=="Join an other game":
 			del session["game_id"]
+			if "ID" in session:
+				del session["ID"]
 			return redirect(url_for("start_menu"))
 
 		# AJOUTER UN NOUVEAU JOUEUR
 		if request.form["submit"]=="Add player":
-			#print("Sign in")
+			print("Signed in")
 			new_player_name=request.form["new_player_name"]
 			new_player_role=request.form["new_player_role"]
 			new_player_color=request.form["new_player_color"]
@@ -67,7 +69,7 @@ def start_menu():
 			if len(new_player_name) != 0 and len(new_player_password) != 0:
 				list_games[session["game_id"]].register_player(new_player_name,Role[new_player_role],Color[new_player_color],new_player_password)
 				flash(list_games[session["game_id"]].message, "info")
-				print(list_games[session["game_id"]].status())
+				#print(list_games[session["game_id"]].status())
 				"""try:
 					session["ID"] = max(list_games[session["game_id"]].players.keys()) + 1
 				except:
@@ -120,27 +122,49 @@ def start_menu():
 			else:
 				return redirect(url_for("game"))
 
+	# Serialisation de l'objet list_game pour pouvoir faire un transfert JSON vers la page
+	list_games_serialized.clear()
+	print(list_games_serialized)
 	for i in list_games:
-		list_games_serialized[i]=list_games[i].serialize()
-	"""game_java=Lobby(1,4)
-	game_java.register_player("Lucas",Role["SPY"],Color["BLUE"],"mdp")
-	list_games_java[str(game_java.lobby_id)]=game_java.serialize()
-	game_java2=Lobby(2,5)
-	list_games_java[str(game_java2.lobby_id)]=game_java2.serialize()"""
+		list_games_serialized[str(i)]=list_games[i].serialize()
+		try:
+			print(list_games[i].serialize())
+		except:
+			print("non dispo")
+	
+	if "game_id" in session:
+		print(list_games[session["game_id"]].players)
+		print(list_games_serialized[str(session["game_id"])]["players"])
+
 	return render_template("start_menu.html",list_games=list_games,errors=errors)
 
 
-@app.route("/test_actualisation_start_menu", methods=["POST","GET"])
-def test_actualisation_start_menu():
-	print("Main entered")
+@app.route("/test_actualisation_games_list", methods=["POST","GET"])
+def test_actualisation_games_list():
+	#print("Main entered")
+	#print(list_games_serialized)
 	list_game_sent_xhr=json.loads(request.form['list_game_send_xhr'])
-	sync={}
+	response={}
 	if list_game_sent_xhr==list_games_serialized:
-		sync["status"]="Not necessary"
+		response["status"]="Not necessary"
 	else:
-		sync["status"]="Required"
-		sync["data"]=list_games_serialized
-	return sync
+		response["status"]="Required"
+		response["list_games"]=list_games_serialized
+	return response
+
+@app.route("/test_actualisation_players_list", methods=["POST","GET"])
+def test_actualisation_players_list():
+	# session[game_id] est forcément définit car sinon le JavaScript ne lance pas la requete AJAX
+	#print("Main entered")
+	#print(list_games_serialized[str(session["game_id"])]["players"]) 
+	response={}
+	list_players_sent_xhr=json.loads(request.form['list_players_send_xhr'])
+	if list_players_sent_xhr==list_games_serialized[str(session["game_id"])]["players"]: 
+		response["status"]="Not necessary"
+	else:
+		response["status"]="Required"
+		response["list_players"]=list_games_serialized[str(session["game_id"])]["players"]
+	return response
 
 @app.route("/game", methods=["POST","GET"])
 def game():
@@ -189,7 +213,7 @@ def game():
 		if request.form["submit"]=="NO":
 			list_games[session["game_id"]].players[session["ID"]].replay = 3
 		flash(list_games[session["game_id"]].message, "info")
-	print(list_games[session["game_id"]].status())
+	#print(list_games[session["game_id"]].status())
 	list_games[session["game_id"]].players[session["ID"]].actualiser_mots = len(list_games[session["game_id"]].guesses)
 	list_games[session["game_id"]].players[session["ID"]].actualiser_nb_de_joueurs = len(list_games[session["game_id"]].players)
 	list_games[session["game_id"]].players[session["ID"]].actualiser_role = list_games[session["game_id"]].current_role

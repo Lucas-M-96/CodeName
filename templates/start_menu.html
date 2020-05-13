@@ -4,14 +4,13 @@
 
     <title>Start Menu</title>
     <link rel="stylesheet" type="text/CSS" href="{{url_for('static',filename='stylesheets/start_menu_style.css')}}">
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     
 {% endblock %}
 
 {% block body_content %}
 
 	<p id='test'></p>
-
-	<h1>Start Menu</h1>
 
 	{% with messages = get_flashed_messages() %}
 		{% if messages %}
@@ -21,9 +20,34 @@
 		{% endif %}
 	{% endwith %}
 
+
+
 	{% if "game_id" not in session or session["game_id"] not in list_games.keys() %}
-	<!-- Creation ou inscription à une partie -->
-		<p class="proposition">Create a new game :</p>
+            <!-- Icon Divider-->
+            <div class="divider-custom">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon"><i class="far fa-star"></i></div>
+                <div class="divider-custom-line"></div>
+            </div>
+            <!-- create lobby button -->
+            <div style="text-align: center;" id="app">
+                <div v-if="show">
+                    <input type="submit" value="Create new game" class="btn btn-secondary btn-lg" v-on:click="createLobby()"/>
+                </div>
+                <div style="margin-top: 2%; background-color: #222A51; border-radius: 2%; display: inline-block; padding: 2%;" v-else>
+                    <form action="" method="post">
+					<div style="float:left; width: 100%;">
+                        <input class="form-control" type="number" id="new_game_id" name= "new_game_id" placeholder="Choose a game number !">
+                        <input class="form-control" style="margin-top: 8%;" type="number" id="new_game_nb_players" name= "new_game_nb_players" placeholder="Number of players">
+					</div>
+                    <div style="float: left; width: 100%;margin-top: -2%">
+                        <input type="submit" value="Create game" name="submit" class="btn btn-secondary btn-lg" style="margin-top: 7%;" />
+					</div>
+					</form>
+                </div>
+            </div>
+
+	<!--	<p class="proposition">Create a new game :</p>
 		<div class="fondmarronstartmenu">
 		<form action="" method="post">
 			<p> <label for="new_game_id">Game N°: </label>
@@ -33,13 +57,17 @@
 			<p> <input type="submit" value="Create game" name="submit" class="boutonStartMenu"/></p>
 		</form>
 		</div>
-
-		<p>OR</p>
+-->
+		<div class="divider-custom">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon"><p>OR</p></div>
+                <div class="divider-custom-line"></div>
+		</div>
 
 	<!-- Affichage des parties actives (ecriture a la volée en AJAX) -->
 		<p>
-			<p class="proposition">Join an existing game. List of active games:</p>
-			<div class="fondmarronstartmenu" id="list_of_active_games"></div>
+			<p class="Titre">Join an existing game. List of active games:</p>
+			<div class="dispositionGame" id="list_of_active_games"></div>
 		</p>
 
 	<!-- Affichage des parties actives
@@ -66,10 +94,10 @@
 	{% else %}
 
 	<!-- Gestion de la partie -->
-		<p>You are joining game N°{{list_games[session["game_id"]].lobby_id}} / Number of players : {{list_games[session["game_id"]].number_of_players}}</p>
+		<p class="proposition">You are joining game N°{{list_games[session["game_id"]].lobby_id}} / Number of players : {{list_games[session["game_id"]].number_of_players}}</p>
 
 		<form action="" method="post">
-		<input type="submit" value="Join an other game" name="submit" class="boutonStartMenu"/>
+		<input type="submit" value="Join an other game" name="submit" class="btn btn-secondary btn-lg"/>
 		</form>
 
 		<br/>
@@ -107,8 +135,8 @@
 
 	<!-- Inscrire un nouveau joueur -->
 		{% if "ID" not in session %}
-			<center><table class="tableau" cellpadding=5% cellspacing=5% >
-				<td class="fondmarronstartmenu" valign="top" width=50%>
+		<div class="dispositionSignIn" style="grid-column: 1; grid-row: 1;">
+				<div class="fondGrisStartMenu fondGrisStartMenu-newPlayer">
 					<p class="proposition">Create a new player and sign in</p>
 					<form action="" method="post">
 						<p> <label for="new_player_name">Player name: </label>
@@ -125,11 +153,11 @@
 							<label for="BLUE"> BLUE </label></p>
 						<p> <label for="new_player_password">Password: </label>
 							<input type="text" id="new_player_password" name= "new_player_password" /></p>
-						<p> <input type="submit" value="Add player" name="submit" class="boutonStartMenu"/></p>
+						<p> <input type="submit" value="Add player" name="submit" class="btn btn-secondary btn-lg"/></p>
 					</form>
-				</td>
+				</div>
 
-				<td class="fondmarronstartmenu" valign="top" width=50%>
+				<div class="fondGrisStartMenu fondGrisStartMenu-signIN">
 				<!-- Reprendre un joueur déjà inscrit -->
 					<p class="proposition">Sign in as an existing player</p>
 					<form action="" method="post">
@@ -137,19 +165,21 @@
 						<input type="number" id="sign_in_ID" name= "sign_in_ID" /></p>
 					<p> <label for="sign_in_password">Password: </label>
 						<input type="text" id="sign_in_password" name= "sign_in_password" /></p>
-					<p> <input type="submit" value="Sign in as" name="submit" class="boutonStartMenu"/></p>
-				</td>
-			</table></center>
+					<p> <input type="submit" value="Sign in as" name="submit" class="btn btn-secondary btn-lg"/></p>
+					</form>
+				</div>
+		</div>
+
 
 	<!-- Details et options session actuelle + afficher le plateau -->
 		{% else %}
 			<br/>
-			<p class="fondmarronstartmenu">Currently signed in as :
-			{{list_games[session["game_id"]].players[session["ID"]]}}<p>
+			<p class="fondGrisV2startmenu">Currently signed in as :
+			{{list_games[session["game_id"]].players[session["ID"]].name}}, {{list_games[session["game_id"]].players[session["ID"]].role.name}} (ID : {{session["ID"]}})<p>
 			<form action="" method="post">
-			<p> <input type="submit" value="Sign out" name="submit" class="boutonStartMenu"/></p>
-			<p> <input type="submit" value="Delete player" name="submit" class="boutonStartMenu"/></p>
-			<p> <input type="submit" value="Start game" name="submit" class="boutonStartMenu"/></p>
+			<p> <input type="submit" value="Sign out" name="submit" class="btn btn-secondary btn-lg"/></p>
+			<p> <input type="submit" value="Delete player" name="submit" class="btn btn-secondary btn-lg"/></p>
+			<p> <input type="submit" value="Start game" name="submit" class="btn btn-secondary btn-lg"/></p>
 			</form>
 
 		{% endif %}
@@ -161,6 +191,29 @@
 {% block script %}
 
 	<script type='text/Javascript' src="{{url_for('static',filename='scriptfiles/start_menu_script.js')}}"></script>
+	<script src="https://kit.fontawesome.com/60ce4abe8f.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script>
+	var demo = new Vue({
+	  	el: "#app",
+	  	data: {
+			show: true,
+	  	},
+
+	methods: {
+	  	createLobby: function () {
+			if (this.show === true) {
+				this.show = false;
+			} else if (this.show === false) {
+				this.show = true;
+			}
+		},
+	},
+
+
+	});
+	</script>
+
 
 {% endblock %}
 

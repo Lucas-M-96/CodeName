@@ -3,16 +3,43 @@ my_elt.innerHTML+='poulet';*/
 
 function displayGamesList(list_games){
 	//console.log("function launched");
+
+	 if (document.body) {
+        var larg = (document.body.clientWidth);
+        var haut = (document.body.clientHeight);
+     } else {
+        var larg = (window.innerWidth);
+        var haut = (window.innerHeight);
+     }
+
 	document.getElementById('list_of_active_games').innerHTML="";
+	var compteurLigneColonne = 0;
+	var ligne = 1;
 	for (const id in list_games){
 
-		var elt_block_game=document.createElement('form');
+        compteurLigneColonne += 1;
+
+        if (larg>640) {
+            if (compteurLigneColonne === 4) {
+                compteurLigneColonne = 1;
+                ligne += 1;
+            }
+        }
+
+		var elt_block_game=document.createElement('div');
+		elt_block_game.className="fondGrisStartMenu";
+		if (larg>640) {
+		    elt_block_game.style="grid-column: "+ compteurLigneColonne +"; grid-row: "+ ligne +";"
+		} else {
+		    elt_block_game.style="grid-column: 1; grid-row: "+ compteurLigneColonne +";"
+		}
 
 		var elt_form=document.createElement('form');
 		elt_form.action="";
 		elt_form.method="post";
 		
-		text_form="Game N°" + list_games[id]["id"] + " / Number of players : " + list_games[id]["nb_players"];
+		text_form="Game N°" + list_games[id]["id"] + " / Number of players : " + Object.keys(list_games[id]["players"]).length + "/" + list_games[id]["nb_players"] + " ";
+		console.log(Object.keys(list_games[id]["players"]).length)
 		var elt_form_text=document.createTextNode(text_form);
 		elt_form.appendChild(elt_form_text);
 		
@@ -20,7 +47,7 @@ function displayGamesList(list_games){
 		elt_form_input.type="submit";
 		elt_form_input.value="Join game "+list_games[id]["id"];
 		elt_form_input.name="submit";
-		elt_form_input.className="boutonStartMenu";
+		elt_form_input.className="btn btn-secondary btn-lg";
 		elt_form.appendChild(elt_form_input);
 
 		var elt_p_list_players=document.createElement('p');
@@ -133,3 +160,7 @@ setInterval(testActualisationGamesList,3000);
 
 testActualisationPlayersList();
 setInterval(testActualisationPlayersList,3000);
+
+
+
+

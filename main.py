@@ -248,7 +248,7 @@ def administrateur():
 	global list_games
 	if request.method == "POST":
 		for id in list_games:
-			ButtonValue = "Delete game " + id
+			ButtonValue = "Delete game " + str(id)
 			if request.form["submit"] == ButtonValue:
 				del list_games[id]
 				print("Game succesfully Deleted")
@@ -257,4 +257,5 @@ def administrateur():
 
 if __name__=="__main__":
 	#db.create.all()
-	app.run(host="0.0.0.0")
+	app.run()
+	#app.run(host="0.0.0.0")

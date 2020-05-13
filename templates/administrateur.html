@@ -1,10 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}Page administrateur{% endblock %}
+{% block additionnal_head %}
 
-{% block en_tete %}Page administrateur{% endblock %}
+    <title>Administrator's page</title>
+    <link rel="stylesheet" type="text/CSS" href="{{url_for('static',filename='stylesheets/start_menu_style.css')}}">
 
-{% block content %}
+{% endblock %}
+
+{% block body_content %}
 
 {% with messages = get_flashed_messages() %}
 	{% if messages %}
@@ -18,8 +21,8 @@
 	<p class="proposition">List of active games:</p>
 	{% if list_games|length >0 %}
 		{% for id in list_games %}
-			<div class="fondmarronstartmenu">
-				<form action="" method="post"><p> - Game N°{{id}} / Number of players : {{list_games[id].number_of_players}}<span><input type="submit" value="Delete game {{id}}" name="submit" class="boutonStartMenu"/></span></p></form>
+			<div class="fondGrisV2startmenu">
+				<form action="" method="post"><p> - Game N°{{id}} / Number of players : {{list_games[id].number_of_players}}<span><input type="submit" value="Delete game {{id}}" name="submit" class="btn btn-secondary btn-lg"/></span></p></form>
 				<p> Players already sign in :
 				{% for ply in list_games[id].players.values() %}
 					{% if ply.color.name == "BLUE" %}
@@ -32,7 +35,7 @@
 			</div>
 		{% endfor %}
 	{% else %}
-		none
+		<p class="proposition">none</p>
 	{% endif %}
 
 {% endblock %}

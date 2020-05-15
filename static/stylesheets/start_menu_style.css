@@ -43,9 +43,9 @@ h3{
   grid-row: 1;
 }
 
-.dispositionGame {
+.dispositionJoueurAcceuil {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   grid-gap: 1%;
   grid-auto-rows: minmax(2%, auto);
 }
@@ -89,19 +89,7 @@ h3{
 	min-width:200px;
 }
 
-.form-control {
-  display: block;
-  width: 100%;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #495057;
-  background-color: #fff;
-  background-clip: padding-box;
-  border: 0.125rem solid #ced4da;
-  border-radius: 0.5rem;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
+
 
 @media (max-width: 640px) {
     .dispositionGame {

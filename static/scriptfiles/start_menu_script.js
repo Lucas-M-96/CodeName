@@ -37,11 +37,10 @@ function displayGamesList(list_games){
 		var elt_form=document.createElement('form');
 		elt_form.action="";
 		elt_form.method="post";
-		
-		text_form="Game N°" + list_games[id]["id"] + " / Number of players : " + Object.keys(list_games[id]["players"]).length + "/" + list_games[id]["nb_players"] + " ";
-		console.log(Object.keys(list_games[id]["players"]).length)
+
+		/*text_form="Game N°" + list_games[id]["id"] + " / Number of players : " + Object.keys(list_games[id]["players"]).length + "/" + list_games[id]["nb_players"] + " ";
 		var elt_form_text=document.createTextNode(text_form);
-		elt_form.appendChild(elt_form_text);
+		elt_form.appendChild(elt_form_text);*/
 		
 		var elt_form_input=document.createElement('input');
 		elt_form_input.type="submit";
@@ -50,26 +49,45 @@ function displayGamesList(list_games){
 		elt_form_input.className="btn btn-secondary btn-lg";
 		elt_form.appendChild(elt_form_input);
 
-		var elt_p_list_players=document.createElement('p');
-		var elt_text_p_list_player=document.createTextNode("Players already signed in : ");
-		elt_p_list_players.appendChild(elt_text_p_list_player);
+		var elt_number_of_player=document.createElement('p');
+		text_number_of_player="Number of players : " + Object.keys(list_games[id]["players"]).length + "/" + list_games[id]["nb_players"];
+		var elt_p_text=document.createTextNode(text_number_of_player);
+		elt_number_of_player.appendChild(elt_p_text);
+
+		//var elt_p_list_players=document.createElement('p');
+		//var elt_text_p_list_player=document.createTextNode("Players already signed in : ");
+		//elt_p_list_players.appendChild(elt_text_p_list_player);
+		var elt_div_list_players=document.createElement('div');
+		elt_div_list_players.className="dispositionJoueurAcceuil"
+		var elt_detail_player_red=document.createElement('div');
+		elt_detail_player_red.style="grid-column: 1; grid-row: 1; border-radius: 0.5rem;"
+		elt_detail_player_red.className="fondRedTextWhite"
+		var elt_detail_player_blue=document.createElement('div');
+		elt_detail_player_blue.style="grid-column: 2; grid-row: 1; border-radius: 0.5rem;"
+		elt_detail_player_blue.className="fondBlueTextWhite"
 		for (ply_id in list_games[id]["players"]){
-
-			var elt_detail_player=document.createElement('span');
-			elt_detail_player.className="text"+list_games[id]["players"][ply_id]["color"].toLowerCase();
-
-			text_detail_player=list_games[id]["players"][ply_id]["name"] + ", " + list_games[id]["players"][ply_id]["role"] + " / ";
+			var elt_detail_player=document.createElement('p');
+			elt_detail_player.style="margin: 0; padding: 0.2%;"
+			//elt_detail_player.className="text"+list_games[id]["players"][ply_id]["color"].toLowerCase();
+			text_detail_player=list_games[id]["players"][ply_id]["name"] + ", " + list_games[id]["players"][ply_id]["role"];
 			var elt_text_detail_player=document.createTextNode(text_detail_player);
-
 			elt_detail_player.appendChild(elt_text_detail_player);
-			elt_p_list_players.appendChild(elt_detail_player);
+			if (list_games[id]["players"][ply_id]["color"].toLowerCase()==="red") {
+			    elt_detail_player_red.appendChild(elt_detail_player);
+			} else {
+			    elt_detail_player_blue.appendChild(elt_detail_player);
+			}
 		}
 
+        elt_div_list_players.appendChild(elt_detail_player_blue);
+        elt_div_list_players.appendChild(elt_detail_player_red);
 		elt_block_game.appendChild(elt_form);
-		elt_block_game.appendChild(elt_p_list_players);
+		elt_block_game.appendChild(elt_number_of_player);
+		elt_block_game.appendChild(elt_div_list_players);
 		document.getElementById('list_of_active_games').appendChild(elt_block_game);
 	}
 }
+
 
 var testActualisationGamesList=(function(){
 	var list_games={};

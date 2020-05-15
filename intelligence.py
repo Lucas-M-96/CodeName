@@ -253,9 +253,9 @@ class Lobby:
             self.message = "It is not a guess round --> Not your turn bro"
         # is this team the current team
         elif team_color != self.current_team_color:
-            self.message ="It is not this team turn! --> go fuck"
+            self.message ="It is not this team turn!"
         elif team_role != self.current_role:
-            self.message = "you don't have this role, can't you read bitch ?"
+            self.message = "you don't have this role, can't you read ?"
         else:
             # if not, this is a valid guess
             out_of_guess = 0
@@ -417,7 +417,7 @@ class Lobby:
         elif team_color != self.current_team_color:
             self.message = "It is not this team turn!"
         elif player_role != self.current_role:
-            self.message =  "you don't have this role! can't you read bitch ?"
+            self.message =  "you don't have this role! can't you read ?"
         # if not, this is a valid proposal
         else:
             self.message = ""

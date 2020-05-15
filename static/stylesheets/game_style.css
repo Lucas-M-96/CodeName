@@ -96,6 +96,24 @@
 
 /* Divers */
 
+    .dispositionGameBoard {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-gap: 1%;
+      grid-auto-rows: minmax(2%, auto);
+      grid-column: 2 / 5;
+      grid-row: 1;
+      border: 1px Solid;
+      padding: 1%;
+    }
+
+    .dispositionPlayerSection {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      grid-gap: 1%;
+      grid-auto-rows: minmax(2%, auto);
+    }
+
 	.smallspace {
 		margin-left: auto;
 		margin-right: auto;
@@ -124,6 +142,18 @@
 		vertical-align:top;
 	}
 
+	.fondGris {
+        margin-left: auto;
+        margin-right: auto;
+        color:Black;
+        padding:0.5%;
+        font:100% Optima;
+        text-align: center;
+        background: #C7D0CC;
+        line-height: 120%;
+        vertical-align:top;
+    }
+
 	.fondgreen {
 		margin-left: auto;
 		margin-right: auto;
@@ -139,6 +169,7 @@
 		margin-left: auto;
 		margin-right: auto;
 		color:white;
+		width: 100%;
 		font:Bold 100% Optima;
 		text-align: center;
 		background:black;
@@ -149,6 +180,7 @@
 		margin-left: auto;
 		margin-right: auto;
 		color:Black;
+		width: 100%;
 		font:Bold 100% Optima;
 		text-align: center;
 		background:khaki;
@@ -159,6 +191,7 @@
 		margin-left: auto;
 		margin-right: auto;
 		color:White;
+		width: 100%;
 		font:Bold 100% Optima;
 		text-align: center;
 		background:gray;
@@ -169,6 +202,7 @@
 		margin-left: auto;
 		margin-right: auto;
 		color:red;
+		width: 100%;
 		font:Bold 100% Optima;
 		text-align: center;
 		background:red;
@@ -179,6 +213,7 @@
 		margin-left: auto;
 		margin-right: auto;
 		color:Blue;
+		width: 100%;
 		font:Bold 100% Optima;
 		text-align: center;
 		background:blue;
@@ -189,6 +224,7 @@
 		margin-left: auto;
 		margin-right: auto;
 		color:Khaki;
+		width: 100%;
 		font:Bold 100% Optima;
 		text-align: center;
 		background:khaki;
@@ -199,6 +235,7 @@
 		margin-left: auto;
 		margin-right: auto;
 		color:Black;
+		width: 100%;
 		font:Bold 100% Optima;
 		text-align: center;
 		background:red;
@@ -209,6 +246,7 @@
 		margin-left: auto;
 		margin-right: auto;
 		color:Black;
+		width: 100%;
 		font:Bold 100% Optima;
 		text-align: center;
 		background:blue;
@@ -219,8 +257,146 @@
 		margin-left: auto;
 		margin-right: auto;
 		color:Gray;
+		width: 100%;
 		font:Bold 120% Optima;
 		text-align: center;
 		background:khaki;
 		line-height: 100%;
 	}
+
+    .playerSection {
+        grid-column: 1;
+        grid-row: 1;
+        border: 1px Solid;
+        width: 100%;
+        padding: 1%;
+    }
+
+    .gameInformation {
+        grid-column: 5;
+        grid-row: 1;
+        border: 1px Solid;
+        width: 100%;
+        padding: 1%;
+    }
+
+
+@media (max-width: 640px) {
+    .fondDarkTextWhite {
+		margin-left: auto;
+		margin-right: auto;
+		color:white;
+		width: 100%;
+		font:Bold 70% Optima;
+		text-align: center;
+		background:black;
+		line-height: 100%;
+	}
+
+	.fondKhakiTextBlack {
+		margin-left: auto;
+		margin-right: auto;
+		color:Black;
+		width: 100%;
+		font:Bold 70% Optima;
+		text-align: center;
+		background:khaki;
+		line-height: 100%;
+	}
+
+	.fondGrayTextWhite {
+		margin-left: auto;
+		margin-right: auto;
+		color:White;
+		width: 100%;
+		font:Bold 70% Optima;
+		text-align: center;
+		background:gray;
+		line-height: 100%;
+	}
+
+	.fondRedTextRed {
+		margin-left: auto;
+		margin-right: auto;
+		color:red;
+		width: 100%;
+		font:Bold 70% Optima;
+		text-align: center;
+		background:red;
+		line-height: 100%;
+	}
+
+	.fondBlueTextBlue {
+		margin-left: auto;
+		margin-right: auto;
+		color:Blue;
+		width: 100%;
+		font:Bold 70% Optima;
+		text-align: center;
+		background:blue;
+		line-height: 100%;
+	}
+
+	.fondKhakiTextKhaki {
+		margin-left: auto;
+		margin-right: auto;
+		color:Khaki;
+		width: 100%;
+		font:Bold 70% Optima;
+		text-align: center;
+		background:khaki;
+		line-height: 100%;
+	}
+
+	.fondRedTextBlack {
+		margin-left: auto;
+		margin-right: auto;
+		color:Black;
+		width: 100%;
+		font:Bold 70% Optima;
+		text-align: center;
+		background:red;
+		line-height: 100%;
+	}
+
+	.fondBlueTextBlack {
+		margin-left: auto;
+		margin-right: auto;
+		color:Black;
+		width: 100%;
+		font:Bold 70% Optima;
+		text-align: center;
+		background:blue;
+		line-height: 100%;
+	}
+
+	.fondKhakiTextGray {
+		margin-left: auto;
+		margin-right: auto;
+		color:Gray;
+		width: 100%;
+		font:Bold 70% Optima;
+		text-align: center;
+		background:khaki;
+		line-height: 100%;
+	}
+
+	.dispositionGameBoard {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-gap: 1%;
+      grid-auto-rows: minmax(2%, auto);
+      grid-column: 1 ;
+      grid-row: 2;
+      border: 1px Solid;
+      padding: 1%;
+    }
+
+    .gameInformation {
+        grid-column: 1;
+        grid-row: 3;
+        border: 1px Solid;
+        width: 100%;
+        padding: 1%;
+    }
+}

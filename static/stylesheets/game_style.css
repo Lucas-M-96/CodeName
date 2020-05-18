@@ -107,7 +107,7 @@
       padding: 1%;
     }
 
-    .dispositionPlayerSection {
+    .dispositionEquipe {
       display: grid;
       grid-template-columns: repeat(1, 1fr);
       grid-gap: 1%;
@@ -194,7 +194,7 @@
 		width: 100%;
 		font:Bold 100% Optima;
 		text-align: center;
-		background:gray;
+		background: gray;
 		line-height: 100%;
 	}
 
@@ -280,8 +280,25 @@
         padding: 1%;
     }
 
+    .dispositionLegende {
+        grid-column: 2 / 5;
+        grid-row: 1;
+        border: 1px Solid;
+        padding: 1%;"
+    }
 
-@media (max-width: 640px) {
+
+@media (max-width: 850px) {
+    .boutonGuess {
+		margin-left: auto;
+		margin-right: auto;
+		padding:0;
+		font:Bold 80% Optima;
+		background:gray;
+		color:#fff;
+		border:none;
+	}
+
     .fondDarkTextWhite {
 		margin-left: auto;
 		margin-right: auto;
@@ -311,7 +328,7 @@
 		width: 100%;
 		font:Bold 70% Optima;
 		text-align: center;
-		background:gray;
+		background: gray;
 		line-height: 100%;
 	}
 
@@ -398,5 +415,19 @@
         border: 1px Solid;
         width: 100%;
         padding: 1%;
+    }
+
+    .dispositionLegende {
+        grid-column: 1;
+        grid-row: 1;
+        border: 1px Solid;
+        padding: 1%;"
+    }
+
+    .dispositionEquipe {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 1%;
+      grid-auto-rows: minmax(2%, auto);
     }
 }

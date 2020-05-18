@@ -184,14 +184,14 @@ def game():
 					flash("You must indicate how many words are related to your proposal", "info")
 
 
-		if request.form["submit"]=="Show/Hide found words":
+		if request.form["submit"]=="Show/Hide":
 			if list_games[session["game_id"]].players[session["ID"]].affichage == 1:
 				list_games[session["game_id"]].players[session["ID"]].affichage = 2
 			else:
 				list_games[session["game_id"]].players[session["ID"]].affichage = 1
 		if request.form["submit"]=="YES":
 			list_games[session["game_id"]].players[session["ID"]].replay = 1
-		if request.form["submit"]=="Comfirm":
+		if request.form["submit"]=="Confirm":
 			list_games[session["game_id"]].players[session["ID"]].replay = 2
 			list_games[session["game_id"]].actualisation_replay += 1
 			player_role = request.form["player_role"]

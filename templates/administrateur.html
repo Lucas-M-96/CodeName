@@ -4,6 +4,13 @@
 
     <title>Administrator's page</title>
     <link rel="stylesheet" type="text/CSS" href="{{url_for('static',filename='stylesheets/start_menu_style.css')}}">
+	<SCRIPT LANGUAGE="javascript">
+	code = prompt('Entrez le mot de passe pour acceder à la page administrateur.','Entrer le mot de passe ici');
+	if (code != "Adminpoulet96")//Remplacer votremotdepasse par le mot de passe que vous allez choisir...
+			{
+			location.href="/Wrongpassword";
+			}
+	</SCRIPT>
 
 {% endblock %}
 

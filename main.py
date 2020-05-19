@@ -255,6 +255,10 @@ def administrateur():
 				return render_template("administrateur.html", list_games=list_games)
 	return render_template("administrateur.html", list_games=list_games)
 
+@app.route("/Wrongpassword")
+def wrongpassword():
+	return render_template("mauvaiscode.html")
+
 if __name__=="__main__":
 	#db.create.all()
 	app.run()
